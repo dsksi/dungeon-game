@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import java.util.ArrayList;
+
 /**
  * The player entity
  * @author Robert Clifton-Everest
@@ -20,22 +22,55 @@ public class Player extends Entity {
     }
 
     public void moveUp() {
-        if (getY() > 0)
-            y().set(getY() - 1);
+        if (getY() > 0) {
+        	ArrayList<Entity> list = dungeon.getEntity(this.getX(), this.getY()-1);
+        	if(!list.isEmpty()) {
+	        	for (Entity e: list) {
+	        		if(! e.movable()) return;
+	        	}
+        	}
+        	y().set(getY() - 1);
+        }
     }
 
     public void moveDown() {
-        if (getY() < dungeon.getHeight() - 1)
-            y().set(getY() + 1);
+        if (getY() < dungeon.getHeight() - 1) {
+        	ArrayList<Entity> list = dungeon.getEntity(this.getX(), this.getY()+1);
+        	if(!list.isEmpty()) {
+	        	for (Entity e: list) {
+	        		if(! e.movable()) return;
+	        	}
+        	}
+        	y().set(getY() + 1);
+        }
     }
 
     public void moveLeft() {
-        if (getX() > 0)
-            x().set(getX() - 1);
+        if (getX() > 0) {
+        	ArrayList<Entity> list = dungeon.getEntity(this.getX()-1, this.getY());
+        	if(!list.isEmpty()) {
+	        	for (Entity e: list) {
+	        		if(! e.movable()) return;
+	        	}
+        	}
+        	x().set(getX() - 1);
+        }
     }
 
     public void moveRight() {
-        if (getX() < dungeon.getWidth() - 1)
+        if (getX() < dungeon.getWidth() - 1) {
+        	ArrayList<Entity> list = dungeon.getEntity(this.getX()+1, this.getY());
+        	if(!list.isEmpty()) {
+	        	for (Entity e: list) {
+	        		if(! e.movable()) return;
+	        	}
+        	}
             x().set(getX() + 1);
+        }
     }
+
+	@Override
+	public boolean movable() {
+		return true;
+	}
 }
