@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public class Player extends Entity {
 
     private Dungeon dungeon;
+    private int keyID;
+    private Bomb bomb;
 
     /**
      * Create a player positioned in square (x,y)
@@ -72,5 +74,25 @@ public class Player extends Entity {
 	@Override
 	public boolean movable() {
 		return true;
+	}
+	
+	public int getKeyID() {
+		return keyID;
+	}
+
+	public void setKeyID(int keyID) {
+		this.keyID = keyID;
+	}
+
+	public Bomb getBomb() {
+		return bomb;
+	}
+
+	public void setBomb(Bomb bomb) {
+		this.bomb = bomb;
+	}
+
+	public Dungeon getDungeon() {
+		return dungeon;
 	}
 }
