@@ -12,6 +12,7 @@ public class Player extends Entity {
     private Dungeon dungeon;
     private int keyID;
     private Bomb bomb;
+    private int treasureCollected;
 
     /**
      * Create a player positioned in square (x,y)
@@ -23,52 +24,37 @@ public class Player extends Entity {
         this.dungeon = dungeon;
     }
 
-    public void moveUp() {
-        if (getY() > 0) {
-        	ArrayList<Entity> list = dungeon.getEntity(this.getX(), this.getY()-1);
-        	if(!list.isEmpty()) {
-	        	for (Entity e: list) {
-	        		if(! e.movable()) return;
-	        	}
-        	}
-        	y().set(getY() - 1);
+    private boolean checkMoveable(int x, int y) {
+    	if(!((y < dungeon.getHeight() - 1) && (y >= 0)))	return false;
+    	if(!((x < dungeon.getWidth() - 1) && (x >= 0)))		return false;
+    		
+    	ArrayList<Entity> list = dungeon.getEntity(x, y);
+        if(!list.isEmpty()) {
+        	for (Entity e: list) {
+        		if(! e.movable()) return false;
+            }
         }
+        return true;
+    }
+    
+    public void moveUp() {
+    	if(this.checkMoveable(this.getX(), this.getY() - 1))
+    		y().set(getY() - 1);
     }
 
     public void moveDown() {
-        if (getY() < dungeon.getHeight() - 1) {
-        	ArrayList<Entity> list = dungeon.getEntity(this.getX(), this.getY()+1);
-        	if(!list.isEmpty()) {
-	        	for (Entity e: list) {
-	        		if(! e.movable()) return;
-	        	}
-        	}
-        	y().set(getY() + 1);
-        }
+    	if(this.checkMoveable(this.getX(), this.getY() + 1))
+    		y().set(getY() + 1);
     }
 
     public void moveLeft() {
-        if (getX() > 0) {
-        	ArrayList<Entity> list = dungeon.getEntity(this.getX()-1, this.getY());
-        	if(!list.isEmpty()) {
-	        	for (Entity e: list) {
-	        		if(! e.movable()) return;
-	        	}
-        	}
-        	x().set(getX() - 1);
-        }
+    	if(this.checkMoveable(this.getX() - 1, this.getY()))
+    		x().set(getX() - 1);
     }
 
     public void moveRight() {
-        if (getX() < dungeon.getWidth() - 1) {
-        	ArrayList<Entity> list = dungeon.getEntity(this.getX()+1, this.getY());
-        	if(!list.isEmpty()) {
-	        	for (Entity e: list) {
-	        		if(! e.movable()) return;
-	        	}
-        	}
-            x().set(getX() + 1);
-        }
+    	if(this.checkMoveable(this.getX() + 1, this.getY()))
+    		x().set(getX() + 1);
     }
 
 	@Override
@@ -94,5 +80,15 @@ public class Player extends Entity {
 
 	public Dungeon getDungeon() {
 		return dungeon;
+	}
+
+	public int getTreasureCollected() {
+		return this.treasureCollected;
+	}
+
+	@Override
+	public void interact(Entity obj) {
+		//TODO: implement enemy interaction with player
+		return;
 	}
 }

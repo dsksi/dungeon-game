@@ -8,7 +8,11 @@ public class Wall extends Entity {
     
 	@Override
 	public boolean movable() {
-		System.out.println("wall can not move");
 		return false;
+	}
+
+	@Override
+	public void interact(Entity obj) {
+		return;
 	}
 }
