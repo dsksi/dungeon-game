@@ -1,11 +1,14 @@
 package unsw.dungeon;
 
-public class ExitGoal implements Goal, Observer {
+public class ExitGoal implements Goal {
 
 	private boolean status;
-	
-	public ExitGoal() {
+	private Player player;
+	private Exit exit;
+	public ExitGoal(Player pl, Exit exit) {
 		this.status = false;
+		this.player = pl;
+		this.exit = exit;
 	}
 	
 	@Override
