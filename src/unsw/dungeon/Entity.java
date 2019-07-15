@@ -41,4 +41,5 @@ public abstract class Entity {
     }
 
 	public abstract boolean movable();
+	public abstract void interact(Entity Obj);
 }

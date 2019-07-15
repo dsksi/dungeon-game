@@ -10,7 +10,8 @@ import java.util.ArrayList;
 public class Player extends Entity {
 
     private Dungeon dungeon;
-
+    private int treasureCollected;
+    private AttackStrategy attstr;
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -19,6 +20,8 @@ public class Player extends Entity {
     public Player(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
+        this.treasureCollected = 0;
+        this.attstr = new NoAttack();
     }
 
     public void moveUp() {
@@ -72,5 +75,22 @@ public class Player extends Entity {
 	@Override
 	public boolean movable() {
 		return true;
+	}
+
+	public int getTreasureCollected() {
+		return this.treasureCollected;
+	}
+	
+	public void attack() {
+		attstr.attack(this);
+	}
+	
+	public void setAttackStrat(AttackStrategy att) {
+		this.attstr = att;
+	}
+
+	@Override
+	public void interact(Entity Obj) {
+		return;
 	}
 }
