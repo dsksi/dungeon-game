@@ -20,8 +20,8 @@ public class GameState {
 		return tg;
 	}
 	
-	private ExitGoal createExitGoal() {
-		ExitGoal eg = new ExitGoal();
+	private ExitGoal createExitGoal(Player player, Exit exit) {
+		ExitGoal eg = new ExitGoal(player, exit);
 		return eg;
 	}
 	
@@ -45,7 +45,7 @@ public class GameState {
 			int count = dungeon.getEnemyCount();
 			g = this.createEnemyGoal(count);
 		} else if (type.equals("exit")) {
-			g = this.createExitGoal();
+			g = this.createExitGoal(dungeon.getPlayer(), dungeon.getExit());
 		} else if (type.equals("boulders")) {
 			int count = dungeon.getSwitchCount();
 			g = this.createSwitchGoal(count);
@@ -62,8 +62,8 @@ public class GameState {
 		CompositeGoal cg = createCompositeGoal(type);
 		for(String sg : subgoals) {
 			Goal g = createSimpleGoal(sg, dungeon);
+			cg.addGoal(g);
 		}
-		cg.addGoal(g);
 		this.goal = cg;
 	}
 	

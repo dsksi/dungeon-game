@@ -43,4 +43,8 @@ public class Switch extends Entity implements Subject{
 		return true;
 	}
 
+	public boolean getActivated() {
+		return this.activated;
+	}
+
 }

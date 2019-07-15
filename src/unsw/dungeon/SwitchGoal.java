@@ -22,7 +22,7 @@ public class SwitchGoal implements Goal, Observer {
 	public void update(Subject obj) {
 		if(!(obj instanceof Switch)) return;
 		Switch sw = (Switch) obj;
-		if(sw.activated()) {
+		if(sw.getActivated()) {
 			this.switchActivated += 1;
 		} else {
 			this.switchActivated -= 1;

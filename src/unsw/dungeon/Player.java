@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Player extends Entity {
 
     private Dungeon dungeon;
+    private int treasureCollected;
 
     /**
      * Create a player positioned in square (x,y)
@@ -72,5 +73,9 @@ public class Player extends Entity {
 	@Override
 	public boolean movable() {
 		return true;
+	}
+
+	public int getTreasureCollected() {
+		return this.treasureCollected;
 	}
 }
