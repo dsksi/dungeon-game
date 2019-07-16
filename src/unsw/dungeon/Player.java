@@ -29,7 +29,17 @@ public class Player extends Entity {
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
         	for (Entity e: list) {
-        		if(! e.movable()) return false;
+        		if (e instanceof Boulder) {
+        			Boulder b = (Boulder) e;
+        			if (b.checkMoveable(this)) {
+        				b.interact(this);
+        				return true;
+        			} else {
+        				//System.out.println("can't move boulder");
+        				return false;
+        			}
+        		} 
+        		else if(! e.movable()) return false;
             }
         }
         return true;
@@ -70,4 +80,9 @@ public class Player extends Entity {
 		//TODO: implement enemy interaction with player
 		return;
 	}
+	
+	// to keep IDE happy
+    public String getState() {
+    	return null;
+    }
 }

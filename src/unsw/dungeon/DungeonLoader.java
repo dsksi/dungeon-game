@@ -61,6 +61,11 @@ public abstract class DungeonLoader {
             entity = wall;
             break;
         // TODO Handle other possible entities
+        case "boulder":
+        	Boulder boulder = new Boulder(dungeon,x,y);
+        	onLoad(boulder);
+        	entity = boulder;
+        	break;
         }
         dungeon.addEntity(entity);
     }
@@ -70,5 +75,6 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Wall wall);
 
     // TODO Create additional abstract methods for the other entities
+    public abstract void onLoad(Boulder boulder);
 
 }

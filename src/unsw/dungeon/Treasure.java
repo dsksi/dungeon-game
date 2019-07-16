@@ -17,6 +17,7 @@ public class Treasure extends Entity implements Subject{
 		this.isCollected = true;
 	}
 	
+	//------ Observer methods ------
 	@Override
 	public void registerObserver(Observer o) {
 		observers.add(o);
@@ -33,10 +34,17 @@ public class Treasure extends Entity implements Subject{
 			o.update(this);
 		}
 	}
-
+	
+	//------ Entity methods ------
 	@Override
 	public boolean movable() {
 		return true;
+	}
+
+	@Override
+	public void interact(Entity obj) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
