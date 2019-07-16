@@ -2,7 +2,7 @@ package unsw.dungeon;
 
 public interface BombState {
 
-		public BombState pickUp(Player player, Bomb bomb);
-		public BombState activateBomb(Bomb bomb, int x, int y);
-		public void explode(Dungeon dungeon, int x, int y);
+		public BombState pickUp(Bomb bomb, Player player);
+		public BombState activateBomb(Bomb bomb, Player player);
+		public void explode(Bomb bomb, Player player);
 }

@@ -14,33 +14,22 @@ public class Door extends Entity {
 	@Override
 	public boolean movable() {
 
-		if (!isLocked()) {
-			return true;
+		if (locked) {
+			return false;
 		} 
 
-		return false;
+		return true;
 	}
 	
 	public void interact(Entity obj) {
 		if(!(obj instanceof Player)) {
 			return;
+		} else {
+			Player player = (Player) obj;
+			if (player.getKeyID() == this.ID) {
+				this.locked = false;
+				player.setKeyID(-1);
+			}
 		}
-		
-		Player player = (Player) obj;
-		open(player.getKey());
-	}
-	
-	public boolean open(Key key) {
-		
-		if (key.getID() == this.ID) {
-			this.locked = false;
-			return true;
-		}
-		
-		return false;
-	}
-
-	public boolean isLocked() {
-		return locked;
 	}
 }

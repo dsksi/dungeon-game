@@ -5,7 +5,7 @@ public class Bomb extends Entity {
 	private BombState state;
 	public Bomb(int x, int y) {
 		super(x, y);
-		this.state = new Unlit();
+		this.state = new Spawned();
 	}
 
 	@Override
@@ -16,13 +16,14 @@ public class Bomb extends Entity {
 	public void interact(Entity obj) {
 		if (obj instanceof Player) {
 			Player player = (Player) obj;
-			state = state.pickUp(player, this);
+			state = state.pickUp(this, player);
 		}
 	}
 	
-	public void activate(Dungeon dungeon, int x, int y) {
-		state.activateBomb(this, x, y);		
-		state.explode(dungeon, x, y);
+	public void activate(Player player) {
+		state = state.activateBomb(this, player);
+		// wait x seconds
+		state.explode(this, player);
 		// Remove self from lists etc.
 	}
 

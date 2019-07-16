@@ -3,24 +3,24 @@ package unsw.dungeon;
 public class Spawned implements BombState {
 
 	@Override
-	public BombState pickUp(Player player, Bomb bomb) {
+	public BombState pickUp(Bomb bomb, Player player) {
 		if (player.getBomb() == null) {
 			player.setBomb(bomb);
-			return new Lit();
+			return new Unlit();
 		} else {
-			
 			return this;
 		}
 
 	}
 
 	@Override
-	public BombState activateBomb(Bomb bomb, int x, int y) {
+	public BombState activateBomb(Bomb bomb, Player player) {
 		return this;
 	}
 
 	@Override
-	public void explode(Dungeon dungeon, int x, int y) {
+	public void explode(Bomb bomb, Player player) {
+		return;
 	}
 
 }
