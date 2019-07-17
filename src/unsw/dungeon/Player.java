@@ -10,11 +10,13 @@ import javafx.beans.property.SimpleIntegerProperty;
  * @author Robert Clifton-Everest
  *
  */
-public class Player extends Entity {
+public class Player extends Entity implements Subject{
 
     private Dungeon dungeon;
     private IntegerProperty sword;
-
+    private int treasureCollected;
+    private ArrayList<Observer> observers;
+    
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -24,6 +26,8 @@ public class Player extends Entity {
         super(x, y);
         this.dungeon = dungeon;
         this.sword = new SimpleIntegerProperty(0);
+        this.treasureCollected = 0;
+        this.observers = new ArrayList<Observer>();
     }
 
     private boolean checkMoveable(int x, int y) {
@@ -47,7 +51,6 @@ public class Player extends Entity {
     }
 
     public void moveDown() {
-    	System.out.println("move down");
     	if(this.checkMoveable(this.getX(), this.getY() + 1)) {
     		dungeon.interactItems(this, this.getX(), this.getY() + 1);
     		y().set(getY() + 1);
@@ -65,13 +68,24 @@ public class Player extends Entity {
     	if(this.checkMoveable(this.getX() + 1, this.getY())) {
     		dungeon.interactItems(this, this.getX()+1, this.getY());
     		x().set(getX() + 1);
-    		this.pickUpSword();
     	}
     }
 
 	@Override
 	public boolean movable(Entity obj) {
 		return true;
+	}
+
+	public void pickUpTreasure(Treasure treasure) {
+		System.out.println("Pick up treasure");
+		treasure.collect();
+		dungeon.removeEntity(treasure);
+		this.treasureCollected++;
+		this.updateObservers();
+	}
+	
+	public int getTreasureCollected() {
+		return this.treasureCollected;
 	}
 
 	@Override
@@ -86,5 +100,22 @@ public class Player extends Entity {
 	
 	public void pickUpSword() {
 		sword().set(1);
+	}
+
+	@Override
+	public void registerObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void removeObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void updateObservers() {
+		for (Observer o : observers) {
+			o.update(this);
+		}
 	}
 }

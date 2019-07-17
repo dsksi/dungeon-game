@@ -69,4 +69,44 @@ public class Dungeon {
     		e.interact(obj);
     	}
     }
+
+
+	public int getTreasureCount() {
+		int count = 0;
+		for(Entity e : this.entities) {
+			if (e instanceof Treasure) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	public Exit getExit() {
+		for(Entity e : this.entities) {
+			if (e instanceof Exit) {
+				return (Exit) e;
+			}
+		}
+		return null;
+	}
+
+	public int getEnemyCount() {
+		int count = 0;
+		for(Entity e : this.entities) {
+			if (e instanceof Enemy) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int getSwitchCount() {
+		int count = 0;
+		for(Entity e : this.entities) {
+			if (e instanceof Switch) {
+				count++;
+			}
+		}
+		return count;
+	}
 }
