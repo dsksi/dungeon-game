@@ -42,7 +42,7 @@ public class Boulder extends Entity{
     	ArrayList<Entity> list = dungeon.getEntity(futureX, futureY);
         if(!list.isEmpty()) {
         	for (Entity e: list) {
-        		if(! e.movable()) return false;
+        		if(! e.movable(this)) return false;
             }
         }
         return true;

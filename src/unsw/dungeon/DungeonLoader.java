@@ -80,7 +80,7 @@ public abstract class DungeonLoader {
         	onLoad(treasure);
         	entity = treasure;
         	break;
-        /*case "sword":
+        case "sword":
         	Sword sword = new Sword(x, y);
         	onLoad(sword);
         	entity = sword;
@@ -93,7 +93,7 @@ public abstract class DungeonLoader {
         	Boulder boulder = new Boulder(dungeon,x,y);
         	onLoad(boulder);
         	entity = boulder;
-        	break;*/
+        	break;
         }
         dungeon.addEntity(entity);
     }

@@ -16,7 +16,8 @@ public class Player extends Entity implements Subject{
     private IntegerProperty sword;
     private int treasureCollected;
     private ArrayList<Observer> observers;
-    
+    private AttackStrategy attstr;
+
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -28,6 +29,8 @@ public class Player extends Entity implements Subject{
         this.sword = new SimpleIntegerProperty(0);
         this.treasureCollected = 0;
         this.observers = new ArrayList<Observer>();
+        this.treasureCollected = 0;
+        this.attstr = new NoAttack();
     }
 
     private boolean checkMoveable(int x, int y) {
@@ -98,8 +101,10 @@ public class Player extends Entity implements Subject{
 		return this.sword;
 	}
 	
-	public void pickUpSword() {
+	public void pickUpSword(Sword sword) {
 		sword().set(1);
+		sword.delete();
+		dungeon.removeEntity(sword);
 	}
 
 	@Override
@@ -122,4 +127,17 @@ public class Player extends Entity implements Subject{
 	public String getState() {
 		return "swordAttack";
 	}
+
+	public void attack() {
+		attstr.attack(this);
+	}
+	
+	public void setAttackStrat(AttackStrategy att) {
+		this.attstr = att;
+	}
+
+	public void setAttackStrategy(AttackStrategy attstr) {
+		this.attstr = attstr;
+	}
+
 }
