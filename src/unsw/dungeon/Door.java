@@ -12,7 +12,7 @@ public class Door extends Entity {
 	}
 
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 
 		if (locked) {
 			return false;

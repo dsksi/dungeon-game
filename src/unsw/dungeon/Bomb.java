@@ -9,7 +9,7 @@ public class Bomb extends Entity {
 	}
 
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 		return true;
 	}
 	

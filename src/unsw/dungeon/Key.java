@@ -10,7 +10,7 @@ public class Key extends Entity {
 	}
 
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 		return true;
 	}
 

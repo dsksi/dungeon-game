@@ -33,7 +33,7 @@ public class Player extends Entity {
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
         	for (Entity e: list) {
-        		if(! e.movable()) return false;
+        		if(! e.movable(this)) return false;
             }
         }
         return true;
@@ -47,6 +47,9 @@ public class Player extends Entity {
     public void moveDown() {
     	if(this.checkMoveable(this.getX(), this.getY() + 1))
     		y().set(getY() + 1);
+    	if (this.bomb != null) {
+    		System.out.println("have bomb");
+    	}
     }
 
     public void moveLeft() {
@@ -60,7 +63,7 @@ public class Player extends Entity {
     }
 
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 		return true;
 	}
 	
