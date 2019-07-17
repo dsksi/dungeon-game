@@ -228,19 +228,14 @@
       "type": "wall"
     },
     {
-      "x": 15,
-      "y": 3,
-      "type": "wall"
-    },
-    {
       "x": 16,
       "y": 3,
-      "type": "wall"
+      "type": "boulder"
     },
     {
       "x": 17,
       "y": 3,
-      "type": "wall"
+      "type": "boulder"
     },
     {
       "x": 19,

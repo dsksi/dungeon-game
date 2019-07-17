@@ -93,7 +93,7 @@ public class Player extends Entity implements Subject{
 		//TODO: implement enemy interaction with player
 		return;
 	}
-	
+
 	public IntegerProperty sword() {
 		return this.sword;
 	}
@@ -117,5 +117,9 @@ public class Player extends Entity implements Subject{
 		for (Observer o : observers) {
 			o.update(this);
 		}
+	}
+
+	public String getState() {
+		return "swordAttack";
 	}
 }

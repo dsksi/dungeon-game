@@ -32,7 +32,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image boulderImage;
     private Image swordImage;
     private Image invImage;
-    
+
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
         super(filename);

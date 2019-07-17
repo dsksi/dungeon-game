@@ -80,7 +80,7 @@ public abstract class DungeonLoader {
         	onLoad(treasure);
         	entity = treasure;
         	break;
-        case "sword":
+        /*case "sword":
         	Sword sword = new Sword(x, y);
         	onLoad(sword);
         	entity = sword;
@@ -89,7 +89,11 @@ public abstract class DungeonLoader {
         	InvinciblePotion inv = new InvinciblePotion(x, y);
         	onLoad(inv);
         	entity = inv;
-        	break;
+        case "boulder":
+        	Boulder boulder = new Boulder(dungeon,x,y);
+        	onLoad(boulder);
+        	entity = boulder;
+        	break;*/
         }
         dungeon.addEntity(entity);
     }
@@ -98,6 +102,19 @@ public abstract class DungeonLoader {
 
     public abstract void onLoad(Wall wall);
 
-    // TODO Create additional abstract methods for the other entities
+    public abstract void onLoad(Boulder boulder);
+
+	public abstract void onLoad(Treasure treasure);
+
+	public abstract void onLoad(Switch sw);
+	
+	public abstract void onLoad(Sword sword);
+	
+	public abstract void onLoad(InvinciblePotion inv);
+
+	public abstract void onLoad(Enemy enemy);
+
+	public abstract void onLoad(Exit exit);
+	
 
 }

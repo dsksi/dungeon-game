@@ -14,7 +14,7 @@ public class Treasure extends Entity{
 	}
 
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 		return true;
 	}
 
@@ -26,8 +26,6 @@ public class Treasure extends Entity{
 			player.pickUpTreasure(this);
 			this.delete();
 		}
-		
 	}
-	
 	
 }

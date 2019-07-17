@@ -109,4 +109,9 @@ public class Dungeon {
 		}
 		return count;
 	}
+
+	public void removeEntity(Entity obj) {
+		if(entities.contains(obj))
+			entities.remove(obj);
+	}
 }
