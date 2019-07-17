@@ -51,7 +51,7 @@ public class Boulder extends Entity{
 
 	@Override
 	public boolean movable(Entity obj) {
-		
+		if(!(obj instanceof Player)) return false;
 		Player player = (Player) obj;
 		
 		int futureX = this.getX();

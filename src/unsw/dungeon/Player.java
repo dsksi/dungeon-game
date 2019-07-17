@@ -14,6 +14,8 @@ public class Player extends Entity implements Subject{
 
     private Dungeon dungeon;
     private IntegerProperty sword;
+    private int keyID;
+    private Bomb bomb;
     private int treasureCollected;
     private ArrayList<Observer> observers;
     private AttackStrategy attstr;
@@ -31,6 +33,8 @@ public class Player extends Entity implements Subject{
         this.observers = new ArrayList<Observer>();
         this.treasureCollected = 0;
         this.attstr = new NoAttack();
+        this.keyID = -1;
+        this.bomb = null;
     }
 
     private boolean checkMoveable(int x, int y) {
@@ -80,6 +84,22 @@ public class Player extends Entity implements Subject{
 	public boolean movable(Entity obj) {
 		return true;
 	}
+	
+	public int getKeyID() {
+		return keyID;
+	}
+
+	public void setKeyID(int keyID) {
+		this.keyID = keyID;
+	}
+
+	public Bomb getBomb() {
+		return bomb;
+	}
+
+	public void setBomb(Bomb bomb) {
+		this.bomb = bomb;
+	}
 
 	public void pickUpTreasure(Treasure treasure) {
 		System.out.println("Pick up treasure");
@@ -89,6 +109,10 @@ public class Player extends Entity implements Subject{
 		this.updateObservers();
 	}
 	
+	public Dungeon getDungeon() {
+		return dungeon;
+	}
+
 	public int getTreasureCollected() {
 		return this.treasureCollected;
 	}
