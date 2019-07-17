@@ -46,15 +46,22 @@ public class Switch extends Entity implements Subject{
 	
 	//------ Entity methods ------
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 		return true;
 	}
 
 	@Override
 	public void interact(Entity obj) {
-		if ((obj instanceof Boulder)) activateSwitch();
-		if ((obj instanceof Player)) deactivateSwitch();
+		if ((obj instanceof Boulder)) {
+			activateSwitch();
+			System.out.println("switch active");
+		}
 		
+		if ((obj instanceof Player)) {
+			deactivateSwitch();
+			System.out.println("switch not active");
+		}
+		updateObservers();
 	}
 	
 }

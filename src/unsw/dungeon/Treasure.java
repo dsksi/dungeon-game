@@ -37,7 +37,7 @@ public class Treasure extends Entity implements Subject{
 	
 	//------ Entity methods ------
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 		return true;
 	}
 

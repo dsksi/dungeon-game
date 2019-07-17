@@ -11,38 +11,19 @@ public class Boulder extends Entity{
         this.dungeon = dungeon;
     }
 	
-	public boolean checkMoveable(Player player) {
-		int futureX = this.getX();
-		int futureY = this.getY();
+	public boolean checkMoveable(int x, int y) {
 		
-		
-		int playerX = player.getX();
-		int playerY = player.getY();
-		
-		if (playerX == this.getX()) {
-			// player moving either up or down
-			if (playerY > this.getY()) {
-				// player moving down so check what's down of boulder
-				futureY = this.getY() - 1;
-			} else {
-				// player moving up
-				futureY = this.getY() + 1;
-			}
-		} else if (playerY == this.getY()) {
-			// player moving either left or right
-			if (playerX > this.getX()) {
-				futureX = this.getX() - 1;
-			} else {
-				futureX = this.getX() + 1;
-			}
-		}
-    	if(!((futureY < dungeon.getHeight() - 1) && (futureY >= 0)))	return false;
-    	if(!((futureX < dungeon.getWidth() - 1) && (futureX >= 0)))		return false;
+    	if(!((y < dungeon.getHeight() - 1) && (y >= 0)))	return false;
+    	if(!((x < dungeon.getWidth() - 1) && (x >= 0)))		return false;
     	
-    	ArrayList<Entity> list = dungeon.getEntity(futureX, futureY);
+    	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
         	for (Entity e: list) {
-        		if(! e.movable()) return false;
+        		if(! e.movable(this)) {
+        			return false;
+        		} else {
+        			e.interact(this);
+        		}
             }
         }
         return true;
@@ -65,8 +46,40 @@ public class Boulder extends Entity{
     }
 
 	@Override
-	public boolean movable() {
-		return false;
+	public boolean movable(Entity obj) {
+		if (!(obj instanceof Player)) return false;
+		
+		Player player = (Player) obj;
+		
+		int futureX = this.getX();
+		int futureY = this.getY();
+		
+		
+		int playerX = player.getX();
+		int playerY = player.getY();
+		
+		if (playerX == this.getX()) {
+			// player moving either up or down
+			if (playerY > this.getY()) {
+				// player moving up so check what's up of boulder
+				futureY = this.getY() - 1;
+			} else {
+				// player moving down ''
+				futureY = this.getY() + 1;
+			}
+		} else if (playerY == this.getY()) {
+			// player moving either left or right
+			if (playerX > this.getX()) {
+				// player moving left ''
+				futureX = this.getX() - 1;
+			} else {
+				// player moving right ''
+				futureX = this.getX() + 1;
+			}
+		}
+		
+		boolean result = checkMoveable(futureX, futureY);
+		return result;
 	}
 
 	@Override
@@ -79,20 +92,13 @@ public class Boulder extends Entity{
 		int playerY = player.getY();
 		
 		if (playerX == this.getX()) {
-			// player moving either up or down
-			if (playerY > this.getY()) {
-				// player moving down so check what's down of boulder
-				this.moveUp();
-			} else {
-				// player moving up
+			if (playerY > this.getY()) this.moveUp();
+			else {
 				this.moveDown();
-				
 			}
 		} else if (playerY == this.getY()) {
-			// player moving either left or right
-			if (playerX > this.getX()) {
-				this.moveLeft();
-			} else {
+			if (playerX > this.getX()) this.moveLeft();
+			else {
 				this.moveRight();
 			}
 		}		

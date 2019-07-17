@@ -7,7 +7,7 @@ public class Wall extends Entity {
     }
     
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 		return false;
 	}
 

@@ -40,6 +40,6 @@ public abstract class Entity {
         return x().get();
     }
 
-	public abstract boolean movable();
+	public abstract boolean movable(Entity obj);
 	public abstract void interact(Entity obj);
 }

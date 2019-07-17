@@ -28,25 +28,19 @@ public class Player extends Entity {
     		
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
+        	boolean result = true;
         	for (Entity e: list) {
-        		if (e instanceof Boulder) {
-        			Boulder b = (Boulder) e;
-        			if (b.checkMoveable(this)) {
-        				b.interact(this);
-        				return true;
-        			} else {
-        				//System.out.println("can't move boulder");
-        				return false;
-        			}
-        		} 
-        		else if(! e.movable()) return false;
+        		if(! e.movable(this)) return false;
+        		e.interact(this);
             }
+        	return result;
         }
         return true;
     }
     
     public void moveUp() {
     	if(this.checkMoveable(this.getX(), this.getY() - 1))
+    		
     		y().set(getY() - 1);
     }
 
@@ -66,7 +60,7 @@ public class Player extends Entity {
     }
 
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 		return true;
 	}
 

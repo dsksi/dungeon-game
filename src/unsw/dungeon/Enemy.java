@@ -45,7 +45,7 @@ public class Enemy extends Entity implements Subject, Observer {
 	
 	//------ Entity methods ------
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 		return true;
 	}
 

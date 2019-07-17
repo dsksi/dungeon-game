@@ -52,7 +52,7 @@ public class Dungeon {
     	ArrayList<Entity> list = new ArrayList<Entity>();
     	for (Entity e: entities) {
     		if (e == null) continue;
-    		System.out.println(x + "  X = " + e.getX() + "    "+y + "  Y = " + e.getY());
+    		//System.out.println(x + "  X = " + e.getX() + "    "+y + "  Y = " + e.getY());
     		if(e.getX() == x && e.getY() == y) {
     			System.out.println("Found");
     			list.add(e);
