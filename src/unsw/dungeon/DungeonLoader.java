@@ -60,7 +60,36 @@ public abstract class DungeonLoader {
             onLoad(wall);
             entity = wall;
             break;
-        // TODO Handle other possible entities
+        case "enemy":
+            Enemy enemy = new Enemy(x, y);
+            onLoad(enemy);
+            entity = enemy;
+            break;
+        case "exit":
+            Exit exit = new Exit(x, y);
+            onLoad(exit);
+            entity = exit;
+            break;
+        case "switch":
+        	Switch sw = new Switch(x, y);
+        	onLoad(sw);
+        	entity = sw;
+        	break;
+        case "treasure":
+        	Treasure treasure = new Treasure(x, y);
+        	onLoad(treasure);
+        	entity = treasure;
+        	break;
+        case "sword":
+        	Sword sword = new Sword(x, y);
+        	onLoad(sword);
+        	entity = sword;
+        	break;
+        case "invincibility":
+        	InvinciblePotion inv = new InvinciblePotion(x, y);
+        	onLoad(inv);
+        	entity = inv;
+        	break;
         }
         dungeon.addEntity(entity);
     }
