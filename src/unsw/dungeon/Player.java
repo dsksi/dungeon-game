@@ -39,9 +39,11 @@ public class Player extends Entity implements Subject{
     		
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
+        	boolean result = true;
         	for (Entity e: list) {
         		if(! e.movable(this)) return false;
             }
+        	return result;
         }
         return true;
     }

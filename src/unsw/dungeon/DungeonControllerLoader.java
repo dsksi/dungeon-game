@@ -74,12 +74,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
     
     @Override
-    public void onLoad(Switch sw) {
-    	ImageView view = new ImageView(switchImage);
-    	addEntity(sw, view);
-    }
-    
-    @Override
     public void onLoad(Treasure treasure) {
     	ImageView view = new ImageView(treasureImage);
     	addEntity(treasure, view);
@@ -95,6 +89,12 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Sword sword) {
     	ImageView view = new ImageView(swordImage);
     	addEntity(sword, view);
+    }
+    
+    @Override
+    public void onLoad(Switch gameSwitch) {
+        ImageView view = new ImageView(switchImage);
+        addEntity(gameSwitch, view);
     }
 
     @Override

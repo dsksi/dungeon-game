@@ -108,11 +108,6 @@
       "type": "wall"
     },
     {
-      "x": 1,
-      "y": 1,
-      "type": "player"
-    },
-    {
       "x": 2,
       "y": 1,
       "type": "wall"
@@ -225,12 +220,12 @@
     {
       "x": 14,
       "y": 3,
-      "type": "wall"
+      "type": "boulder"
     },
     {
       "x": 16,
       "y": 3,
-      "type": "boulder"
+      "type": "switch"
     },
     {
       "x": 17,
@@ -1026,6 +1021,11 @@
       "x": 19,
       "y": 17,
       "type": "wall"
+    },
+	{
+      "x": 1,
+      "y": 1,
+      "type": "player"
     }
   ],
   "goal-condition": {

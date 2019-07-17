@@ -70,11 +70,6 @@ public abstract class DungeonLoader {
             onLoad(exit);
             entity = exit;
             break;
-        case "switch":
-        	Switch sw = new Switch(x, y);
-        	onLoad(sw);
-        	entity = sw;
-        	break;
         case "treasure":
         	Treasure treasure = new Treasure(x, y);
         	onLoad(treasure);
@@ -94,6 +89,11 @@ public abstract class DungeonLoader {
         	onLoad(boulder);
         	entity = boulder;
         	break;
+        case "switch":
+        	Switch gameSwitch = new Switch(x, y);
+        	onLoad(gameSwitch);
+        	entity = gameSwitch;
+        	break;
         }
         dungeon.addEntity(entity);
     }
@@ -103,10 +103,11 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Wall wall);
 
     public abstract void onLoad(Boulder boulder);
+    
+    public abstract void onLoad(Switch gameSwitch);
 
 	public abstract void onLoad(Treasure treasure);
 
-	public abstract void onLoad(Switch sw);
 	
 	public abstract void onLoad(Sword sword);
 	
