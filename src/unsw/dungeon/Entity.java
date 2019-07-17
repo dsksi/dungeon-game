@@ -12,7 +12,7 @@ public abstract class Entity {
 
     // IntegerProperty is used so that changes to the entities position can be
     // externally observed.
-    private IntegerProperty x, y;
+    private IntegerProperty x, y, status;
 
     /**
      * Create an entity positioned in square (x,y)
@@ -22,6 +22,7 @@ public abstract class Entity {
     public Entity(int x, int y) {
         this.x = new SimpleIntegerProperty(x);
         this.y = new SimpleIntegerProperty(y);
+        this.status = new SimpleIntegerProperty(0);
     }
 
     public IntegerProperty x() {
@@ -30,6 +31,14 @@ public abstract class Entity {
 
     public IntegerProperty y() {
         return y;
+    }
+    
+    public IntegerProperty status() {
+        return this.status;
+    }
+    
+    public void delete() {
+        status().set(1);
     }
 
     public int getY() {
@@ -40,6 +49,6 @@ public abstract class Entity {
         return x().get();
     }
 
-	public abstract boolean movable();
+	public abstract boolean movable(Entity obj);
 	public abstract void interact(Entity obj);
 }
