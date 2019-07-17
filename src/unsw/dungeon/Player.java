@@ -2,17 +2,23 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * The player entity
  * @author Robert Clifton-Everest
  *
  */
-public class Player extends Entity {
+public class Player extends Entity implements Subject{
 
     private Dungeon dungeon;
     private int keyID;
     private Bomb bomb;
+    private IntegerProperty sword;
     private int treasureCollected;
+    private ArrayList<Observer> observers;
+    private AttackStrategy attstr;
 
     /**
      * Create a player positioned in square (x,y)
@@ -24,6 +30,11 @@ public class Player extends Entity {
         this.dungeon = dungeon;
         this.keyID = -1;
         this.bomb = null;
+        this.sword = new SimpleIntegerProperty(0);
+        this.treasureCollected = 0;
+        this.observers = new ArrayList<Observer>();
+        this.treasureCollected = 0;
+        this.attstr = new NoAttack();
     }
 
     private boolean checkMoveable(int x, int y) {
@@ -32,34 +43,44 @@ public class Player extends Entity {
     		
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
+        	boolean result = true;
         	for (Entity e: list) {
         		if(! e.movable(this)) return false;
             }
+        	return result;
         }
         return true;
     }
     
     public void moveUp() {
-    	if(this.checkMoveable(this.getX(), this.getY() - 1))
+    	if(this.checkMoveable(this.getX(), this.getY() - 1)) {
+    		dungeon.interactItems(this, this.getX(), this.getY() - 1);
     		y().set(getY() - 1);
+    	}	
     }
 
     public void moveDown() {
-    	if(this.checkMoveable(this.getX(), this.getY() + 1))
+    	if(this.checkMoveable(this.getX(), this.getY() + 1)) {
+    		dungeon.interactItems(this, this.getX(), this.getY() + 1);
     		y().set(getY() + 1);
+    	}
     	if (this.bomb != null) {
     		System.out.println("have bomb");
     	}
     }
 
     public void moveLeft() {
-    	if(this.checkMoveable(this.getX() - 1, this.getY()))
+    	if(this.checkMoveable(this.getX() - 1, this.getY())) {
+    		dungeon.interactItems(this, this.getX() - 1, this.getY());
     		x().set(getX() - 1);
+    	}
     }
 
     public void moveRight() {
-    	if(this.checkMoveable(this.getX() + 1, this.getY()))
+    	if(this.checkMoveable(this.getX() + 1, this.getY())) {
+    		dungeon.interactItems(this, this.getX()+1, this.getY());
     		x().set(getX() + 1);
+    	}
     }
 
 	@Override
@@ -82,11 +103,19 @@ public class Player extends Entity {
 	public void setBomb(Bomb bomb) {
 		this.bomb = bomb;
 	}
-
+	
 	public Dungeon getDungeon() {
 		return dungeon;
 	}
 
+	public void pickUpTreasure(Treasure treasure) {
+		System.out.println("Pick up treasure");
+		treasure.collect();
+		dungeon.removeEntity(treasure);
+		this.treasureCollected++;
+		this.updateObservers();
+	}
+	
 	public int getTreasureCollected() {
 		return this.treasureCollected;
 	}
@@ -96,4 +125,48 @@ public class Player extends Entity {
 		//TODO: implement enemy interaction with player
 		return;
 	}
+
+	public IntegerProperty sword() {
+		return this.sword;
+	}
+	
+	public void pickUpSword(Sword sword) {
+		sword().set(1);
+		sword.delete();
+		dungeon.removeEntity(sword);
+	}
+
+	@Override
+	public void registerObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void removeObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void updateObservers() {
+		for (Observer o : observers) {
+			o.update(this);
+		}
+	}
+
+	public String getState() {
+		return "swordAttack";
+	}
+
+	public void attack() {
+		attstr.attack(this);
+	}
+	
+	public void setAttackStrat(AttackStrategy att) {
+		this.attstr = att;
+	}
+
+	public void setAttackStrategy(AttackStrategy attstr) {
+		this.attstr = attstr;
+	}
+
 }

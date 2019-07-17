@@ -20,10 +20,8 @@ public class TreasureGoal implements Goal, Observer {
 
 	@Override
 	public void update(Subject obj) {
-
 		Player pl = (Player) obj;
-		this.treasureCount = pl.getTreasureCollected();
-		
+		this.treasureCount = pl.getTreasureCollected();	
 	}
 
 	public int getTreasureGoal() {

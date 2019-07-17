@@ -21,6 +21,12 @@ public class Switch extends Entity implements Subject{
 		this.activated = false;
 	}
 	
+	public boolean getActivated() {
+		return this.activated;
+	}
+	
+	
+	//------ Observer methods ------
 	@Override
 	public void registerObserver(Observer o) {
 		observers.add(o);
@@ -37,14 +43,25 @@ public class Switch extends Entity implements Subject{
 			o.update(this);
 		}
 	}
-
+	
+	//------ Entity methods ------
 	@Override
-	public boolean movable() {
+	public boolean movable(Entity obj) {
 		return true;
 	}
 
-	public boolean getActivated() {
-		return this.activated;
+	@Override
+	public void interact(Entity obj) {
+		if ((obj instanceof Boulder)) {
+			activateSwitch();
+			System.out.println("switch active");
+		}
+		
+		if ((obj instanceof Player)) {
+			deactivateSwitch();
+			System.out.println("switch not active");
+		}
+		updateObservers();
 	}
-
+	
 }

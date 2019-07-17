@@ -60,6 +60,15 @@ public class Dungeon {
     	}
     	return list;
     }
+    
+    public void interactItems(Entity obj, int x, int y) {
+    	ArrayList<Entity> list = new ArrayList<Entity>();
+    	list = this.getEntity(x, y);
+    	for (Entity e : list) {
+    		e.interact(obj);
+    	}
+    }
+
 
 	public int getTreasureCount() {
 		int count = 0;
@@ -98,5 +107,10 @@ public class Dungeon {
 			}
 		}
 		return count;
+	}
+
+	public void removeEntity(Entity obj) {
+		if(entities.contains(obj))
+			entities.remove(obj);
 	}
 }

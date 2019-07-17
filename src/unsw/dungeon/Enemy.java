@@ -15,6 +15,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		this.playerYPos = 0;
 	}
 	
+	//------ Observer methods ------
 	@Override
 	public void registerObserver(Observer o) {
 		observers.add(o);
@@ -32,6 +33,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		}
 	}
 	
+	//------ Subject methods ------
 	@Override
 	public void update(Subject obj) {
 		if (!(obj instanceof Player)) return;
@@ -40,10 +42,23 @@ public class Enemy extends Entity implements Subject, Observer {
 		this.playerXPos = player.getX();
 		this.playerYPos = player.getY();
 	}
+	
+	//------ Entity methods ------
+	@Override
+	public boolean movable(Entity obj) {
+		return true;
+	}
 
 	@Override
-	public boolean movable() {
-		return true;
+	public void interact(Entity obj) {
+		if (!(obj instanceof Player)) return;
+		
+		Player player = (Player) obj;
+		switch (player.getState()) {
+		case "swordAttack": /* Do something */ break;
+		case "invinsibleAttack": /* Do something */break;
+		default: /* Do something */ break;
+		}
 	}
 
 

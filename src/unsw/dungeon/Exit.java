@@ -13,6 +13,7 @@ public class Exit extends Entity implements Subject{
 		this.isActive = false;
 	}
 	
+	//------ Observer methods ------
 	@Override
 	public void registerObserver(Observer o) {
 		observers.add(o);
@@ -29,9 +30,16 @@ public class Exit extends Entity implements Subject{
 			o.update(this);
 		}
 	}
+	
+	//------ Entity methods ------
+	@Override
+	public boolean movable(Entity obj) {
+		return true;
+	}
 
 	@Override
-	public boolean movable() {
-		return true;
+	public void interact(Entity obj) {
+		// TODO Auto-generated method stub
+		
 	}
 }
