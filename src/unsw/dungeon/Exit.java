@@ -34,4 +34,10 @@ public class Exit extends Entity implements Subject{
 	public boolean movable() {
 		return true;
 	}
+
+	@Override
+	public void interact(Entity obj) {
+		// TODO Auto-generated method stub
+		
+	}
 }

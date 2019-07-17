@@ -46,5 +46,12 @@ public class Enemy extends Entity implements Subject, Observer {
 		return true;
 	}
 
+	@Override
+	public void interact(Entity obj) {
+		// TODO Auto-generated method stub
+		// Implement kill
+		return;
+	}
+
 
 }
