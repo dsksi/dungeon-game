@@ -16,9 +16,9 @@ public class Sword extends Entity {
 	public void interact(Entity obj) {
 		if (!(obj instanceof Player)) return;
 		Player pl = (Player) obj;
-		pl.setAttackStrat(new SwordAttack());
+		if(pl.haveWeapon()) return;
+		pl.setWeaponStrategy(new SwordAttack());
 		pl.pickUpSword(this);
 	}
-
 
 }

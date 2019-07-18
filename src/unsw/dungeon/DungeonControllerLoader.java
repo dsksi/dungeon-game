@@ -23,6 +23,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 
     //Images
     private Image playerImage;
+    private Image mageImage;
     private Image playerSwordImage;
     private Image wallImage;
     private Image enemyImage;
@@ -33,6 +34,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image swordImage;
     private Image invImage;
     private Image bombImage;
+    private Image playerBombImage;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -49,6 +51,8 @@ public class DungeonControllerLoader extends DungeonLoader {
         swordImage = new Image("/greatsword_1_new.png");
         invImage = new Image("brilliant_blue_new.png");
         bombImage = new Image("/bomb_unlit.png");
+        mageImage = new Image("/gnome.png");
+        playerBombImage = new Image("/playerBomb.png");
     }
 
     @Override
@@ -159,16 +163,25 @@ public class DungeonControllerLoader extends DungeonLoader {
     
     private void trackPlayer(Entity entity, Node node) {
     	Player player = (Player) entity;
-        GridPane.setColumnIndex(node, entity.getX());
-        GridPane.setRowIndex(node, entity.getY());
-        
-        player.sword().addListener(new ChangeListener<Number>() {
+
+        player.visualStatus().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
-            	if(!newValue.equals(oldValue)) {
-            		ImageView view = (ImageView) node;
+            	System.out.println("manipulate player image");
+            	ImageView view = (ImageView) node;
+            	if(newValue.equals(0)) {
+                	System.out.println("no sword image");
+                	view.setImage(playerImage);
+            	} else if(newValue.equals(1)) {
+            		System.out.println("sword image");
             		view.setImage(playerSwordImage);
+            	} else if(newValue.equals(2)) {
+            		System.out.println("mage image");
+            		view.setImage(mageImage);
+            	} else if(newValue.equals(3)) {
+            		System.out.println("player with bomb image");
+            		view.setImage(playerBombImage);
             	}
             }
         });

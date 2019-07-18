@@ -54,11 +54,11 @@ public class Enemy extends Entity implements Subject, Observer {
 		if (!(obj instanceof Player)) return;
 		
 		Player player = (Player) obj;
-		switch (player.getState()) {
-		case "swordAttack": /* Do something */ break;
-		case "invinsibleAttack": /* Do something */break;
-		default: /* Do something */ break;
-		}
+//		switch (player.getState()) {
+//		case "swordAttack": /* Do something */ break;
+//		case "invinsibleAttack": /* Do something */break;
+//		default: /* Do something */ break;
+//		}
 	}
 
 

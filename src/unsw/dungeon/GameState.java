@@ -11,7 +11,7 @@ public class GameState {
 	}
 	
 	public boolean checkGameComplete() {
-		if(this.goal == null) return false;
+		if(this.goal == null) return true;
 		return this.goal.isComplete();
 	}
 	

@@ -1,6 +1,8 @@
 package unsw.dungeon;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -13,12 +15,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Player extends Entity implements Subject{
 
     private Dungeon dungeon;
-    private IntegerProperty sword;
+    private IntegerProperty visualStatus;
     private int keyID;
     private Bomb bomb;
     private int treasureCollected;
     private ArrayList<Observer> observers;
-    private AttackStrategy attstr;
+    private WeaponStrategy weaponStrat;
+    private boolean invincible;
 
     /**
      * Create a player positioned in square (x,y)
@@ -28,13 +31,14 @@ public class Player extends Entity implements Subject{
     public Player(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
-        this.sword = new SimpleIntegerProperty(0);
+        this.visualStatus = new SimpleIntegerProperty(0);
         this.treasureCollected = 0;
         this.observers = new ArrayList<Observer>();
         this.treasureCollected = 0;
-        this.attstr = new NoAttack();
+        this.weaponStrat = new NoWeapon();
         this.keyID = -1;
         this.bomb = null;
+        this.invincible = false;
     }
 
     private boolean checkMoveable(int x, int y) {
@@ -104,7 +108,6 @@ public class Player extends Entity implements Subject{
 	public void pickUpTreasure(Treasure treasure) {
 		System.out.println("Pick up treasure");
 		treasure.collect();
-		dungeon.removeEntity(treasure);
 		this.treasureCollected++;
 		this.updateObservers();
 	}
@@ -123,15 +126,30 @@ public class Player extends Entity implements Subject{
 		return;
 	}
 
-	public IntegerProperty sword() {
-		return this.sword;
+	public IntegerProperty visualStatus() {
+		return this.visualStatus;
 	}
 	
-	public void pickUpSword(Sword sword) {
-		sword().set(1);
-		sword.delete();
-		dungeon.removeEntity(sword);
+	public void setVisualStatus(int num) {
+		visualStatus().set(num);
+	}	
+
+	public boolean isInvincible() {
+		return this.invincible;
 	}
+	
+	public boolean haveWeapon() {
+		if (!(this.weaponStrat instanceof NoWeapon)) return true;
+		return false;
+	}
+	
+	
+	public void pickUpSword(Sword sword) {
+		setVisualStatus(1);
+		System.out.println("pick up sword");
+		sword.delete();
+	}
+	
 
 	@Override
 	public void registerObserver(Observer o) {
@@ -149,21 +167,50 @@ public class Player extends Entity implements Subject{
 			o.update(this);
 		}
 	}
-
-	public String getState() {
-		return "swordAttack";
-	}
-
-	public void attack() {
-		attstr.attack(this);
+	
+	public void dropWeapon() {
+		setWeaponStrategy(new NoWeapon());
+		setVisualStatus(0);
 	}
 	
-	public void setAttackStrat(AttackStrategy att) {
-		this.attstr = att;
+	public boolean attack(Entity obj) {
+		if (!(obj instanceof Enemy)) return false;
+		if (isInvincible()) {
+			obj.delete();
+			return true;
+		} else if (weaponStrat.attack(obj)) {
+			if(!(weaponStrat.hasDurability())) {
+				dropWeapon();
+			}
+			return true;
+		}
+		return false;
 	}
-
-	public void setAttackStrategy(AttackStrategy attstr) {
-		this.attstr = attstr;
+	
+	public void setWeaponStrategy(WeaponStrategy wstr) {
+		this.weaponStrat = wstr;
+	}
+	
+	public void drinkPotion(InvinciblePotion potion) {
+		Timer timer = new Timer();
+		System.out.println("drink potion");
+		this.invincible = true;
+		int oldVisualStatus = visualStatus().getValue();
+		setVisualStatus(2);
+		potion.delete();
+		
+		TimerTask task = new TimerTask() {
+	        public void run() {
+	        		invincible = false;
+	        		if(visualStatus().getValue().equals(2)) {
+	        			System.out.println("still invincible");
+	        			setVisualStatus(oldVisualStatus);
+			        	System.out.println("invincibility wears off");
+	        		}
+	        	}
+		};
+	    
+	    timer.schedule(task, 10000);		
 	}
 
 }

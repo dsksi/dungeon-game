@@ -6,6 +6,10 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.layout.GridPane;
+
 /**
  * A dungeon in the interactive dungeon player.
  *
@@ -20,11 +24,13 @@ public class Dungeon {
     private int width, height;
     private List<Entity> entities;
     private Player player;
+    private GameState gameState;
 
     public Dungeon(int width, int height) {
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<>();
+        this.gameState = new GameState();
         this.player = null;
     }
 
@@ -42,19 +48,63 @@ public class Dungeon {
 
     public void setPlayer(Player player) {
         this.player = player;
+        trackGameState(player);
     }
 
     public void addEntity(Entity entity) {
+    	trackEntityStatus(entity);
         entities.add(entity);
     }
     
-    public ArrayList<Entity> getEntity(int x, int y) {
+    public void trackGameState(Player player) {
+    	player.x().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                    Number oldValue, Number newValue) {
+                if (gameState.checkGameComplete()) {
+                	gameWon();
+                }
+            }
+        });
+        player.y().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                    Number oldValue, Number newValue) {
+                if(gameState.checkGameComplete()) {
+                	gameWon();
+                }
+            }
+        });
+    }
+    
+    public void trackEntityStatus(Entity obj) {
+    	obj.status().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                    Number oldValue, Number newValue) {
+                if (obj instanceof Player) {
+                	gameLost();
+                	return;
+                }
+                removeEntity(obj);
+            }
+        });
+    }
+    
+    private void gameWon() {
+		System.out.println("You completed all goals: You have WON!");
+	}
+    
+    private void gameLost() {
+		System.out.println("You died. Game lost!");
+	}
+
+	public ArrayList<Entity> getEntity(int x, int y) {
     	ArrayList<Entity> list = new ArrayList<Entity>();
     	for (Entity e: entities) {
     		if (e == null) continue;
     		//System.out.println(x + "  X = " + e.getX() + "    "+y + "  Y = " + e.getY());
     		if(e.getX() == x && e.getY() == y) {
-    			System.out.println("Found");
     			list.add(e);
 
     		}
