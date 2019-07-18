@@ -123,6 +123,13 @@ public class Player extends Entity implements Subject{
 	@Override
 	public void interact(Entity obj) {
 		//TODO: implement enemy interaction with player
+		if (obj instanceof Enemy) {
+			Enemy enemy = (Enemy) obj;
+			if (!(attack(enemy))) {
+				System.out.println("can not attack enemy");
+				this.delete();
+			}
+		}
 		return;
 	}
 
