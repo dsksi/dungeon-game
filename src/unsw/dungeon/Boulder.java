@@ -19,15 +19,7 @@ public class Boulder extends Entity{
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
         	for (Entity e: list) {
-/*<<<<<<< HEAD
         		if(! e.movable(this)) return false;
-=======*/
-        		if(! e.movable(this)) {
-        			return false;
-        		} else {
-        			e.interact(this);
-        		}
-//>>>>>>> subject
             }
         }
         return true;
@@ -51,7 +43,7 @@ public class Boulder extends Entity{
 
 	@Override
 	public boolean movable(Entity obj) {
-		if(!(obj instanceof Player)) return false;
+		if (!(obj instanceof Player)) return false;
 		Player player = (Player) obj;
 		
 		int futureX = this.getX();
