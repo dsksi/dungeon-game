@@ -84,6 +84,7 @@ public abstract class DungeonLoader {
         	InvinciblePotion inv = new InvinciblePotion(x, y);
         	onLoad(inv);
         	entity = inv;
+        	break;
         case "boulder":
         	Boulder boulder = new Boulder(dungeon,x,y);
         	onLoad(boulder);
