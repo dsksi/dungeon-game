@@ -22,6 +22,7 @@ public class Player extends Entity implements Subject{
     private ArrayList<Observer> observers;
     private WeaponStrategy weaponStrat;
     private boolean invincible;
+	private IntegerProperty prevVisualStatus;
 
     /**
      * Create a player positioned in square (x,y)
@@ -151,6 +152,14 @@ public class Player extends Entity implements Subject{
 		return this.visualStatus;
 	}
 	
+	public void setPrevVisualStatus() {
+		this.prevVisualStatus = new SimpleIntegerProperty(this.visualStatus.intValue());
+	}
+	
+	public IntegerProperty getPrevVisualStatus() {
+		return this.prevVisualStatus;
+	}
+	
 	public void setVisualStatus(int num) {
 		visualStatus().set(num);
 	}	
@@ -221,7 +230,7 @@ public class Player extends Entity implements Subject{
 		Timer timer = new Timer();
 		System.out.println("drink potion");
 		this.invincible = true;
-		int oldVisualStatus = visualStatus().getValue();
+		setPrevVisualStatus();
 		setVisualStatus(2);
 		potion.delete();
 		
@@ -230,7 +239,8 @@ public class Player extends Entity implements Subject{
 	        		invincible = false;
 	        		if(visualStatus().getValue().equals(2)) {
 	        			System.out.println("still invincible");
-	        			setVisualStatus(oldVisualStatus);
+	        			System.out.println(getPrevVisualStatus().intValue());
+	        			setVisualStatus(getPrevVisualStatus().intValue());
 			        	System.out.println("invincibility wears off");
 	        		}
 	        	}

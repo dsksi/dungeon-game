@@ -6,6 +6,7 @@ public class Spawned implements BombState {
 	public BombState pickUp(Bomb bomb, Player player) {
 		if (player.getBomb() == null) {
 			player.setBomb(bomb);
+			player.setPrevVisualStatus();
 			player.setVisualStatus(3);
 			bomb.delete();
 			return new Unlit();

@@ -58,12 +58,12 @@ public class Switch extends Entity implements Subject{
 	public void interact(Entity obj) {
 		if ((obj instanceof Boulder)) {
 			activateSwitch();
-			System.out.println("switch active");
+			//System.out.println("switch active");
 		}
 		
 		if ((obj instanceof Player)) {
 			deactivateSwitch();
-			System.out.println("switch not active");
+			//System.out.println("switch not active");
 		}
 	}
 	

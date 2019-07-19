@@ -12,7 +12,7 @@ public class Unlit implements BombState {
 		bomb.x().set(player.getX());
 		bomb.y().set(player.getY());
 		bomb.restore();
-		player.setVisualStatus(0);
+		player.setVisualStatus(player.getPrevVisualStatus().intValue());
 		player.setBomb(null);
 		return new Lit();
 	}

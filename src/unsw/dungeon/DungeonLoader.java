@@ -44,6 +44,7 @@ public abstract class DungeonLoader {
         if(jsonGoals != null) {
         	loadGoal(dungeon, jsonGoals);
         }
+        dungeon.setUp();
         return dungeon;
     }
 
