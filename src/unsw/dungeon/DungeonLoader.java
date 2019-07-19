@@ -67,7 +67,7 @@ public abstract class DungeonLoader {
         	break;
         // TODO Handle other possible entities
         case "enemy":
-            Enemy enemy = new Enemy(x, y);
+            Enemy enemy = new Enemy(dungeon, x, y);
             onLoad(enemy);
             entity = enemy;
             break;
@@ -126,7 +126,6 @@ public abstract class DungeonLoader {
 
 	public abstract void onLoad(Treasure treasure);
 
-	
 	public abstract void onLoad(Sword sword);
 	
 	public abstract void onLoad(InvinciblePotion inv);
