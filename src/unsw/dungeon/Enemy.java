@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 import java.util.Stack;
 
 public class Enemy extends Entity implements Subject, Observer {
@@ -22,110 +23,102 @@ public class Enemy extends Entity implements Subject, Observer {
 		this.observers = new ArrayList<Observer>();
 	}
 	
-	public void followPath() {
-		//System.out.println("followPath");
-		ArrayList<Node> path = this.findPathToPlayer();
-		//System.out.println("after make list");
+	
+	// ------ Path finder methods ------ 
+	
+	public void followPath(ArrayList<Node> pathList) {
+		ArrayList<Node> path = pathList;
 		for (Node e : path) {
 			if (e.getX() < this.getX() && e.getY() == this.getY()) moveLeft();
 			if (e.getX() > this.getX() && e.getY() == this.getY()) moveRight();
 			if (e.getX() == this.getX() && e.getY() > this.getY()) moveDown();
 			if (e.getX() == this.getX() && e.getY() < this.getY()) moveUp();
 		}
-		
 	}
 	
-	public ArrayList<Node> findPathToPlayer() {
+	public ArrayList<Node> playerPath() {
+		return findPathTo(playerXPos, playerYPos);
+	}
+	
+	public ArrayList<Node> runAwayPath() {
 		
-		boolean[][] visited = new boolean[dungeon.getHeight()+1][dungeon.getWidth()+1];
+		// Using random generator to determine path
 		
+		Random rand = new Random();
+		
+		int randX = rand.nextInt(dungeon.getHeight());
+		int randY = rand.nextInt(dungeon.getWidth());
+		
+		int newX = (randX + playerXPos)%dungeon.getHeight();
+		int newY = (randY + playerYPos)%dungeon.getWidth();
+		
+		while (!checkMoveable(newX,newY)) {
+			randX = rand.nextInt(dungeon.getHeight());
+			randY = rand.nextInt(dungeon.getWidth());
+			
+			newX = (randX + playerXPos)%dungeon.getHeight();
+			newY = (randY + playerYPos)%dungeon.getWidth();
+		}
+		
+		return findPathTo(newX, newY);
+	}
+	
+	public ArrayList<Node> findPathTo(int tarX, int tarY) {
+		
+		//System.out.println("Target coordinate: (" + tarX + "," + tarY + ")");
+		int player_index = 0;
+		int index = 0;
+		
+		Queue<Node> q = new LinkedList<Node>();
 		ArrayList<Node> predecessor = new ArrayList<Node>();
+		boolean[][] visited = new boolean[dungeon.getHeight()+1][dungeon.getWidth()+1];
 
-		
 		int[] dx = {-1, +1, 0, 0};
 		int[] dy = {0, 0, +1, -1};
+
+		Node enemy = new Node(index, 0, this.getX(), this.getY());
+		index++;
 		
-		Queue<Integer> xq = new LinkedList<Integer>();
-		Queue<Integer> yq = new LinkedList<Integer>();
-		
-		xq.add(this.getX());
-		yq.add(this.getY());
-		visited[this.getX()][this.getY()] = true;
-		
-		Node enemy = new Node(0, this.getX(), this.getY());
+		q.add(enemy);
 		predecessor.add(enemy);
-	
-		while (!xq.isEmpty()) {
-			int x = xq.remove();
-			int y = yq.remove();
-			//System.out.println("after pop");
-			if (x == this.playerXPos && y == this.playerYPos) {
-				System.out.println("ply x = " + x + " ply y = " + y);
-				System.out.println("found player");
+		visited[enemy.getX()][enemy.getY()] = true;
+
+		while (!q.isEmpty()) {
+			Node node = q.remove();
+			
+			int x = node.getX();
+			int y = node.getY();
+			int parent_index = node.getIndex();
+			
+			if (x == tarX && y == tarY) {
+				//System.out.println("Found coordinate: (" + x + "," + y + ")");
+				player_index = node.getIndex();
 				break;
 			}
-			
-			int parent_index = -1;
-			for (int i = 0; i < predecessor.size(); i++) {
-				Node n = predecessor.get(i);
-				if (n.getX() == x && n.getY() == y) {
-					parent_index = i;
-					break;
-				}
-			}
-			
-			//System.out.println("before for");
 			for (int i=0; i < 4; i++) {
 				int futureX = x + dx[i];
 				int futureY = y + dy[i];
-				
-				//System.out.println("pop x = " + x + " pop y = " + y);
-				//System.out.println("x = " + futureX + " y = " + futureY);
-				
+		
 				if (!this.checkMoveable(futureX, futureY)) continue;
 				if (visited[futureX][futureY]) continue;
 
-				xq.add(futureX);
-				yq.add(futureY);
-
-				visited[futureX][futureY] = true;
-
+				Node child = new Node(index, parent_index, futureX, futureY);
+				index++;
 				
-				Node child = new Node(parent_index, futureX, futureY);
+				q.add(child);
 				predecessor.add(child);
-				//System.out.println("put in predecessor");
-				
-				
+				visited[futureX][futureY] = true;
 			}			
 		}
 		
 		ArrayList<Node> directions = new ArrayList<Node>();
-		
-		//System.out.println("out");
-		
-		int plyIdx = -1;
-		for (int i = 0; i < predecessor.size(); i++) {
-			Node n = predecessor.get(i);
-			if (n.getX() == playerXPos && n.getY() == playerYPos) {
-				plyIdx = i;
-				break;
-			}
-		}
-		
-		for (int i = plyIdx; i != predecessor.get(i).getParentIndex(); i = predecessor.get(i).getParentIndex()) {
+		for (int i = player_index; i != predecessor.get(i).getParentIndex(); i = predecessor.get(i).getParentIndex()) {
 			directions.add(predecessor.get(i));
 		}
 		
-		
 		Collections.reverse(directions);
-		
-		
 		return directions;
 	
-	}
-	
-	public void runAwayPath(int x, int y) {
-		return;
 	}
 	
 	private boolean checkMoveable(int x, int y) {
@@ -187,7 +180,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		this.playerXPos = player.getX();
 		this.playerYPos = player.getY();
 		
-		this.followPath();
+		//this.followPath();
 	}
 	
 	//------ Entity methods ------

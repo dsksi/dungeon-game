@@ -54,7 +54,7 @@ public class Dungeon {
     		if (e == null) continue;
     		//System.out.println(x + "  X = " + e.getX() + "    "+y + "  Y = " + e.getY());
     		if(e.getX() == x && e.getY() == y) {
-    			System.out.println("Found");
+    			//System.out.println("Found");
     			list.add(e);
 
     		}
@@ -85,6 +85,15 @@ public class Dungeon {
 		for(Entity e : this.entities) {
 			if (e instanceof Exit) {
 				return (Exit) e;
+			}
+		}
+		return null;
+	}
+	
+	public Enemy getEnemy() {
+		for(Entity e : this.entities) {
+			if (e instanceof Enemy) {
+				return (Enemy) e;
 			}
 		}
 		return null;

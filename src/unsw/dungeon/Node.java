@@ -1,15 +1,21 @@
 package unsw.dungeon;
 
 public class Node {
+	private int index;
 	private int parent_index;
 	private int x;
 	private int y;
 	
-	public Node(int index, int x, int y) {
+	public Node(int index, int pIndex, int x, int y) {
 		super();
-		this.parent_index = index;
+		this.index = index;
+		this.parent_index = pIndex;
 		this.x = x;
 		this.y = y;
+	}
+	
+	public int getIndex() {
+		return this.index;
 	}
 	
 	public int getParentIndex() {
