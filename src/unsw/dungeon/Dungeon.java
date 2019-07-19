@@ -49,6 +49,7 @@ public class Dungeon {
     public void setPlayer(Player player) {
         this.player = player;
         trackGameState(player);
+        trackEntityStatus(player);
     }
 
     public void addEntity(Entity entity) {
@@ -92,11 +93,17 @@ public class Dungeon {
     }
     
     private void gameWon() {
-		System.out.println("You completed all goals: You have WON!");
+    	if (gameState.isGameInProgress()) {
+    		gameState.gameEnded();
+    		System.out.println("You completed all goals: You have WON!");
+    	}
 	}
     
     private void gameLost() {
-		System.out.println("You died. Game lost!");
+    	if (gameState.isGameInProgress()) {
+    		gameState.gameEnded();
+    		System.out.println("You died. Game lost!");
+    	}
 	}
 
 	public ArrayList<Entity> getEntity(int x, int y) {
@@ -128,6 +135,7 @@ public class Dungeon {
 				count++;
 			}
 		}
+		System.out.println("treasure = " + count);
 		return count;
 	}
 	
@@ -164,4 +172,32 @@ public class Dungeon {
 		if(entities.contains(obj))
 			entities.remove(obj);
 	}
+
+	public GameState getGameState() {
+		return this.gameState;
+	}
+
+	public void setUpObserverEnemyGoal(EnemyGoal goal) {
+		for (Entity e : entities) {
+			if (e instanceof Enemy) {
+				Enemy enemy = (Enemy) e;
+				enemy.registerObserver(goal);
+			}
+		}
+		
+	}
+	
+	public void setUpObserverSwitchGoal(SwitchGoal goal) {
+		for (Entity e : entities) {
+			if (e instanceof Switch) {
+				Switch sw = (Switch) e;
+				sw.registerObserver(goal);
+			}
+		}
+	}
+	
+	public void setUpObserverTreasureGoal(TreasureGoal goal) {
+		player.registerObserver(goal);
+	}
+	
 }

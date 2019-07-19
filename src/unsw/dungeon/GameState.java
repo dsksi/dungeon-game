@@ -1,13 +1,27 @@
 package unsw.dungeon;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class GameState {
 
 	private Goal goal;
+	private boolean gameInProgress;
 	
 	public GameState() {
 		this.goal = null;
+		this.gameInProgress = true;
+	}
+	
+	public Goal getGoal() {
+		return this.goal;
+	}
+	public boolean isGameInProgress() {
+		return this.gameInProgress;
+	}
+	
+	public void gameEnded() {
+		this.gameInProgress = false;
 	}
 	
 	public boolean checkGameComplete() {
@@ -15,23 +29,31 @@ public class GameState {
 		return this.goal.isComplete();
 	}
 	
-	private TreasureGoal createTreasureGoal(int count) {
+	private TreasureGoal createTreasureGoal(Dungeon dungeon) {
+		int count = dungeon.getTreasureCount();
 		TreasureGoal tg = new TreasureGoal(count);
+		dungeon.getPlayer().registerObserver(tg);
 		return tg;
 	}
 	
-	private ExitGoal createExitGoal(Player player, Exit exit) {
+	private ExitGoal createExitGoal(Dungeon dungeon) {
+		Exit exit = dungeon.getExit();
+		Player player = dungeon.getPlayer();
 		ExitGoal eg = new ExitGoal(player, exit);
 		return eg;
 	}
 	
-	private SwitchGoal createSwitchGoal(int count) {
+	private SwitchGoal createSwitchGoal(Dungeon dungeon) {
+		int count = dungeon.getSwitchCount();
 		SwitchGoal sg = new SwitchGoal(count);
+		dungeon.setUpObserverSwitchGoal(sg);
 		return sg;
 	}
 	
-	private EnemyGoal createEnemyGoal(int count) {
+	private EnemyGoal createEnemyGoal(Dungeon dungeon) {
+		int count = dungeon.getEnemyCount();
 		EnemyGoal eg = new EnemyGoal(count);
+		dungeon.setUpObserverEnemyGoal(eg);
 		return eg;
 	}
 	
@@ -39,35 +61,38 @@ public class GameState {
 		Goal g = null;
 		
 		if(type.equals("treasure")) {
-			int count = dungeon.getTreasureCount();
-			g = this.createTreasureGoal(count);
+			g = this.createTreasureGoal(dungeon);
 		} else if (type.equals("enemies")) {
-			int count = dungeon.getEnemyCount();
-			g = this.createEnemyGoal(count);
+			g = this.createEnemyGoal(dungeon);
 		} else if (type.equals("exit")) {
-			g = this.createExitGoal(dungeon.getPlayer(), dungeon.getExit());
+			g = this.createExitGoal(dungeon);
 		} else if (type.equals("boulders")) {
-			int count = dungeon.getSwitchCount();
-			g = this.createSwitchGoal(count);
+			g = this.createSwitchGoal(dungeon);
 		}
 		
-		return g;	}
+		return g;	
+	}
 	
 	private CompositeGoal createCompositeGoal(String type) {
 		CompositeGoal cg = new CompositeGoal(type);
 		return cg;
 	}
 	
-	public void addCompositeGoal(String type, ArrayList<String> subgoals, Dungeon dungeon) {
+	public void addCompositeGoal(String type, JSONArray subgoals, Dungeon dungeon) {
 		CompositeGoal cg = createCompositeGoal(type);
-		for(String sg : subgoals) {
-			Goal g = createSimpleGoal(sg, dungeon);
-			cg.addGoal(g);
-		}
+		for (int i = 0; i < subgoals.length(); i++) {
+            JSONObject goal = subgoals.getJSONObject(i);
+            String sg = goal.getString("goal");
+            Goal g = createSimpleGoal(sg, dungeon);
+            cg.addGoal(g);
+        }
+		
 		this.goal = cg;
 	}
 	
 	public void addSimpleGoal(String type, Dungeon dungeon) {
 		this.goal = createSimpleGoal(type, dungeon);
 	}
+
+	
 }

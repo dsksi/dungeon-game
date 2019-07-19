@@ -2,20 +2,25 @@ package unsw.dungeon;
 
 public class TreasureGoal implements Goal, Observer {
 
-	private int treasureGoal;
+	public int getTreasureCount() {
+		return treasureCount;
+	}
+
+	private int totalTreasure;
 	private int treasureCount;
 	
 	public TreasureGoal(int goal) {
-		this.treasureGoal = goal;
+		this.totalTreasure = goal;
 		this.treasureCount = 0;
 	}
 	
 	@Override
 	public boolean isComplete() {
-
-		if(this.treasureCount == this.treasureGoal) return true;
+		if(this.treasureCount >= this.totalTreasure) {
+			System.out.println("Treasure goal is complete");
+			return true;
+		}
 		return false;
-	
 	}
 
 	@Override
@@ -24,8 +29,12 @@ public class TreasureGoal implements Goal, Observer {
 		this.treasureCount = pl.getTreasureCollected();	
 	}
 
-	public int getTreasureGoal() {
-		return treasureGoal;
+	public int getTotalTreasure() {
+		return totalTreasure;
+	}
+	
+	public int getTreasureCount1() {
+		return this.treasureCount;
 	}
 
 }

@@ -14,11 +14,15 @@ public class Switch extends Entity implements Subject{
 	}
 	
 	public void activateSwitch() {
+		if(this.activated == true) return;
 		this.activated = true;
+		updateObservers();
 	}
 	
 	public void deactivateSwitch() {
+		if(this.activated == false) return;
 		this.activated = false;
+		updateObservers();
 	}
 	
 	public boolean getActivated() {
@@ -61,7 +65,6 @@ public class Switch extends Entity implements Subject{
 			deactivateSwitch();
 			System.out.println("switch not active");
 		}
-		updateObservers();
 	}
 	
 }

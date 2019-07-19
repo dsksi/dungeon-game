@@ -9,6 +9,9 @@ public class Treasure extends Entity{
 		this.isCollected = false;
 	}
 	
+	public boolean isCollected() {
+		return isCollected;
+	}
 	public void collect() {
 		this.isCollected = true;
 	}

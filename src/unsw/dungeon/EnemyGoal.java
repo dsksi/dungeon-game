@@ -17,6 +17,14 @@ public class EnemyGoal implements Goal, Observer {
 		}
 	}
 
+	public int getDefeated() {
+		return defeated;
+	}
+
+	public int getTotalEnemies() {
+		return totalEnemies;
+	}
+
 	@Override
 	public boolean isComplete() {
 		if (this.defeated == this.totalEnemies)

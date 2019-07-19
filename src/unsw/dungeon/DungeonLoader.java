@@ -35,14 +35,39 @@ public abstract class DungeonLoader {
         Dungeon dungeon = new Dungeon(width, height);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
+        JSONObject jsonGoals = json.optJSONObject("goal-condition");
 
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
+        
+        if(jsonGoals != null) {
+        	loadGoal(dungeon, jsonGoals);
+        }
         return dungeon;
     }
 
-    private void loadEntity(Dungeon dungeon, JSONObject json) {
+    private void loadGoal(Dungeon dungeon, JSONObject jsonGoals) {
+    	GameState gameState = dungeon.getGameState();
+    	
+        String type = jsonGoals.getString("goal");
+        switch (type) {
+        case "AND":
+        	JSONArray subAnd = jsonGoals.getJSONArray("subgoals");
+        	gameState.addCompositeGoal("AND", subAnd, dungeon);
+        	break;
+        case "OR":
+        	JSONArray subOr = jsonGoals.getJSONArray("subgoals");
+        	gameState.addCompositeGoal("OR", subOr, dungeon);
+        	break;
+        default:
+        	gameState.addSimpleGoal(type, dungeon);
+        }
+        
+		
+	}
+
+	private void loadEntity(Dungeon dungeon, JSONObject json) {
         String type = json.getString("type");
         int x = json.getInt("x");
         int y = json.getInt("y");
@@ -99,7 +124,6 @@ public abstract class DungeonLoader {
         	Bomb bomb = new Bomb(x, y);
         	onLoad(bomb);
         	entity = bomb;
-        // TODO Handle other possible entities
         }
         dungeon.addEntity(entity);
     }
@@ -115,7 +139,6 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Switch gameSwitch);
 
 	public abstract void onLoad(Treasure treasure);
-
 	
 	public abstract void onLoad(Sword sword);
 	

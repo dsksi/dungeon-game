@@ -106,6 +106,7 @@ public class Player extends Entity implements Subject{
 	}
 
 	public void pickUpTreasure(Treasure treasure) {
+		if (treasure.isCollected()) return;
 		System.out.println("Pick up treasure");
 		treasure.collect();
 		this.treasureCollected++;
@@ -122,7 +123,6 @@ public class Player extends Entity implements Subject{
 
 	@Override
 	public void interact(Entity obj) {
-		//TODO: implement enemy interaction with player
 		if (obj instanceof Enemy) {
 			Enemy enemy = (Enemy) obj;
 			if (!(attack(enemy))) {
@@ -160,6 +160,7 @@ public class Player extends Entity implements Subject{
 
 	@Override
 	public void registerObserver(Observer o) {
+		System.out.println("add observer");
 		observers.add(o);
 	}
 
@@ -170,6 +171,9 @@ public class Player extends Entity implements Subject{
 
 	@Override
 	public void updateObservers() {
+		if (observers.isEmpty()) {
+			return;
+		}
 		for (Observer o : observers) {
 			o.update(this);
 		}
@@ -189,6 +193,7 @@ public class Player extends Entity implements Subject{
 			if(!(weaponStrat.hasDurability())) {
 				dropWeapon();
 			}
+			obj.delete();
 			return true;
 		}
 		return false;
