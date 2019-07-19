@@ -22,7 +22,7 @@ class SwordTest {
 		player = new Player(dungeon, 0, 0);
 		dungeon.setPlayer(player);
 		
-		enemy = new Enemy(1, 1);
+		enemy = new Enemy(dungeon, 1, 1);
 		
 		sw1 = new Sword(0, 1);
 		sw2 = new Sword(0, 2);

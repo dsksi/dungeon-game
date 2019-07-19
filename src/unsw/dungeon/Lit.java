@@ -21,19 +21,30 @@ public class Lit implements BombState {
 		
 		for (int i = (x - 1); i <= (x + 1); i++) {
 			for (int j = (y - 1); j <= (y + 1); j++) {
-				for (Entity k : dungeon.getEntity(x, y)) {
+				for (Entity k : dungeon.getEntity(i, j)) {
 					if (k instanceof Enemy) {
 						// kill enemy
 					} else if (k instanceof Player) {
-						// kill player
+						k.delete();
+					} else if (k instanceof Boulder) {
+						k.delete();
 					}
 				}
 			}
 		}
+		
+		bomb.delete();
+		dungeon.removeEntity(bomb);
 		// suggest dungeon.remove(Entity);
 		// removes the need for entities to get a list of entities from the dungeon
 		// when it needs to be deleted.
 		return;
+	}
+
+	@Override
+	public void exploding(Bomb bomb, Player player) {
+		bomb.exploding();
+		
 	}
 
 }

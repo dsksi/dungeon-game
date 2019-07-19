@@ -32,13 +32,13 @@ public class Player extends Entity implements Subject{
         super(x, y);
         this.dungeon = dungeon;
         this.visualStatus = new SimpleIntegerProperty(0);
+        this.weaponStrat = new NoWeapon();
+        this.invincible = false;
+        this.keyID = -1;
+        this.bomb = null;
         this.treasureCollected = 0;
         this.observers = new ArrayList<Observer>();
         this.treasureCollected = 0;
-        this.weaponStrat = new NoWeapon();
-        this.keyID = -1;
-        this.bomb = null;
-        this.invincible = false;
     }
 
     private boolean checkMoveable(int x, int y) {
@@ -60,13 +60,17 @@ public class Player extends Entity implements Subject{
     	if(this.checkMoveable(this.getX(), this.getY() - 1)) {
     		dungeon.interactItems(this, this.getX(), this.getY() - 1);
     		y().set(getY() - 1);
-    	}	
+    	} else if (this.checkDoor(this.getX(), this.getY() - 1)){
+    		dungeon.interactItems(this, this.getX(), this.getY() - 1);
+    	}
     }
 
     public void moveDown() {
     	if(this.checkMoveable(this.getX(), this.getY() + 1)) {
     		dungeon.interactItems(this, this.getX(), this.getY() + 1);
     		y().set(getY() + 1);
+    	} else if (this.checkDoor(this.getX(), this.getY() + 1)){
+    		dungeon.interactItems(this, this.getX(), this.getY() + 1);
     	}
     }
 
@@ -74,6 +78,8 @@ public class Player extends Entity implements Subject{
     	if(this.checkMoveable(this.getX() - 1, this.getY())) {
     		dungeon.interactItems(this, this.getX() - 1, this.getY());
     		x().set(getX() - 1);
+    	} else if (this.checkDoor(this.getX() - 1, this.getY())){
+    		dungeon.interactItems(this, this.getX() - 1, this.getY());
     	}
     }
 
@@ -81,6 +87,8 @@ public class Player extends Entity implements Subject{
     	if(this.checkMoveable(this.getX() + 1, this.getY())) {
     		dungeon.interactItems(this, this.getX()+1, this.getY());
     		x().set(getX() + 1);
+    	} else if (this.checkDoor(this.getX() + 1, this.getY())){
+    		dungeon.interactItems(this, this.getX()+1, this.getY());
     	}
     }
 
@@ -103,6 +111,12 @@ public class Player extends Entity implements Subject{
 
 	public void setBomb(Bomb bomb) {
 		this.bomb = bomb;
+	}
+	
+	public void dropBomb() {
+		if (bomb != null) {
+			bomb.activate(this);
+		}
 	}
 
 	public void pickUpTreasure(Treasure treasure) {
@@ -223,6 +237,15 @@ public class Player extends Entity implements Subject{
 		};
 	    
 	    timer.schedule(task, 10000);		
+	}
+	
+	private boolean checkDoor(int x, int y) {
+		for(Entity i : dungeon.getEntity(x, y)){
+			if(i instanceof Door) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

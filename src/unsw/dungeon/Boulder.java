@@ -20,6 +20,9 @@ public class Boulder extends Entity{
         if(!list.isEmpty()) {
         	for (Entity e: list) {
         		if(! e.movable(this)) return false;
+        		if(e instanceof Switch) {
+        			e.interact(this);
+        		}
             }
         }
         return true;

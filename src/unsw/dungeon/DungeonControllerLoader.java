@@ -26,6 +26,8 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image mageImage;
     private Image playerSwordImage;
     private Image wallImage;
+    private Image bombImage;
+    private Image explodeImage;
     private Image enemyImage;
     private Image exitImage;
     private Image switchImage;
@@ -33,8 +35,11 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image boulderImage;
     private Image swordImage;
     private Image invImage;
-    private Image bombImage;
     private Image playerBombImage;
+    private Image closedImage;
+    private Image openImage;
+    private Image keyImage;
+
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -42,6 +47,8 @@ public class DungeonControllerLoader extends DungeonLoader {
         entities = new ArrayList<>();
         playerImage = new Image("/player.png");
         wallImage = new Image("/brick_brown_0.png");
+        bombImage = new Image("/bomb_unlit.png");
+        explodeImage = new Image("bomb_lit_4.png");
         playerSwordImage = new Image("/playerSword.png");
         enemyImage = new Image("/hound.png");
         exitImage = new Image("/exit.png");
@@ -50,9 +57,11 @@ public class DungeonControllerLoader extends DungeonLoader {
         boulderImage = new Image("/boulder.png");
         swordImage = new Image("/greatsword_1_new.png");
         invImage = new Image("brilliant_blue_new.png");
-        bombImage = new Image("/bomb_unlit.png");
         mageImage = new Image("/gnome.png");
         playerBombImage = new Image("/playerBomb.png");
+        closedImage = new Image("/closed_door.png");
+        openImage = new Image("/open_door.png");
+        keyImage = new Image("key.png");
     }
 
     @Override
@@ -66,7 +75,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         ImageView view = new ImageView(wallImage);
         addEntity(wall, view);
     }
-    
+        
     @Override
     public void onLoad(Exit exit) {
         ImageView view = new ImageView(exitImage);
@@ -109,9 +118,22 @@ public class DungeonControllerLoader extends DungeonLoader {
     	addEntity(inv, view);
     }
     
+    @Override
     public void onLoad(Bomb bomb) {
     	ImageView view = new ImageView(bombImage);
     	addEntity(bomb, view);
+	}
+    
+    @Override
+    public void onLoad(Door door) {
+    	ImageView view = new ImageView(closedImage);
+    	addDoor(door, view);
+    }
+
+    @Override
+    public void onLoad(Key key) {
+    	ImageView view = new ImageView(keyImage);
+    	addEntity(key, view);
     }
 
     private void addPlayer(Entity player, ImageView view) {
@@ -122,6 +144,10 @@ public class DungeonControllerLoader extends DungeonLoader {
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
         entities.add(0, view);
+    }
+    private void addDoor(Entity door, ImageView view) {
+    	trackDoor(door, view);
+    	entities.add(0, view);
     }
 
     /**
@@ -155,8 +181,14 @@ public class DungeonControllerLoader extends DungeonLoader {
             @Override
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
-            	if(!newValue.equals(oldValue))
+            	if(newValue.equals(0)) {
+            		node.setVisible(true);
+            	} else if (newValue.equals(1)) {
             		node.setVisible(false);
+            	} else if (newValue.equals(2)) {
+            		ImageView view = (ImageView) node;
+            		view.setImage(explodeImage);
+            	}
             }
         });
     }
@@ -184,6 +216,27 @@ public class DungeonControllerLoader extends DungeonLoader {
             		view.setImage(playerBombImage);
             	}
             }
+        });
+    }
+    
+    private void trackDoor(Entity entity, Node node) {
+    	Door door = (Door) entity;
+    	GridPane.setColumnIndex(node, entity.getX());
+        GridPane.setRowIndex(node, entity.getY());
+        
+        door.locked().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				
+				ImageView view = (ImageView) node;
+				if (newValue.equals(true)) {
+					view.setImage(closedImage);
+				} else {
+					view.setImage(openImage);
+				}
+			}
+        	
         });
     }
 

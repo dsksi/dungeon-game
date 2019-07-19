@@ -85,8 +85,13 @@ public abstract class DungeonLoader {
             onLoad(wall);
             entity = wall;
             break;
+        case "bomb":
+        	Bomb bomb = new Bomb(x, y);
+        	onLoad(bomb);
+        	entity = bomb;
+        	break;
         case "enemy":
-            Enemy enemy = new Enemy(x, y);
+            Enemy enemy = new Enemy(dungeon, x, y);
             onLoad(enemy);
             entity = enemy;
             break;
@@ -120,10 +125,16 @@ public abstract class DungeonLoader {
         	onLoad(gameSwitch);
         	entity = gameSwitch;
         	break;
-        case "bomb":
-        	Bomb bomb = new Bomb(x, y);
-        	onLoad(bomb);
-        	entity = bomb;
+        case "door":
+        	Door door = new Door(x, y, json.getInt("ID"));
+        	onLoad(door);
+        	entity = door;
+        	break;
+        case "key":
+        	Key key = new Key(x, y, json.getInt("ID"));
+        	onLoad(key);
+        	entity = key;
+        	break;
         }
         dungeon.addEntity(entity);
     }
@@ -139,7 +150,7 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Switch gameSwitch);
 
 	public abstract void onLoad(Treasure treasure);
-	
+
 	public abstract void onLoad(Sword sword);
 	
 	public abstract void onLoad(InvinciblePotion inv);
@@ -147,6 +158,10 @@ public abstract class DungeonLoader {
 	public abstract void onLoad(Enemy enemy);
 
 	public abstract void onLoad(Exit exit);
+	
+	public abstract void onLoad(Door door);
+	
+	public abstract void onLoad(Key key);
 	
 
 }

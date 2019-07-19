@@ -1,20 +1,23 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Door extends Entity {
 	
 	private int ID;
-	private boolean locked;
+	private BooleanProperty locked;
 
 	public Door(int x, int y, int ID) {
 		super(x, y);
 		this.ID = ID;
-		this.locked = true;
+		this.locked = new SimpleBooleanProperty(true);
 	}
 
 	@Override
 	public boolean movable(Entity obj) {
 
-		if (locked) {
+		if (locked.get() == true) {
 			return false;
 		} 
 
@@ -27,9 +30,13 @@ public class Door extends Entity {
 		} else {
 			Player player = (Player) obj;
 			if (player.getKeyID() == this.ID) {
-				this.locked = false;
+				this.locked.set(false);
 				player.setKeyID(-1);
 			}
 		}
+	}
+
+	public BooleanProperty locked() {
+		return this.locked;
 	}
 }

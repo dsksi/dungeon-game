@@ -40,6 +40,10 @@ public abstract class Entity {
     public void delete() {
         status().set(1);
     }
+    
+    public void restore() {
+    	status().set(0);
+    }
 
     public int getY() {
         return y().get();

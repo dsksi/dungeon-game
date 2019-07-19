@@ -6,6 +6,8 @@ public class Spawned implements BombState {
 	public BombState pickUp(Bomb bomb, Player player) {
 		if (player.getBomb() == null) {
 			player.setBomb(bomb);
+			player.setVisualStatus(3);
+			bomb.delete();
 			return new Unlit();
 		} else {
 			return this;
@@ -23,4 +25,8 @@ public class Spawned implements BombState {
 		return;
 	}
 
+	@Override
+	public void exploding(Bomb bomb, Player player) {
+		return;
+	}
 }

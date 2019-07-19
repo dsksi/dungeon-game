@@ -35,9 +35,9 @@ class EnemyGoalTest {
 	
 	@Test
 	void testEnemyGoalSuccessInitial() {
-		Enemy e1 = new Enemy(0,1);
-		Enemy e2 = new Enemy(0,2);
-		Enemy e3 = new Enemy(0,3);
+		Enemy e1 = new Enemy(dungeon, 0,1);
+		Enemy e2 = new Enemy(dungeon, 0,2);
+		Enemy e3 = new Enemy(dungeon, 0,3);
 		
 		dungeon.addEntity(e1);
 		dungeon.addEntity(e2);
@@ -56,7 +56,7 @@ class EnemyGoalTest {
 	
 	@Test
 	void testEnemyGoalSuccessCompleteOneEnemy() {
-		Enemy e1 = new Enemy(0,1);
+		Enemy e1 = new Enemy(dungeon, 0,1);
 		
 		dungeon.addEntity(e1);
 		
@@ -81,7 +81,7 @@ class EnemyGoalTest {
 
 	@Test
 	void testEnemyGoalSuccessCompleteInteractionOneEnemy() {
-		Enemy e1 = new Enemy(0,2);
+		Enemy e1 = new Enemy(dungeon, 0,2);
 		
 		dungeon.addEntity(e1);
 		
@@ -110,7 +110,7 @@ class EnemyGoalTest {
 	
 	@Test
 	void testEnemyGoalSuccessCompleteInteractionThreeEnemy() {
-		Enemy e1 = new Enemy(0,2);
+		Enemy e1 = new Enemy(dungeon, 0,2);
 		
 		dungeon.addEntity(e1);
 		
