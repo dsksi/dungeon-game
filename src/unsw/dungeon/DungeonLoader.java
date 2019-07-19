@@ -64,6 +64,7 @@ public abstract class DungeonLoader {
         	Bomb bomb = new Bomb(x, y);
         	onLoad(bomb);
         	entity = bomb;
+        	break;
         // TODO Handle other possible entities
         case "enemy":
             Enemy enemy = new Enemy(x, y);
@@ -99,6 +100,16 @@ public abstract class DungeonLoader {
         	onLoad(gameSwitch);
         	entity = gameSwitch;
         	break;
+        case "door":
+        	Door door = new Door(x, y, json.getInt("ID"));
+        	onLoad(door);
+        	entity = door;
+        	break;
+        case "key":
+        	Key key = new Key(x, y, json.getInt("ID"));
+        	onLoad(key);
+        	entity = key;
+        	break;
         }
         dungeon.addEntity(entity);
     }
@@ -123,6 +134,10 @@ public abstract class DungeonLoader {
 	public abstract void onLoad(Enemy enemy);
 
 	public abstract void onLoad(Exit exit);
+	
+	public abstract void onLoad(Door door);
+	
+	public abstract void onLoad(Key key);
 	
 
 }

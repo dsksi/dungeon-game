@@ -21,13 +21,14 @@ public class Key extends Entity {
 			Player player = (Player) obj;
 			pickUp(player);
 		}
-		
 	}
 	
 	public void pickUp(Player player) {
-		if (player.getKeyID() != -1) {
+		if ((player.getKeyID() == -1) && (this.status().getValue() == 0)) {
 			player.setKeyID(ID);
-			// dungeon.remove(this);
+			this.delete();
+			Dungeon dungeon = player.getDungeon();
+			dungeon.removeEntity(this);
 		}
 	}
 

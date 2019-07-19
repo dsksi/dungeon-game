@@ -1026,6 +1026,23 @@
       "x": 1,
       "y": 1,
       "type": "player"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "type": "door",
+    "ID": 1
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "type": "key",
+    "ID": 1
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "type": "bomb"
     }
   ],
   "goal-condition": {

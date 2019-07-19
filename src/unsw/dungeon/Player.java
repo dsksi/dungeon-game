@@ -56,16 +56,17 @@ public class Player extends Entity implements Subject{
     	if(this.checkMoveable(this.getX(), this.getY() - 1)) {
     		dungeon.interactItems(this, this.getX(), this.getY() - 1);
     		y().set(getY() - 1);
-    	}	
+    	} else if (this.checkDoor(this.getX(), this.getY() - 1)){
+    		dungeon.interactItems(this, this.getX(), this.getY() - 1);
+    	}
     }
 
     public void moveDown() {
     	if(this.checkMoveable(this.getX(), this.getY() + 1)) {
     		dungeon.interactItems(this, this.getX(), this.getY() + 1);
     		y().set(getY() + 1);
-    	}
-    	if (this.bomb != null) {
-    		System.out.println("have bomb");
+    	} else if (this.checkDoor(this.getX(), this.getY() + 1)){
+    		dungeon.interactItems(this, this.getX(), this.getY() + 1);
     	}
     }
 
@@ -73,6 +74,8 @@ public class Player extends Entity implements Subject{
     	if(this.checkMoveable(this.getX() - 1, this.getY())) {
     		dungeon.interactItems(this, this.getX() - 1, this.getY());
     		x().set(getX() - 1);
+    	} else if (this.checkDoor(this.getX() - 1, this.getY())){
+    		dungeon.interactItems(this, this.getX() - 1, this.getY());
     	}
     }
 
@@ -80,6 +83,8 @@ public class Player extends Entity implements Subject{
     	if(this.checkMoveable(this.getX() + 1, this.getY())) {
     		dungeon.interactItems(this, this.getX()+1, this.getY());
     		x().set(getX() + 1);
+    	} else if (this.checkDoor(this.getX() + 1, this.getY())){
+    		dungeon.interactItems(this, this.getX()+1, this.getY());
     	}
     }
 
@@ -102,6 +107,12 @@ public class Player extends Entity implements Subject{
 
 	public void setBomb(Bomb bomb) {
 		this.bomb = bomb;
+	}
+	
+	public void dropBomb() {
+		if (bomb != null) {
+			bomb.activate(this);
+		}
 	}
 	
 	public Dungeon getDungeon() {
@@ -167,6 +178,15 @@ public class Player extends Entity implements Subject{
 
 	public void setAttackStrategy(AttackStrategy attstr) {
 		this.attstr = attstr;
+	}
+	
+	private boolean checkDoor(int x, int y) {
+		for(Entity i : dungeon.getEntity(x, y)){
+			if(i instanceof Door) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
