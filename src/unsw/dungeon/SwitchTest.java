@@ -1,22 +1,22 @@
-package unsw.dungeonTest;
+package unsw.dungeon;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.*;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import unsw.dungeon.*;
 
-public class SwitchTest {
-	
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class SwitchTest {
+
 	Dungeon dungeon;
 	
-	@Before
-	public void Initialize() {
+	@BeforeEach
+	void Initialize() {
 		dungeon = new Dungeon(10, 10);
 	}
 	
 	@Test
-	public void testActivateSwitch() {
+	void testActivateSwitch() {
 		System.out.println("----- testActivateSwitch -----");
 		Switch switches = new Switch(0,0);
 		dungeon.addEntity(switches);
@@ -27,7 +27,7 @@ public class SwitchTest {
 	}
 	
 	@Test
-	public void testDeactivateSwitch() {
+	void testDeactivateSwitch() {
 		System.out.println("----- testdeactivateSwitch -----");
 		Switch switches = new Switch(0,0);
 		dungeon.addEntity(switches);
@@ -38,7 +38,7 @@ public class SwitchTest {
 	}
 	
 	@Test
-	public void testBoulderInteractSwitch() {
+	void testBoulderInteractSwitch() {
 		System.out.println("----- testBoulderInteractSwitch -----");
 		Switch switch1 = new Switch(1,0);
 		Boulder boulder1 = new Boulder(dungeon,1,0);
@@ -50,7 +50,7 @@ public class SwitchTest {
 	}
 	
 	@Test
-	public void testPlayerInteractSwitch() {
+	void testPlayerInteractSwitch() {
 		System.out.println("----- testPlayerInteractSwitch -----");
 		Switch switches = new Switch(1,0);
 		Boulder boulder = new Boulder(dungeon,1,0);
@@ -65,6 +65,4 @@ public class SwitchTest {
 		assertFalse(switches.getActivated(), "Switch is activated");
 		System.out.println("Passed");
 	}
-	
-	
 }
