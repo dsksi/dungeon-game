@@ -27,6 +27,9 @@ public class Enemy extends Entity implements Subject, Observer {
 		this.observers = new ArrayList<Observer>();
 	}
 	
+	public boolean getGameInProgress() {
+    	return dungeon.getGameInProgress();
+    }
 	
 	// ------ Path finder methods ------ 
 	
@@ -128,8 +131,15 @@ public class Enemy extends Entity implements Subject, Observer {
 	}
 	
 	private boolean checkMoveable(int x, int y) {
-    	if(!((y < dungeon.getHeight() - 1) && (y >= 0)))	return false;
-    	if(!((x < dungeon.getWidth() - 1) && (x >= 0)))		return false;
+		if(!getGameInProgress()) return false;
+    	if(!((y < dungeon.getHeight() - 1) && (y >= 0))) {
+    		System.out.println((dungeon.getHeight() - 1) +" "+ y +"not movable");
+    		return false;
+    	}
+    	if(!((x < dungeon.getWidth() - 1) && (x >= 0))) {
+    		System.out.println("not movable");
+    		return false;
+    	}
     		
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
@@ -180,41 +190,44 @@ public class Enemy extends Entity implements Subject, Observer {
 	//------ Subject methods ------
 	@Override
 	public void update(Subject obj) {
-//		if (!(obj instanceof Player)) return;
-//		
-//		Player player = (Player) obj;
-//		this.playerXPos = player.getX();
-//		this.playerYPos = player.getY();
-//		
-//		//this.followPath();
+		if (!(obj instanceof Player)) return;
+		
+		Player player = (Player) obj;
+		this.playerXPos = player.getX();
+		this.playerYPos = player.getY();
+		if(player.isInvincible()) {
+			followPath(runAwayPath());
+		} else {
+			followPath(playerPath());
+		}
 	}
 	
-	public void trackPlayerPosition(Player player) {
-    	player.x().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
-            	playerXPos = newValue.intValue();
-            	if(player.isInvincible()) {
-            		followPath(runAwayPath());
-            	} else {
-            		followPath(playerPath());
-            	}
-            }
-        });
-        player.y().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
-            	playerYPos = newValue.intValue();
-            	if(player.isInvincible()) {
-            		followPath(runAwayPath());
-            	} else {
-            		followPath(playerPath());
-            	}
-            }
-        });
-    }
+//	public void trackPlayerPosition(Player player) {
+//    	player.x().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable,
+//                    Number oldValue, Number newValue) {
+//            	playerXPos = newValue.intValue();
+//            	if(player.isInvincible()) {
+//            		followPath(runAwayPath());
+//            	} else {
+//            		followPath(playerPath());
+//            	}
+//            }
+//        });
+//        player.y().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable,
+//                    Number oldValue, Number newValue) {
+//            	playerYPos = newValue.intValue();
+//            	if(player.isInvincible()) {
+//            		followPath(runAwayPath());
+//            	} else {
+//            		followPath(playerPath());
+//            	}
+//            }
+//        });
+//    }
 	
 	//------ Entity methods ------
 	@Override

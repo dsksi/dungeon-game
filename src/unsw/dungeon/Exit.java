@@ -34,7 +34,12 @@ public class Exit extends Entity implements Subject{
 	//------ Entity methods ------
 	@Override
 	public boolean movable(Entity obj) {
-		return true;
+		if(!(obj instanceof Player)) return false;
+		Player player = (Player) obj;
+		if(player.completedNonExitGoals()) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

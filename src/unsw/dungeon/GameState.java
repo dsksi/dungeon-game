@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -92,6 +94,17 @@ public class GameState {
 	
 	public void addSimpleGoal(String type, Dungeon dungeon) {
 		this.goal = createSimpleGoal(type, dungeon);
+	}
+
+	public boolean completedNonExitGoals() {
+		if(!(goal instanceof CompositeGoal)) return true;
+		CompositeGoal compGoal = (CompositeGoal) goal;
+		ArrayList<Goal> leafs = compGoal.getLeafGoals();
+		for(Goal lg : leafs) {
+			if (lg instanceof ExitGoal) continue;
+			if (!(lg.isComplete())) return false;
+		}
+		return true;
 	}
 
 	

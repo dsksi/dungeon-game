@@ -211,8 +211,16 @@ public class Dungeon {
 		for (Entity e : entities) {
 			if (e instanceof Enemy) {
 				Enemy enemy = (Enemy) e;
-				enemy.trackPlayerPosition(player);
+				player.registerObserver(enemy);
 			}
 		}
+	}
+
+	public boolean completedNonExitGoals() {
+		return gameState.completedNonExitGoals();
+	}
+
+	public boolean getGameInProgress() {
+		return this.gameState.isGameInProgress();
 	}
 }
