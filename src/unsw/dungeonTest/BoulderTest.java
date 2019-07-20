@@ -2,8 +2,6 @@ package unsw.dungeonTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.*;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import unsw.dungeon.*;
 
 public class BoulderTest {
