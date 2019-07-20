@@ -2,16 +2,34 @@ package unsw.dungeon;
 
 public class TreasureGoal implements Goal, Observer {
 
-	public int getTreasureCount() {
-		return treasureCount;
-	}
+	
 
 	private int totalTreasure;
 	private int treasureCount;
 	
+	/**
+	 * Create a treasure goal given a total treasure count goal
+	 * @param goal
+	 */
 	public TreasureGoal(int goal) {
 		this.totalTreasure = goal;
 		this.treasureCount = 0;
+	}
+	
+	/**
+	 * Get the current treasure count collected
+	 * @return
+	 */
+	public int getTreasureCount() {
+		return treasureCount;
+	}
+
+	/**
+	 * Get total treasure goal count
+	 * @return total
+	 */
+	public int getTotalTreasure() {
+		return totalTreasure;
 	}
 	
 	@Override
@@ -23,18 +41,11 @@ public class TreasureGoal implements Goal, Observer {
 		return false;
 	}
 
+	
 	@Override
 	public void update(Subject obj) {
 		Player pl = (Player) obj;
 		this.treasureCount = pl.getTreasureCollected();	
-	}
-
-	public int getTotalTreasure() {
-		return totalTreasure;
-	}
-	
-	public int getTreasureCount1() {
-		return this.treasureCount;
 	}
 
 }

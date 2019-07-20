@@ -26,6 +26,11 @@ public class Dungeon {
     private Player player;
     private GameState gameState;
 
+    /**
+     * 
+     * @param width of the desired dungeon map
+     * @param height of the desired dungeon map
+     */
     public Dungeon(int width, int height) {
         this.width = width;
         this.height = height;
@@ -34,29 +39,52 @@ public class Dungeon {
         this.player = null;
     }
 
+    /**
+     * 
+     * @return width of dungeon
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * 
+     * @return height of dungeon
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * 
+     * @return player of the game
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Setup the player in the dungeon map
+     * @param player
+     */
     public void setPlayer(Player player) {
         this.player = player;
         trackGameState(player);
         trackEntityStatus(player);
     }
 
+    /**
+     * Add entity to the dungeon's list of entities and allow dungeon to track entity
+     * @param entity
+     */
     public void addEntity(Entity entity) {
     	trackEntityStatus(entity);
         entities.add(entity);
     }
-    
+    /**
+     * Track the player movement to check for game completion
+     * @param player
+     */
     public void trackGameState(Player player) {
     	player.x().addListener(new ChangeListener<Number>() {
             @Override
@@ -78,6 +106,10 @@ public class Dungeon {
         });
     }
     
+    /**
+     * Setup listener for entity status to remove the entity from dungeon when it is deleted
+     * @param obj
+     */
     public void trackEntityStatus(Entity obj) {
     	obj.status().addListener(new ChangeListener<Number>() {
             @Override
@@ -92,6 +124,9 @@ public class Dungeon {
         });
     }
     
+    /**
+     * Announce game won and end game when all goals completed
+     */
     private void gameWon() {
     	if (gameState.isGameInProgress()) {
     		gameState.gameEnded();
@@ -99,6 +134,9 @@ public class Dungeon {
     	}
 	}
     
+    /**
+     * Announce game lost and end game when player dies
+     */
     private void gameLost() {
     	if (gameState.isGameInProgress()) {
     		gameState.gameEnded();
@@ -106,6 +144,12 @@ public class Dungeon {
     	}
 	}
 
+    /**
+     * Given the x, y coordinate, get a list of entities at that coordinate in the dungeon
+     * @param x
+     * @param y
+     * @return
+     */
 	public ArrayList<Entity> getEntity(int x, int y) {
     	ArrayList<Entity> list = new ArrayList<Entity>();
     	for (Entity e: entities) {
@@ -117,6 +161,12 @@ public class Dungeon {
     	return list;
     }
     
+	/**
+	 * Given an entity obj and x, y coordinate, inflict interaction between obj and all entities at that coordinate in the dungeon
+	 * @param obj
+	 * @param x
+	 * @param y
+	 */
     public void interactItems(Entity obj, int x, int y) {
     	ArrayList<Entity> list = new ArrayList<Entity>();
     	list = this.getEntity(x, y);
@@ -125,7 +175,10 @@ public class Dungeon {
     	}
     }
 
-
+    /**
+     * 
+     * @return total treasure count within the dungeon
+     */
 	public int getTreasureCount() {
 		int count = 0;
 		for(Entity e : this.entities) {
@@ -137,6 +190,10 @@ public class Dungeon {
 		return count;
 	}
 	
+	/**
+	 * Get the exit in the dungeon, if no exit exist, returns null
+	 * @return exit
+	 */
 	public Exit getExit() {
 		for(Entity e : this.entities) {
 			if (e instanceof Exit) {
@@ -145,16 +202,11 @@ public class Dungeon {
 		}
 		return null;
 	}
-	
-	public Enemy getEnemy() {
-		for(Entity e : this.entities) {
-			if (e instanceof Enemy) {
-				return (Enemy) e;
-			}
-		}
-		return null;
-	}
 
+	/**
+	 * Get total count of enemies in dungeon
+	 * @return count
+	 */
 	public int getEnemyCount() {
 		int count = 0;
 		for(Entity e : this.entities) {
@@ -165,6 +217,10 @@ public class Dungeon {
 		return count;
 	}
 
+	/**
+	 * Get total count of switches in dungeon
+	 * @return count
+	 */
 	public int getSwitchCount() {
 		int count = 0;
 		for(Entity e : this.entities) {
@@ -175,15 +231,27 @@ public class Dungeon {
 		return count;
 	}
 
+	/**
+	 * Remove a given entity from the dungeon list of entities
+	 * @param obj
+	 */
 	public void removeEntity(Entity obj) {
 		if(entities.contains(obj))
 			entities.remove(obj);
 	}
 
+	/**
+	 * Get the GameState of the dungeon game
+	 * @return gameState
+	 */
 	public GameState getGameState() {
 		return this.gameState;
 	}
 
+	/**
+	 * Set up all subject observer relationship for a given enemy goal
+	 * @param goal
+	 */
 	public void setUpObserverEnemyGoal(EnemyGoal goal) {
 		for (Entity e : entities) {
 			if (e instanceof Enemy) {
@@ -194,6 +262,10 @@ public class Dungeon {
 		
 	}
 	
+	/**
+	 * Set up all subject observer relationship for a given switch goal
+	 * @param goal
+	 */
 	public void setUpObserverSwitchGoal(SwitchGoal goal) {
 		for (Entity e : entities) {
 			if (e instanceof Switch) {
@@ -203,11 +275,18 @@ public class Dungeon {
 		}
 	}
 	
+	/**
+	 * Set up subject observer relationship for a given treasure goal
+	 * @param goal
+	 */
 	public void setUpObserverTreasureGoal(TreasureGoal goal) {
 		player.registerObserver(goal);
 	}
 	
-	public void setUp() {
+	/**
+	 * Set up subject observer relationship between enemies and player to turn on enemy pursue feature
+	 */
+	public void setUpEnemy() {
 		for (Entity e : entities) {
 			if (e instanceof Enemy) {
 				Enemy enemy = (Enemy) e;
@@ -216,6 +295,10 @@ public class Dungeon {
 		}
 	}
 
+	/**
+	 * Get boolean value indicating if game is still in progress
+	 * @return true or false
+	 */
 	public boolean getGameInProgress() {
 		return this.gameState.isGameInProgress();
 	}

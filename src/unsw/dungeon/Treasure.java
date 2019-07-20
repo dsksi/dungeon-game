@@ -4,14 +4,26 @@ public class Treasure extends Entity{
 
 	private boolean isCollected;
 	
+	/**
+	 * Create a treasure given the coordinates
+	 * @param x
+	 * @param y
+	 */
 	public Treasure(int x, int y) {
 		super(x, y);
 		this.isCollected = false;
 	}
 	
+	/**
+	 * Check if the treasure has already been collected
+	 * @return true if collected, else false
+	 */
 	public boolean isCollected() {
 		return isCollected;
 	}
+	/**
+	 * Collect the treasure by setting isCollected to true
+	 */
 	public void collect() {
 		this.isCollected = true;
 	}
@@ -21,6 +33,12 @@ public class Treasure extends Entity{
 		return true;
 	}
 
+	/**
+	 * Only the player can interact with the treasure
+	 * and only if the treasure is not yet collected
+	 * Upon interaction, player pickup the treasure
+	 * The treasure is then deleted from the dungeon map
+	 */
 	@Override
 	public void interact(Entity obj) {
 		// Increment treasure count on player

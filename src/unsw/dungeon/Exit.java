@@ -6,10 +6,9 @@ public class Exit extends Entity {
 		super(x,y);
 	}
 
-	//------ Entity methods ------
 	@Override
 	public boolean movable(Entity obj) {
-//		if(!(obj instanceof Player)) return false;
+		if (!(obj instanceof Player)) return false;
 		return true;
 	}
 
