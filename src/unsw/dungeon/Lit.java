@@ -23,7 +23,7 @@ public class Lit implements BombState {
 			for (int j = (y - 1); j <= (y + 1); j++) {
 				for (Entity k : dungeon.getEntity(i, j)) {
 					if (k instanceof Enemy) {
-						// kill enemy
+						k.delete();
 					} else if (k instanceof Player) {
 						k.delete();
 					} else if (k instanceof Boulder) {
