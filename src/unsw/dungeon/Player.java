@@ -43,8 +43,8 @@ public class Player extends Entity implements Subject{
     }
 
     private boolean checkMoveable(int x, int y) {
-    	if(!((y < dungeon.getHeight() - 1) && (y >= 0)))	return false;
-    	if(!((x < dungeon.getWidth() - 1) && (x >= 0)))		return false;
+    	if(!((y < dungeon.getHeight()) && (y >= 0)))	return false;
+    	if(!((x < dungeon.getWidth()) && (x >= 0)))		return false;
     		
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {

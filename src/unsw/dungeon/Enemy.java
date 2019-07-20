@@ -27,22 +27,30 @@ public class Enemy extends Entity implements Subject, Observer {
 		this.observers = new ArrayList<Observer>();
 	}
 	
-	
 	// ------ Path finder methods ------ 
 	
 	public void followPath(ArrayList<Node> pathList) {
-		ArrayList<Node> path = pathList;	    
+		ArrayList<Node> path = pathList;	
 		for (Node e : path) {
+			
+			Entity entity = null;
+			if (dungeon.getEntity(e.getX(), e.getY()).size() != 0) {
+				entity = dungeon.getEntity(e.getX(), e.getY()).get(0);
+			}
+			if (entity != null) entity.interact(this);
+			
 			if (e.getX() < this.getX() && e.getY() == this.getY()) moveLeft();
 			else if (e.getX() > this.getX() && e.getY() == this.getY()) moveRight();
 			else if (e.getX() == this.getX() && e.getY() > this.getY()) moveDown();
 			else if (e.getX() == this.getX() && e.getY() < this.getY()) moveUp();
+			
 		}
 	}
 	
-	
-	
 	public ArrayList<Node> playerPath() {
+		if (findPathTo(playerXPos, playerYPos).size() == 0) {
+			return runAwayPath();
+		}
 		return findPathTo(playerXPos, playerYPos);
 	}
 	
@@ -70,8 +78,6 @@ public class Enemy extends Entity implements Subject, Observer {
 	}
 	
 	public ArrayList<Node> findPathTo(int tarX, int tarY) {
-		
-		//System.out.println("Target coordinate: (" + tarX + "," + tarY + ")");
 		int player_index = 0;
 		int index = 0;
 		
@@ -91,13 +97,11 @@ public class Enemy extends Entity implements Subject, Observer {
 
 		while (!q.isEmpty()) {
 			Node node = q.remove();
-			
 			int x = node.getX();
 			int y = node.getY();
 			int parent_index = node.getIndex();
-			
+	
 			if (x == tarX && y == tarY) {
-				//System.out.println("Found coordinate: (" + x + "," + y + ")");
 				player_index = node.getIndex();
 				break;
 			}
@@ -128,8 +132,8 @@ public class Enemy extends Entity implements Subject, Observer {
 	}
 	
 	private boolean checkMoveable(int x, int y) {
-    	if(!((y < dungeon.getHeight() - 1) && (y >= 0)))	return false;
-    	if(!((x < dungeon.getWidth() - 1) && (x >= 0)))		return false;
+    	if(!((y < dungeon.getHeight()) && (y >= 0)))	return false;
+    	if(!((x < dungeon.getWidth()) && (x >= 0)))		return false;
     		
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
@@ -180,13 +184,12 @@ public class Enemy extends Entity implements Subject, Observer {
 	//------ Subject methods ------
 	@Override
 	public void update(Subject obj) {
-//		if (!(obj instanceof Player)) return;
-//		
-//		Player player = (Player) obj;
-//		this.playerXPos = player.getX();
-//		this.playerYPos = player.getY();
-//		
-//		//this.followPath();
+		if (!(obj instanceof Player)) return;
+		
+		Player player = (Player) obj;
+		this.playerXPos = player.getX();
+		this.playerYPos = player.getY();
+
 	}
 	
 	public void trackPlayerPosition(Player player) {
@@ -195,6 +198,7 @@ public class Enemy extends Entity implements Subject, Observer {
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
             	playerXPos = newValue.intValue();
+            	playerYPos = player.getY();
             	if(player.isInvincible()) {
             		followPath(runAwayPath());
             	} else {
@@ -207,6 +211,8 @@ public class Enemy extends Entity implements Subject, Observer {
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
             	playerYPos = newValue.intValue();
+            	playerXPos = player.getX();
+            	
             	if(player.isInvincible()) {
             		followPath(runAwayPath());
             	} else {
@@ -215,7 +221,7 @@ public class Enemy extends Entity implements Subject, Observer {
             }
         });
     }
-	
+
 	//------ Entity methods ------
 	@Override
 	public boolean movable(Entity obj) {
@@ -233,6 +239,4 @@ public class Enemy extends Entity implements Subject, Observer {
 			obj.delete();
 		}
 	}
-
-
 }
