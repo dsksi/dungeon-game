@@ -47,4 +47,17 @@ public class CompositeGoal implements Goal {
 	public void removeGoal(Goal g) {
 		goals.remove(g);
 	}
+	
+	public ArrayList<Goal> getLeafGoals() {
+		ArrayList<Goal> leafs = new ArrayList<Goal>();
+		for (Goal g: this.goals) {
+			if (g instanceof CompositeGoal) {
+				CompositeGoal compgoal = (CompositeGoal) g;
+				leafs.addAll(compgoal.getLeafGoals());
+			} else {
+				leafs.add(g);
+			}
+		}
+		return leafs;
+	}
 }

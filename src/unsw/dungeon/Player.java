@@ -42,10 +42,16 @@ public class Player extends Entity implements Subject{
         this.treasureCollected = 0;
     }
 
+    public boolean getGameInProgress() {
+    	return dungeon.getGameInProgress();
+    }
+    
     private boolean checkMoveable(int x, int y) {
-    	if(!((y < dungeon.getHeight() - 1) && (y >= 0)))	return false;
-    	if(!((x < dungeon.getWidth() - 1) && (x >= 0)))		return false;
-    		
+
+    	if(!getGameInProgress()) return false;
+    	if(!((y < dungeon.getHeight()) && (y >= 0)))	return false;
+    	if(!((x < dungeon.getWidth()) && (x >= 0)))		return false;
+
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
         	boolean result = true;
@@ -61,6 +67,7 @@ public class Player extends Entity implements Subject{
     	if(this.checkMoveable(this.getX(), this.getY() - 1)) {
     		dungeon.interactItems(this, this.getX(), this.getY() - 1);
     		y().set(getY() - 1);
+    		updateObservers();
     	} else if (this.checkDoor(this.getX(), this.getY() - 1)){
     		dungeon.interactItems(this, this.getX(), this.getY() - 1);
     	}
@@ -70,6 +77,7 @@ public class Player extends Entity implements Subject{
     	if(this.checkMoveable(this.getX(), this.getY() + 1)) {
     		dungeon.interactItems(this, this.getX(), this.getY() + 1);
     		y().set(getY() + 1);
+    		updateObservers();
     	} else if (this.checkDoor(this.getX(), this.getY() + 1)){
     		dungeon.interactItems(this, this.getX(), this.getY() + 1);
     	}
@@ -79,6 +87,7 @@ public class Player extends Entity implements Subject{
     	if(this.checkMoveable(this.getX() - 1, this.getY())) {
     		dungeon.interactItems(this, this.getX() - 1, this.getY());
     		x().set(getX() - 1);
+    		updateObservers();
     	} else if (this.checkDoor(this.getX() - 1, this.getY())){
     		dungeon.interactItems(this, this.getX() - 1, this.getY());
     	}
@@ -88,6 +97,7 @@ public class Player extends Entity implements Subject{
     	if(this.checkMoveable(this.getX() + 1, this.getY())) {
     		dungeon.interactItems(this, this.getX()+1, this.getY());
     		x().set(getX() + 1);
+    		updateObservers();
     	} else if (this.checkDoor(this.getX() + 1, this.getY())){
     		dungeon.interactItems(this, this.getX()+1, this.getY());
     	}
@@ -222,6 +232,10 @@ public class Player extends Entity implements Subject{
 		return false;
 	}
 	
+	public WeaponStrategy getWeaponStrat() {
+		return weaponStrat;
+	}
+	
 	public void setWeaponStrategy(WeaponStrategy wstr) {
 		this.weaponStrat = wstr;
 	}
@@ -256,6 +270,10 @@ public class Player extends Entity implements Subject{
 			}
 		}
 		return false;
+	}
+
+	public boolean completedNonExitGoals() {
+		return dungeon.completedNonExitGoals();
 	}
 
 }

@@ -2,15 +2,10 @@ package unsw.dungeonTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import unsw.dungeon.Bomb;
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.Player;
+import unsw.dungeon.*;
 
 class BombTest {
 
@@ -21,20 +16,26 @@ class BombTest {
 	void setUp() throws Exception {
 		dungeon = new Dungeon(20, 18);
 		player = new Player(dungeon, 1, 1);
+		
+		dungeon.setPlayer(player);
 		bomb = new Bomb(1, 2);
+		
+		GameState gameState = dungeon.getGameState();
+		Exit exit = new Exit(19, 17);
+		dungeon.addEntity(exit);
+		gameState.addSimpleGoal("exit", dungeon);
 		
 		dungeon.addEntity(player);
 		dungeon.addEntity(bomb);
-		dungeon.setPlayer(player);
 	}
 
 	@Test
 	void BombShouldBePickedUp() {
-		assert(player.getBomb() == null);
-		assert(bomb.status().get() == 0);
+		assertNull(player.getBomb());
+		assertTrue(bomb.status().get() == 0);
 		player.moveDown();
-		assert(player.getBomb() == bomb);
-		assert(bomb.status().get() == 1 );
+		assertTrue(player.getBomb() == bomb);
+		assertTrue(bomb.status().get() == 1 );
 	}
 	
 	@Test
@@ -44,18 +45,17 @@ class BombTest {
 		player.moveDown();
 		player.moveDown();
 		
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask() {
-			public void run() {
-				assertNull(bomb);
-			}
-		};
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
-		timer.schedule(task, 3000);
+		assertTrue(bomb.status().get() == 1);
 	}
 	
 	@Test
-	void BombShouldKillPlayer() {
+	void BombShouldKillEntitiesSurroundingIt() {
 		Player player1 = new Player(dungeon, 5, 5);
 		Player player2 = new Player(dungeon, 5, 6);
 		Player player3 = new Player(dungeon, 5, 7);
@@ -77,9 +77,9 @@ class BombTest {
 		dungeon.addEntity(player9);
 		
 		
-		assert(player.getBomb() == null);
+		assertNull(player.getBomb());
 		player.moveDown();
-		assert(player.getBomb() == bomb);
+		assertTrue(player.getBomb() == bomb);
 		
 		player.moveDown();
 		player.moveDown();
@@ -92,7 +92,7 @@ class BombTest {
 		player.moveRight();
 		player.moveRight();
 		
-		assert((player.getX() == 6) && (player.getY() == 6));
+		assertTrue((player.getX() == 6) && (player.getY() == 6));
 		player.dropBomb();
 				
 		player.moveLeft();
@@ -101,13 +101,11 @@ class BombTest {
 		
 		try {
 			Thread.sleep(3000);
-			
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		assert((player1.status().get() == 1) &&
+		assertTrue((player1.status().get() == 1) &&
 				(player2.status().get() == 1) &&
 				(player3.status().get() == 1) &&
 				(player4.status().get() == 1) &&
@@ -117,5 +115,169 @@ class BombTest {
 				(player8.status().get() == 1) &&
 				(player9.status().get() == 1));
 	}
+	
+	@Test
+	void BombShouldNotDestroyWall() {
+		
+		Wall wall = new Wall(1, 3);
+		dungeon.addEntity(wall);
+		
+		player.moveDown();
+		player.dropBomb();
+		player.moveRight();
+		player.moveRight();
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertTrue(dungeon.getEntity(1, 3).contains(wall));
+	}
+	
+	@Test
+	void BombShouldNotDestroyDoorAndKey() {
+		Door door = new Door(1, 3, 1);
+		Key key = new Key(2, 3, 1);
+		
+		dungeon.addEntity(door);
+		dungeon.addEntity(key);
+		
+		player.moveDown();
+		player.dropBomb();
+		player.moveRight();
+		player.moveRight();
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertTrue(dungeon.getEntity(1, 3).contains(door));
+		assertTrue(dungeon.getEntity(2, 3).contains(key));
+		
+	}
+	
+	@Test
+	void BombShouldNotDestroyBombSwordPotion() {
+		Sword sword = new Sword(1, 3);
+		Bomb newBomb = new Bomb(2, 3);
+		InvinciblePotion potion = new InvinciblePotion(3,3);
+		
+		dungeon.addEntity(sword);
+		dungeon.addEntity(newBomb);
+		dungeon.addEntity(potion);
+		
+		player.moveDown();
+		player.dropBomb();
+		player.moveRight();
+		player.moveRight();
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertTrue(dungeon.getEntity(1, 3).contains(sword));
+		assertTrue(dungeon.getEntity(2, 3).contains(newBomb));
+		assertTrue(dungeon.getEntity(3, 3).contains(potion));
+		
+	}
+	
+	@Test
+	void BombShouldNotDestroySwitch() {
+		Switch switch1 = new Switch(1, 3);
+		dungeon.addEntity(switch1);
+		
+		player.moveDown();
+		player.dropBomb();
+		player.moveRight();
+		player.moveRight();
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertTrue(dungeon.getEntity(1, 3).contains(switch1));
+	}
+	
+	@Test
+	void BombShouldNotDestroyExit() {
+		Exit exit = new Exit(1, 3);
+		dungeon.addEntity(exit);
+		
+		player.moveDown();
+		player.dropBomb();
+		player.moveRight();
+		player.moveRight();
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertTrue(dungeon.getEntity(1, 3).contains(exit));
+	}
+	
+	@Test
+	void BombShouldKillEnemy() {
+		Enemy enemy = new Enemy (dungeon, 1, 3);
+		dungeon.addEntity(enemy);
+		
+		player.moveDown();
+		player.dropBomb();
+		player.moveRight();
+		player.moveRight();
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertTrue(enemy.status().get() == 1);
+		assertFalse(dungeon.getEntity(1, 3).contains(enemy));
+	}
+	
+	@Test
+	void BombShouldDestroyBoulder() {
+		Boulder boulder = new Boulder(dungeon, 1, 3);
+		dungeon.addEntity(boulder);
+		
+		player.moveDown();
+		player.dropBomb();
+		player.moveRight();
+		player.moveRight();
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertTrue(boulder.status().get() == 1);
+		assertFalse(dungeon.getEntity(1, 3).contains(boulder));
+		
+	}
+	
+	@Test
+	void BombShouldNotActivateInSpawnedState() {
+		bomb.activate(player);
+				
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertTrue(bomb.status().get() == 0);
+	}
+	
 
 }

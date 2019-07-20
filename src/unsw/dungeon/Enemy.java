@@ -6,11 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 
 public class Enemy extends Entity implements Subject, Observer {
 	
@@ -27,22 +23,35 @@ public class Enemy extends Entity implements Subject, Observer {
 		this.observers = new ArrayList<Observer>();
 	}
 	
+
+	public boolean getGameInProgress() {
+    	return dungeon.getGameInProgress();
+    }
 	
 	// ------ Path finder methods ------ 
 	
 	public void followPath(ArrayList<Node> pathList) {
-		ArrayList<Node> path = pathList;	    
+		ArrayList<Node> path = pathList;	
 		for (Node e : path) {
+			
+			Entity entity = null;
+			if (dungeon.getEntity(e.getX(), e.getY()).size() != 0) {
+				entity = dungeon.getEntity(e.getX(), e.getY()).get(0);
+			}
+			if (entity != null) entity.interact(this);
+			
 			if (e.getX() < this.getX() && e.getY() == this.getY()) moveLeft();
 			else if (e.getX() > this.getX() && e.getY() == this.getY()) moveRight();
 			else if (e.getX() == this.getX() && e.getY() > this.getY()) moveDown();
 			else if (e.getX() == this.getX() && e.getY() < this.getY()) moveUp();
+			
 		}
 	}
 	
-	
-	
 	public ArrayList<Node> playerPath() {
+		if (findPathTo(playerXPos, playerYPos).size() == 0) {
+			return runAwayPath();
+		}
 		return findPathTo(playerXPos, playerYPos);
 	}
 	
@@ -70,8 +79,6 @@ public class Enemy extends Entity implements Subject, Observer {
 	}
 	
 	public ArrayList<Node> findPathTo(int tarX, int tarY) {
-		
-		//System.out.println("Target coordinate: (" + tarX + "," + tarY + ")");
 		int player_index = 0;
 		int index = 0;
 		
@@ -91,13 +98,11 @@ public class Enemy extends Entity implements Subject, Observer {
 
 		while (!q.isEmpty()) {
 			Node node = q.remove();
-			
 			int x = node.getX();
 			int y = node.getY();
 			int parent_index = node.getIndex();
-			
+	
 			if (x == tarX && y == tarY) {
-				//System.out.println("Found coordinate: (" + x + "," + y + ")");
 				player_index = node.getIndex();
 				break;
 			}
@@ -128,9 +133,10 @@ public class Enemy extends Entity implements Subject, Observer {
 	}
 	
 	private boolean checkMoveable(int x, int y) {
-    	if(!((y < dungeon.getHeight() - 1) && (y >= 0)))	return false;
-    	if(!((x < dungeon.getWidth() - 1) && (x >= 0)))		return false;
-    		
+		if(!getGameInProgress()) return false;
+    	if(!((y < dungeon.getHeight()) && (y >= 0)))	return false;
+    	if(!((x < dungeon.getWidth()) && (x >= 0)))		return false;
+
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
         	boolean result = true;
@@ -180,41 +186,18 @@ public class Enemy extends Entity implements Subject, Observer {
 	//------ Subject methods ------
 	@Override
 	public void update(Subject obj) {
-//		if (!(obj instanceof Player)) return;
-//		
-//		Player player = (Player) obj;
-//		this.playerXPos = player.getX();
-//		this.playerYPos = player.getY();
-//		
-//		//this.followPath();
+		if (!(obj instanceof Player)) return;
+		
+		Player player = (Player) obj;
+		this.playerXPos = player.getX();
+		this.playerYPos = player.getY();
+
+		if(player.isInvincible()) {
+			followPath(runAwayPath());
+		} else {
+			followPath(playerPath());
+		}
 	}
-	
-	public void trackPlayerPosition(Player player) {
-    	player.x().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
-            	playerXPos = newValue.intValue();
-            	if(player.isInvincible()) {
-            		followPath(runAwayPath());
-            	} else {
-            		followPath(playerPath());
-            	}
-            }
-        });
-        player.y().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
-            	playerYPos = newValue.intValue();
-            	if(player.isInvincible()) {
-            		followPath(runAwayPath());
-            	} else {
-            		followPath(playerPath());
-            	}
-            }
-        });
-    }
 	
 	//------ Entity methods ------
 	@Override
@@ -233,6 +216,4 @@ public class Enemy extends Entity implements Subject, Observer {
 			obj.delete();
 		}
 	}
-
-
 }
