@@ -35,9 +35,6 @@ public class Lit implements BombState {
 		
 		bomb.delete();
 		dungeon.removeEntity(bomb);
-		// suggest dungeon.remove(Entity);
-		// removes the need for entities to get a list of entities from the dungeon
-		// when it needs to be deleted.
 		return;
 	}
 
