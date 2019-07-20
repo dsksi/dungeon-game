@@ -121,7 +121,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Bomb bomb) {
     	ImageView view = new ImageView(bombImage);
-    	addEntity(bomb, view);
+    	addBomb(bomb, view);
 	}
     
     @Override
@@ -147,6 +147,10 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
     private void addDoor(Entity door, ImageView view) {
     	trackDoor(door, view);
+    	entities.add(0, view);
+    }
+    private void addBomb(Entity bomb, ImageView view) {
+    	trackBomb(bomb, view);
     	entities.add(0, view);
     }
 
@@ -185,9 +189,6 @@ public class DungeonControllerLoader extends DungeonLoader {
             		node.setVisible(true);
             	} else if (newValue.equals(1)) {
             		node.setVisible(false);
-            	} else if (newValue.equals(2)) {
-            		ImageView view = (ImageView) node;
-            		view.setImage(explodeImage);
             	}
             }
         });
@@ -237,6 +238,42 @@ public class DungeonControllerLoader extends DungeonLoader {
 				}
 			}
         	
+        });
+    }
+    
+    private void trackBomb(Entity entity, Node node) {
+        
+    	Bomb bomb = (Bomb) entity;
+    	
+    	GridPane.setColumnIndex(node, entity.getX());
+        GridPane.setRowIndex(node, entity.getY());
+        entity.x().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                    Number oldValue, Number newValue) {
+                GridPane.setColumnIndex(node, newValue.intValue());
+            }
+        });
+        entity.y().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                    Number oldValue, Number newValue) {
+                GridPane.setRowIndex(node, newValue.intValue());
+            }
+        });
+        entity.status().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                    Number oldValue, Number newValue) {
+            	if(newValue.equals(0)) {
+            		node.setVisible(true);
+            	} else if (newValue.equals(1)) {
+            		node.setVisible(false);
+            	} else if (newValue.equals(2)) {
+            		ImageView view = (ImageView) node;
+            		view.setImage(explodeImage);
+            	}
+            }
         });
     }
 

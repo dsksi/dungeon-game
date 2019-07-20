@@ -47,7 +47,7 @@ class BombTest {
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			public void run() {
-				assert(bomb == null);
+				assertNull(bomb);
 			}
 		};
 		
