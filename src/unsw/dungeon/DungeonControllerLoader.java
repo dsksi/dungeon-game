@@ -237,44 +237,44 @@ public class DungeonControllerLoader extends DungeonLoader {
 					view.setImage(openImage);
 				}
 			}
-        	
         });
     }
     
     private void trackBomb(Entity entity, Node node) {
         
-    	Bomb bomb = (Bomb) entity;
-    	
-    	GridPane.setColumnIndex(node, entity.getX());
-        GridPane.setRowIndex(node, entity.getY());
-        entity.x().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
-                GridPane.setColumnIndex(node, newValue.intValue());
-            }
-        });
-        entity.y().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
-                GridPane.setRowIndex(node, newValue.intValue());
-            }
-        });
-        entity.status().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
-            	if(newValue.equals(0)) {
-            		node.setVisible(true);
-            	} else if (newValue.equals(1)) {
-            		node.setVisible(false);
-            	} else if (newValue.equals(2)) {
-            		ImageView view = (ImageView) node;
-            		view.setImage(explodeImage);
-            	}
-            }
-        });
+    	if(entity instanceof Bomb) {
+    		Bomb bomb = (Bomb) entity;
+    		GridPane.setColumnIndex(node, entity.getX());
+            GridPane.setRowIndex(node, entity.getY());
+            bomb.x().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable,
+                        Number oldValue, Number newValue) {
+                    GridPane.setColumnIndex(node, newValue.intValue());
+                }
+            });
+            bomb.y().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable,
+                        Number oldValue, Number newValue) {
+                    GridPane.setRowIndex(node, newValue.intValue());
+                }
+            });
+            bomb.getVisualStatus().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable,
+                        Number oldValue, Number newValue) {
+                	if(newValue.equals(0)) {
+                		node.setVisible(true);
+                	} else if (newValue.equals(1)) {
+                		node.setVisible(false);
+                	} else if (newValue.equals(2)) {
+                		ImageView view = (ImageView) node;
+                		view.setImage(explodeImage);
+                	}
+                }
+            });
+    	}
     }
 
     /**

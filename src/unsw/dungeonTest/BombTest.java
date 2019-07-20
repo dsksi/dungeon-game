@@ -56,26 +56,17 @@ class BombTest {
 	
 	@Test
 	void BombShouldKillEntitiesSurroundingIt() {
-		Player player1 = new Player(dungeon, 5, 5);
-		Player player2 = new Player(dungeon, 5, 6);
-		Player player3 = new Player(dungeon, 5, 7);
-		Player player4 = new Player(dungeon, 6, 5);
-		Player player5 = new Player(dungeon, 6, 6);
-		Player player6 = new Player(dungeon, 6, 7);
-		Player player7 = new Player(dungeon, 7, 5);
-		Player player8 = new Player(dungeon, 7, 6);
-		Player player9 = new Player(dungeon, 7, 7);
+		Player player1 = new Player(dungeon, 5, 6);
+		Player player2 = new Player(dungeon, 6, 5);
+		Player player3 = new Player(dungeon, 6, 6);
+		Player player4 = new Player(dungeon, 6, 7);
+		Player player5 = new Player(dungeon, 7, 6);
 		
 		dungeon.addEntity(player1);
 		dungeon.addEntity(player2);
 		dungeon.addEntity(player3);
 		dungeon.addEntity(player4);
-		dungeon.addEntity(player5);
-		dungeon.addEntity(player6);
-		dungeon.addEntity(player7);
-		dungeon.addEntity(player8);
-		dungeon.addEntity(player9);
-		
+		dungeon.addEntity(player5);		
 		
 		assertNull(player.getBomb());
 		player.moveDown();
@@ -109,11 +100,7 @@ class BombTest {
 				(player2.status().get() == 1) &&
 				(player3.status().get() == 1) &&
 				(player4.status().get() == 1) &&
-				(player5.status().get() == 1) &&
-				(player6.status().get() == 1) &&
-				(player7.status().get() == 1) &&
-				(player8.status().get() == 1) &&
-				(player9.status().get() == 1));
+				(player5.status().get() == 1));
 	}
 	
 	@Test
