@@ -14,6 +14,7 @@ public class Enemy extends Entity implements Subject, Observer {
 	private int playerXPos;
 	private int playerYPos;
 	private ArrayList<Observer> observers;
+	private boolean alive;
 	
 	public Enemy(Dungeon dungeon, int x, int y) {
 		super(x, y);
@@ -21,6 +22,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		this.playerXPos = 0;
 		this.playerYPos = 0;
 		this.observers = new ArrayList<Observer>();
+		this.alive = true;
 	}
 	
 
@@ -133,6 +135,7 @@ public class Enemy extends Entity implements Subject, Observer {
 	}
 	
 	private boolean checkMoveable(int x, int y) {
+		if(!this.alive) return false;
 		if(!getGameInProgress()) return false;
     	if(!((y < dungeon.getHeight()) && (y >= 0)))	return false;
     	if(!((x < dungeon.getWidth()) && (x >= 0)))		return false;
@@ -187,7 +190,7 @@ public class Enemy extends Entity implements Subject, Observer {
 	@Override
 	public void update(Subject obj) {
 		if (!(obj instanceof Player)) return;
-		
+		if (!this.alive) return;
 		Player player = (Player) obj;
 		this.playerXPos = player.getX();
 		this.playerYPos = player.getY();
@@ -208,12 +211,24 @@ public class Enemy extends Entity implements Subject, Observer {
 	@Override
 	public void interact(Entity obj) {
 		if (!(obj instanceof Player)) return;
-		
+		if (! this.getGameInProgress()) return;
+		if (!this.alive) return;
 		Player player = (Player) obj;
 		if (player.attack(this)) {
 			updateObservers();
 		} else {
 			obj.delete();
 		}
+	}
+
+
+	public boolean isAlive() {
+		return this.alive;
+	}
+
+
+	public void isDead() {
+		this.alive = false;
+		this.delete();
 	}
 }

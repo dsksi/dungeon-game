@@ -75,37 +75,36 @@ public class GameState {
 		return g;	
 	}
 	
-	private CompositeGoal createCompositeGoal(String type) {
+	private CompositeGoal createCompositeGoal(String type, JSONArray subgoals, Dungeon dungeon) {
 		CompositeGoal cg = new CompositeGoal(type);
+		cg = addSubGoals(cg, subgoals, dungeon);
+		return cg;
+	}
+	
+	private CompositeGoal addSubGoals(CompositeGoal cg, JSONArray subgoals, Dungeon dungeon) {
+		for (int i = 0; i < subgoals.length(); i++) {
+            JSONObject goal = subgoals.getJSONObject(i);
+            String sg = goal.getString("goal");
+            Goal g;
+            if(sg.equals("OR") || sg.equals("AND")) {
+            	JSONArray tmpSub = goal.getJSONArray("subgoals");
+            	g = createCompositeGoal(sg, tmpSub, dungeon);
+            } else {
+            	g = createSimpleGoal(sg, dungeon);
+            }
+             
+            cg.addGoal(g);
+        }
 		return cg;
 	}
 	
 	public void addCompositeGoal(String type, JSONArray subgoals, Dungeon dungeon) {
-		CompositeGoal cg = createCompositeGoal(type);
-		for (int i = 0; i < subgoals.length(); i++) {
-            JSONObject goal = subgoals.getJSONObject(i);
-            String sg = goal.getString("goal");
-            Goal g = createSimpleGoal(sg, dungeon);
-            cg.addGoal(g);
-        }
-		
+		CompositeGoal cg = createCompositeGoal(type, subgoals, dungeon);
 		this.goal = cg;
 	}
 	
 	public void addSimpleGoal(String type, Dungeon dungeon) {
 		this.goal = createSimpleGoal(type, dungeon);
 	}
-
-	public boolean completedNonExitGoals() {
-		if(!(goal instanceof CompositeGoal)) return true;
-		CompositeGoal compGoal = (CompositeGoal) goal;
-		ArrayList<Goal> leafs = compGoal.getLeafGoals();
-		for(Goal lg : leafs) {
-			if (lg instanceof ExitGoal) continue;
-			if (!(lg.isComplete())) return false;
-		}
-		return true;
-	}
-
 	
 }

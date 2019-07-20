@@ -9,12 +9,8 @@ public class Exit extends Entity {
 	//------ Entity methods ------
 	@Override
 	public boolean movable(Entity obj) {
-		if(!(obj instanceof Player)) return false;
-		Player player = (Player) obj;
-		if(player.completedNonExitGoals()) {
-			return true;
-		}
-		return false;
+//		if(!(obj instanceof Player)) return false;
+		return true;
 	}
 
 	@Override

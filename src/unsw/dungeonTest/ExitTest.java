@@ -46,21 +46,5 @@ class ExitTest {
 		assertTrue(player.getX() == 0);
 	}
 	
-	@Test
-	void testPlayerCanNotMoveToExitWhenOtherGoalsNotComplete() {
-		JSONArray subgoals = new JSONArray();
-
-		subgoals.put(treasureGoal);
-		subgoals.put(exitGoal);
-	    Treasure t1 = new Treasure(1,4);
-	    dungeon.addEntity(t1);
-		gameState.addCompositeGoal("AND", subgoals, dungeon);
-		Goal g = gameState.getGoal();
-		assertFalse(g.isComplete());
-		
-		player.moveDown();
-		assertTrue(player.getY() == 0);
-		assertTrue(player.getX() == 0);
-	}
 
 }
