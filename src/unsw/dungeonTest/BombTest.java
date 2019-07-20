@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.Bomb;
 import unsw.dungeon.Dungeon;
+import unsw.dungeon.Exit;
+import unsw.dungeon.GameState;
 import unsw.dungeon.Player;
 
 class BombTest {
@@ -21,11 +23,17 @@ class BombTest {
 	void setUp() throws Exception {
 		dungeon = new Dungeon(20, 18);
 		player = new Player(dungeon, 1, 1);
+		
+		dungeon.setPlayer(player);
 		bomb = new Bomb(1, 2);
+		
+		GameState gameState = dungeon.getGameState();
+		Exit exit = new Exit(19, 17);
+		dungeon.addEntity(exit);
+		gameState.addSimpleGoal("exit", dungeon);
 		
 		dungeon.addEntity(player);
 		dungeon.addEntity(bomb);
-		dungeon.setPlayer(player);
 	}
 
 	@Test
