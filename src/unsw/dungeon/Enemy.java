@@ -7,7 +7,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-
+/**
+ * An enemy in the dungeon that wanders around or chases the player if it finds him.
+ * @author luke Yong
+ *
+ */
 public class Enemy extends Entity implements Subject, Observer {
 	
 	private Dungeon dungeon;
@@ -16,6 +20,12 @@ public class Enemy extends Entity implements Subject, Observer {
 	private ArrayList<Observer> observers;
 	private boolean alive;
 	
+	/**
+	 * Constructor for enemy . 
+	 * @param dungeon : The instance of the dungeon
+	 * @param x : X coordinate of the enemy
+	 * @param y : Y coordinate of the enemy
+	 */
 	public Enemy(Dungeon dungeon, int x, int y) {
 		super(x, y);
 		this.dungeon = dungeon;
@@ -25,13 +35,20 @@ public class Enemy extends Entity implements Subject, Observer {
 		this.alive = true;
 	}
 	
-
+	/**
+	 * Method to check if the game is in progress (Player has not completed all goals or the Player dies).
+	 * @return Returns true if game is still in progress
+	 */
 	public boolean getGameInProgress() {
     	return dungeon.getGameInProgress();
     }
 	
 	// ------ Path finder methods ------ 
 	
+	/**
+	 * Method that moves the enemy position given a path in the form of a list of Nodes(coordinates).
+	 * @param pathList : List of type Node
+	 */
 	public void followPath(ArrayList<Node> pathList) {
 		ArrayList<Node> path = pathList;	
 		for (Node e : path) {
@@ -50,6 +67,10 @@ public class Enemy extends Entity implements Subject, Observer {
 		}
 	}
 	
+	/**
+	 * Generates a path to the player or a random path if player cannot be reached.
+	 * @return Returns a list of type Node containing a path to player or random coordinate.
+	 */
 	public ArrayList<Node> playerPath() {
 		if (findPathTo(playerXPos, playerYPos).size() == 0) {
 			return runAwayPath();
@@ -57,6 +78,10 @@ public class Enemy extends Entity implements Subject, Observer {
 		return findPathTo(playerXPos, playerYPos);
 	}
 	
+	/**
+	 * Generates a path to a random coordinate.
+	 * @return Returns a list of type Node containing a path to a random coordinate
+	 */
 	public ArrayList<Node> runAwayPath() {
 		// Using random generator to determine path
 		
@@ -79,6 +104,12 @@ public class Enemy extends Entity implements Subject, Observer {
 		return findPathTo(newX, newY);
 	}
 	
+	/**
+	 * A shortest path finder which uses the BFS algorithm to a given x, y coordinate.
+	 * @param tarX : The target X coordinate
+	 * @param tarY : The target Y coordinate
+	 * @return Returns a list of type Node containing a path to the target coordinate.
+	 */
 	public ArrayList<Node> findPathTo(int tarX, int tarY) {
 		int player_index = 0;
 		int index = 0;
@@ -132,6 +163,12 @@ public class Enemy extends Entity implements Subject, Observer {
 	
 	}
 	
+	/**
+	 * Helper function to check if a given coordinate can be moved to.
+	 * @param x : X coordinate for checking
+	 * @param y : Y coordinate for checking
+	 * @return Returns true if the given coordinate can be moved to.
+	 */
 	private boolean checkMoveable(int x, int y) {
 		if(!this.alive) return false;
 		if(!getGameInProgress()) return false;
@@ -185,6 +222,9 @@ public class Enemy extends Entity implements Subject, Observer {
 	}
 	
 	//------ Subject methods ------
+	/**
+	 * Updates the enemy of the player position. Stops updating if game is completed or enemy dies.
+	 */
 	@Override
 	public void update(Subject obj) {
 		if (!(obj instanceof Player)) return;
@@ -206,7 +246,7 @@ public class Enemy extends Entity implements Subject, Observer {
 	public boolean movable(Entity obj) {
 		return true;
 	}
-
+	
 	@Override
 	public void interact(Entity obj) {
 		if (!(obj instanceof Player)) return;
@@ -220,12 +260,17 @@ public class Enemy extends Entity implements Subject, Observer {
 		}
 	}
 
-
+	/**
+	 * The enemy's alive status
+	 * @return Returns the enemy's status
+	 */
 	public boolean isAlive() {
 		return this.alive;
 	}
 
-
+	/**
+	 * Changes the enemy's alive status to false and deletes it from the map.
+	 */
 	public void isDead() {
 		this.alive = false;
 		this.delete();

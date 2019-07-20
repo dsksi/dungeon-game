@@ -145,15 +145,6 @@ public class Dungeon {
 		}
 		return null;
 	}
-	
-	public Enemy getEnemy() {
-		for(Entity e : this.entities) {
-			if (e instanceof Enemy) {
-				return (Enemy) e;
-			}
-		}
-		return null;
-	}
 
 	public int getEnemyCount() {
 		int count = 0;

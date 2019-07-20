@@ -93,29 +93,38 @@ class EnemyTest {
     }
     
     @Test
-    void testInteract() {
-        System.out.println("\n------ Testing Interact method ------");
+    void testInteractPlayer() {
+        System.out.println("\n------ Testing Interact with normal Player ------");
         enemy.interact(player);
-        assertEquals(player.status().get(), 1);
-        assertEquals(enemy.status().get(), 0);
+        assertFalse(enemy.getGameInProgress());
+        assertTrue(enemy.isAlive());
         
-        player.restore();
-        Sword sword = new Sword(1,1);
-        player.pickUpSword(sword);
-        sword.interact(player);
-        enemy.interact(player);
-        assertEquals(player.status().get(), 0);
-        assertEquals(enemy.status().get(), 1);
-        
-        player.restore();
-        InvinciblePotion potion = new InvinciblePotion(1,1);
-        player.drinkPotion(potion);
-        enemy.interact(player);
-        assertEquals(player.status().get(), 0);
-        assertEquals(enemy.status().get(), 1);
         
         
         System.out.println("Passed");
+    }
+    
+    @Test
+    void testInteractSwordPlayer() {
+    	System.out.println("\n------ Testing Interact with Player with sword ------");
+    	Sword sword = new Sword(1,1);
+        player.pickUpSword(sword);
+        sword.interact(player);
+        enemy.interact(player);
+        assertTrue(enemy.getGameInProgress());
+        assertFalse(enemy.isAlive());
+        
+    }
+    
+    @Test
+    void testInteractPotionPlayer() {
+    	System.out.println("\n------ Testing Interact with Player with potion ------");
+    	InvinciblePotion potion = new InvinciblePotion(1,1);
+        player.drinkPotion(potion);
+        enemy.interact(player);
+        assertTrue(enemy.getGameInProgress());
+        assertFalse(enemy.isAlive());
+        
     }
 
 }
