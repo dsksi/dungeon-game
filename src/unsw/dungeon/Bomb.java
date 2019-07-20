@@ -3,19 +3,47 @@ package unsw.dungeon;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
+/**
+ * A bomb entity that is able to be picked up and dropped/activated. The bomb will kill players, enemies and boulders that are in adjacent coordinates.
+ * @author zenmint
+ *
+ */
 public class Bomb extends Entity {
 
 	private BombState state;
+	private IntegerProperty visualStatus;
+	
+	/**
+	 * Initializes a new bomb object.
+	 * @param x X coordinate of bomb object
+	 * @param y Y coordinate of bomb object
+	 * @return Returns a new bomb object.
+	 */
 	public Bomb(int x, int y) {
 		super(x, y);
 		this.state = new Spawned();
+		this.visualStatus = new SimpleIntegerProperty(0);
 	}
-
+	
+	/**
+	 * Check if an entity can move over the bomb.
+	 * Should always return true.
+	 * @param obj Entity to move over bomb
+	 * @return boolean Always returns true
+	 */
 	@Override
 	public boolean movable(Entity obj) {
 		return true;
 	}
 	
+	/**
+	 * Entity interacts with bomb.
+	 * Should call state.pickUp if entity is a player.
+	 * @param Entity to interact with bomb
+	 */
 	public void interact(Entity obj) {
 		if (obj instanceof Player) {
 			Player player = (Player) obj;
@@ -23,6 +51,13 @@ public class Bomb extends Entity {
 		}
 	}
 	
+	/**
+	 * Gives the bomb a lit state if already picked up.
+	 * Bomb tries to change visual state to show explosion after 1.5 seconds.
+	 * Tries to explode the bomb 2 seconds after activation.
+	 * Bomb only explodes if in the unlit state before activation.
+	 * @param player Player activating the bomb
+	 */
 	public void activate(Player player) {
 		state = state.activateBomb(this, player);
 		Bomb bombRef = this;
@@ -46,9 +81,24 @@ public class Bomb extends Entity {
 		
 		player.getDungeon().removeEntity(this);
 	}
-	
-	public void exploding() {
-		status().set(2);
+
+	/**
+	 * Returns the visual status of the bomb.
+	 * @return Returns the visual status of the bomb
+	 */
+	public IntegerProperty getVisualStatus() {
+		return visualStatus;
 	}
+
+	/**
+	 * 
+	 * @param visualStatus The visual status of the bomb
+	 * @return Sets the visual status to the given visual status.
+	 */
+	public void setVisualStatus(int visualStatus) {
+		this.visualStatus.set(visualStatus);
+	}
+	
+	
 
 }
