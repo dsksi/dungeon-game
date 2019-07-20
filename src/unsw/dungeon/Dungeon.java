@@ -8,7 +8,6 @@ import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.layout.GridPane;
 
 /**
  * A dungeon in the interactive dungeon player.

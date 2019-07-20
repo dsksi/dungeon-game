@@ -9,6 +9,7 @@ import java.util.Random;
 
 /**
  * An enemy in the dungeon that wanders around or chases the player if it finds him.
+ * The enemy runs away from the player when the player is invincible.
  * @author luke Yong
  *
  */

@@ -1,21 +1,38 @@
 package unsw.dungeon;
 
+/**
+ * A switch goal that tracks the number of switches activated
+ * The goal is completed when number of activated switches equal total switches
+ * @author Siyin Zhou
+ *
+ */
 public class SwitchGoal implements Goal, Observer {
 
 	private int totalSwitches;
 	private int switchActivated;
 	
+	/**
+	 * Create a switch goal given the total number of switches
+	 * @param count
+	 * @precondition count is positive
+	 */
 	public SwitchGoal(int count) {
 		this.totalSwitches = count;
 		this.switchActivated = 0;
 	}
 	
-	
+	/**
+	 * Get total number of switches of goal
+	 * @return total
+	 */
 	public int getTotalSwitches() {
 		return totalSwitches;
 	}
 
-
+	/**
+	 * Get number of switches currently activated
+	 * @return
+	 */
 	public int getSwitchActivated() {
 		return switchActivated;
 	}

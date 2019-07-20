@@ -3,7 +3,7 @@ package unsw.dungeon;
 import java.util.ArrayList;
 
 /**
- * A boulder in the dungeon that can me moved by the player.
+ * A boulder in the dungeon that can be moved by the player.
  * @author luke Yong
  *
  */

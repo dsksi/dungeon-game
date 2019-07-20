@@ -124,7 +124,7 @@ class DoorTest {
 		dungeon.addEntity(door3);
 		dungeon.addEntity(door4);
 		dungeon.addEntity(enemy);
-		dungeon.setUp();
+		dungeon.setUpEnemy();
 				
 		assertTrue((enemy.getX() == 1) && (enemy.getY() == 4));
 		player.moveDown();

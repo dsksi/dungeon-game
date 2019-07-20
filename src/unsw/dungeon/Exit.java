@@ -1,5 +1,10 @@
 package unsw.dungeon;
 
+/**
+ * An exit in the dungeon
+ * @author Siyin Zhou
+ *
+ */
 public class Exit extends Entity {
 	
 	public Exit(int x, int y) {

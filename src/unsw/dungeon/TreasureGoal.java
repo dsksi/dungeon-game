@@ -1,5 +1,10 @@
 package unsw.dungeon;
 
+/**
+ * A treasure goal that tracks the number of treasure collected by the player
+ * @author Siyin Zhou
+ *
+ */
 public class TreasureGoal implements Goal, Observer {
 
 	

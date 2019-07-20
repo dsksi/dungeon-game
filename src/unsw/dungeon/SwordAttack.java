@@ -2,7 +2,7 @@ package unsw.dungeon;
 
 /**
  * A weapon strategy stating the player has a Sword.
- * @author Amy
+ * @author Siyin Zhou
  *
  */
 public class SwordAttack implements WeaponStrategy {

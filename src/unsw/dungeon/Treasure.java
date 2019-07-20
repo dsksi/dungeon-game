@@ -1,13 +1,18 @@
 package unsw.dungeon;
 
+/**
+ * A treasure that can be picked up by the player in the dungeon
+ * @author Siyin Zhou
+ *
+ */
 public class Treasure extends Entity{
 
 	private boolean isCollected;
 	
 	/**
 	 * Create a treasure given the coordinates
-	 * @param x
-	 * @param y
+	 * @param x : x coordinate of treasure
+	 * @param y : y coordinate of treasure
 	 */
 	public Treasure(int x, int y) {
 		super(x, y);

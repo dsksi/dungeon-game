@@ -3,6 +3,13 @@ package unsw.dungeon;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Tracks the game state of the dungeon game
+ * The game is completed when the player wins or loses the game
+ * The game state tracks all the goals of the game
+ * @author momo
+ *
+ */
 public class GameState {
 
 	private Goal goal;

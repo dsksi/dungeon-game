@@ -1,5 +1,10 @@
 package unsw.dungeon;
 
+/**
+ * An exit goal for the dungeon game
+ * @author momo
+ *
+ */
 public class ExitGoal implements Goal {
 
 	private Player player;

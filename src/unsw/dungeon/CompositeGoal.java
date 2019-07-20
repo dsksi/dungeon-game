@@ -2,6 +2,14 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 
+/**
+ * A class for composite goal that implements the Goal interface.
+ * A composite goal can be of type AND or OR.
+ * An AND composite goal is completed when all the subgoals are complete.
+ * A OR composite goal is completed when any of the subgoals is complete.
+ * @author Siyin Zhou
+ *
+ */
 public class CompositeGoal implements Goal {
 
 	private ArrayList<Goal> goals = new ArrayList<Goal>();

@@ -1,5 +1,10 @@
 package unsw.dungeon;
 
+/**
+ * A simple Enemy Goal that tracks whether the player has killed all the enemies in the dungeon
+ * @author Siyin Zhou
+ *
+ */
 public class EnemyGoal implements Goal, Observer {
 
 	private int defeated;

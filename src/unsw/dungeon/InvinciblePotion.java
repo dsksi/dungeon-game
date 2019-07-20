@@ -1,5 +1,11 @@
 package unsw.dungeon;
 
+/**
+ * An invincible potion in the dungeon game
+ * Player gains invincibility when player drink the potion
+ * @author Siyin Zhou
+ *
+ */
 public class InvinciblePotion extends Entity {
 
 	
