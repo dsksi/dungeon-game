@@ -13,7 +13,6 @@ public class Spawned implements BombState {
 		} else {
 			return this;
 		}
-
 	}
 
 	@Override

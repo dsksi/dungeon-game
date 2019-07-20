@@ -32,7 +32,6 @@ public class Lit implements BombState {
 				}
 			}
 		}
-		
 		bomb.delete();
 		dungeon.removeEntity(bomb);
 		return;
@@ -41,7 +40,5 @@ public class Lit implements BombState {
 	@Override
 	public void exploding(Bomb bomb, Player player) {
 		bomb.exploding();
-		
 	}
-
 }
