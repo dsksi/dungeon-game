@@ -103,7 +103,7 @@
         "type": "player"
       },
       {
-        "x": 6,
+        "x": 2,
         "y": 1,
         "type": "sword"
       },
@@ -617,13 +617,18 @@
       "goal": "AND",
       "subgoals": [
         {
-          "goal": "enemies"
-        },
-        {
-          "goal": "treasure"
-        },
-        {
           "goal": "exit"
+        },
+        {
+          "goal": "OR",
+          "subgoals": [
+            {
+              "goal": "treasure"
+            },
+            {
+              "goal": "enemies"
+            }
+          ]
         }
       ]
     }

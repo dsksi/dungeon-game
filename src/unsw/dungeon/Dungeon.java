@@ -216,10 +216,6 @@ public class Dungeon {
 		}
 	}
 
-	public boolean completedNonExitGoals() {
-		return gameState.completedNonExitGoals();
-	}
-
 	public boolean getGameInProgress() {
 		return this.gameState.isGameInProgress();
 	}

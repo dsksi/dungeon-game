@@ -150,8 +150,9 @@ public class Player extends Entity implements Subject{
 	public void interact(Entity obj) {
 		if (obj instanceof Enemy) {
 			Enemy enemy = (Enemy) obj;
+			if(!enemy.isAlive()) return;
 			if (!(attack(enemy))) {
-				System.out.println("can not attack enemy");
+				//System.out.println("can not attack enemy");
 				this.delete();
 			}
 		}
@@ -193,7 +194,7 @@ public class Player extends Entity implements Subject{
 
 	@Override
 	public void registerObserver(Observer o) {
-		System.out.println("add observer");
+		//System.out.println("add observer");
 		observers.add(o);
 	}
 
@@ -219,14 +220,19 @@ public class Player extends Entity implements Subject{
 	
 	public boolean attack(Entity obj) {
 		if (!(obj instanceof Enemy)) return false;
+		Enemy enemy = (Enemy) obj;
 		if (isInvincible()) {
-			obj.delete();
+			enemy.isDead();
+			//removeObserver(enemy);
+			enemy.updateObservers();
 			return true;
 		} else if (weaponStrat.attack(obj)) {
 			if(!(weaponStrat.hasDurability())) {
 				dropWeapon();
 			}
-			obj.delete();
+			enemy.isDead();
+			//removeObserver(enemy);
+			enemy.updateObservers();
 			return true;
 		}
 		return false;
@@ -270,10 +276,6 @@ public class Player extends Entity implements Subject{
 			}
 		}
 		return false;
-	}
-
-	public boolean completedNonExitGoals() {
-		return dungeon.completedNonExitGoals();
 	}
 
 }

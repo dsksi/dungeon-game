@@ -1,105 +1,121 @@
 package unsw.dungeonTest;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.*;
-import java.io.FileNotFoundException;
+
 import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.*;
 
-public class EnemyTest {
+
+class EnemyTest {
 	
 	Dungeon dungeon;
+	Player player;
+	Enemy enemy;
 	
-	@Before 
-	public void createDungeon() {
-		dungeon = new Dungeon(10, 10);
+	@BeforeEach
+	void setUp() {
+		dungeon = new Dungeon(5, 5);
+		player = new Player(dungeon, 1, 1);	
+		enemy = new Enemy(dungeon, 3, 3);
+		Exit exit = new Exit(4, 4);
+		
+		dungeon.addEntity(exit);
+		dungeon.addEntity(enemy);
+		dungeon.addEntity(player);
+		
+		dungeon.setPlayer(player);
+		GameState gameState = dungeon.getGameState();
+		gameState.addSimpleGoal("exit", dungeon);
+
 	}
 	
 	@Test
-	public void findPlayerPathTest() {
-
+	void testPlayerPath() {
         System.out.println("\n------ Testing playerPath method ------");
-        Player player = new Player(dungeon, 1, 1);
-        Enemy enemy = new Enemy(dungeon, 9, 9);
-        dungeon.addEntity(player);
-        dungeon.addEntity(enemy);
-        dungeon.setPlayer(player);
-        dungeon.setUp();
-        player.moveDown();
-        // TODO add asserts
-        System.out.println("Enemy at (" + enemy.getX() + "," + enemy.getY() + ")" + " Player at (" + player.getX() + "," + player.getY() + ")");
+        ArrayList<Node> pathList = new ArrayList<Node>();
+        pathList = enemy.playerPath();
+        assertNotEquals(pathList, 0, "pathList equals 0");
         System.out.println("Passed");
 	}
 	
-    @Test
-    public void followPathTest() {
-    	System.out.println("\n------ Testing EnemyFollowPath method ------");
-    	Player player = new Player(dungeon, 1, 1);
-        Enemy enemy = new Enemy(dungeon, 9, 9);
-        dungeon.addEntity(player);
-        dungeon.addEntity(enemy);
-        player.registerObserver(enemy);
-        player.updateObservers();
+	@Test
+	void testRunawayPath() {
+        System.out.println("\n------ Testing runawayPath method ------");
+        ArrayList<Node> pathList = enemy.runAwayPath();
+        assertNotEquals(pathList, 0, "pathList equals 0");
+        System.out.println("Passed");
+	}
+	
+	@Test
+	void testFollowPath() {
+    	System.out.println("\n------ Testing followPath method ------");
+        System.out.println("Enemy at (" + enemy.getX() + "," +enemy.getY() + ")"); 
+    	System.out.println("Setting findPath to (0,4)");
+
+        ArrayList<Node> pathList = enemy.findPathTo(0, 4);
         
-        System.out.println("Enemy at (" + enemy.getX() + "," +enemy.getY() + ")" + " Player at (" + player.getX() + "," + player.getY() + ")");        
         System.out.println("Enemy following path...");
-        ArrayList<Node> pathList = enemy.playerPath();
         enemy.followPath(pathList);
-        System.out.println("Enemy now at (" + enemy.getX() + "," +enemy.getY() + ")" + " Player now at (" + player.getX() + "," + player.getY() + ")");
-        assertEquals(enemy.getX(), player.getX(), "Enemy X != Player X");
-        assertEquals(enemy.getY(), player.getY(), "Enemy Y != Player Y");
+        System.out.println("Enemy now at (" + enemy.getX() + "," +enemy.getY() + ")");
+        
+        assertEquals(enemy.getX(), 0, "Enemy X != Player X");
+        assertEquals(enemy.getY(), 4, "Enemy Y != Player Y");
         System.out.println("Enemy at player position");
         System.out.println("Passed");    
-    }
-    
-    @Test 
-    public void followPlayer() {
-    	Player player = new Player(dungeon, 1, 1);
-        Enemy enemy = new Enemy(dungeon, 9, 9);
-        dungeon.addEntity(player);
-        dungeon.addEntity(enemy);
-        player.registerObserver(enemy);
-        player.updateObservers();
-    	
-        System.out.println("\n------ Moving Player ------");
-        System.out.println("Player at (" + player.getX() + "," + player.getY() + ")");
-        player.moveDown();
-        player.moveDown();
-        player.moveRight();
-        player.moveRight();
-        player.moveRight();
-        System.out.println("Player now at (" + player.getX() + "," + player.getY() + ")");
-        System.out.println("Enemy at (" + enemy.getX() + "," + enemy.getY() + ")" + " Player at (" + player.getX() + "," + player.getY() + ")");
-        player.updateObservers();    
-        ArrayList<Node> pathList = enemy.playerPath();
-        assertNotNull(pathList, "Path list is Null");
-        
-        System.out.println("Enemy following path...");
-        enemy.followPath(pathList);
-        assertEquals(enemy.getX(), player.getX(), "Enemy X != Player X"); 
-        assertEquals(enemy.getY(), player.getY(), "Enemy Y != Player Y");
-        System.out.println("Enemy now at (" + enemy.getX() + "," + enemy.getY() + ")" + " Player now at (" + player.getX() + "," + player.getY() + ")");
-
-        System.out.println("Passed");    }
+    }    
     
     @Test
-    public void runAway() {
-    	Player player = new Player(dungeon, 1, 1);
-        Enemy enemy = new Enemy(dungeon, 9, 9);
-        dungeon.addEntity(player);
-        dungeon.addEntity(enemy);
-        player.registerObserver(enemy);
-        player.updateObservers();
-        
-        System.out.println("\n------ Testing RunawayPath method ------");
+    void testRunAway() {        
+        System.out.println("\n------ Testing followRunawayPath method ------");
         System.out.println("Enemy at (" + enemy.getX() + "," + enemy.getY() + ")" + " Player at (" + player.getX() + "," + player.getY() + ")");
-        player.updateObservers();
         ArrayList<Node> pathList = enemy.runAwayPath();
         enemy.followPath(pathList);
         System.out.println("Enemy now at (" + enemy.getX() + "," + enemy.getY() + ")" + " Player now at (" + player.getX() + "," + player.getY() + ")");
-        //assert enemy.getX() != player.getX() || enemy.getY() != player.getY();
+        assert (enemy.getX() != player.getX() || (enemy.getY() != player.getY()));
         System.out.println("Enemy ran away from player position");
-        System.out.println("Passed");	}
-	
+        System.out.println("Passed");	
+    }
+    
+    @Test
+    void testFollowPlayer() {
+        System.out.println("\n------ Testing Update method ------");
+        System.out.println("Enemy at (" + enemy.getX() + "," + enemy.getY() + ")" + " Player at (" + player.getX() + "," + player.getY() + ")");
+        player.registerObserver(enemy);
+        enemy.update(player);
+        System.out.println("Enemy now at (" + enemy.getX() + "," + enemy.getY() + ")" + " Player now at (" + player.getX() + "," + player.getY() + ")");
+        assertEquals(enemy.getX(), player.getX(), "Enemy X != Player X");
+        assertEquals(enemy.getY(), player.getY(), "Enemy Y != Player Y");
+        System.out.println("Passed");
+    }
+    
+    @Test
+    void testInteract() {
+        System.out.println("\n------ Testing Interact method ------");
+        enemy.interact(player);
+        assertEquals(player.status().get(), 1);
+        assertEquals(enemy.status().get(), 0);
+        
+        player.restore();
+        Sword sword = new Sword(1,1);
+        player.pickUpSword(sword);
+        sword.interact(player);
+        enemy.interact(player);
+        assertEquals(player.status().get(), 0);
+        assertEquals(enemy.status().get(), 1);
+        
+        player.restore();
+        InvinciblePotion potion = new InvinciblePotion(1,1);
+        player.drinkPotion(potion);
+        enemy.interact(player);
+        assertEquals(player.status().get(), 0);
+        assertEquals(enemy.status().get(), 1);
+        
+        
+        System.out.println("Passed");
+    }
+
 }
