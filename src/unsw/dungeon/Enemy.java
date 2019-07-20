@@ -56,7 +56,6 @@ public class Enemy extends Entity implements Subject, Observer {
 	}
 	
 	public ArrayList<Node> runAwayPath() {
-		
 		// Using random generator to determine path
 		
 		Random rand = new Random();
@@ -71,8 +70,8 @@ public class Enemy extends Entity implements Subject, Observer {
 			randX = rand.nextInt(dungeon.getHeight());
 			randY = rand.nextInt(dungeon.getWidth());
 			
-			newX = (randX + playerXPos)%dungeon.getHeight();
-			newY = (randY + playerYPos)%dungeon.getWidth();
+			newX = (randX + playerXPos + 1)%dungeon.getHeight();
+			newY = (randY + playerYPos + 1)%dungeon.getWidth();
 		}
 		
 		return findPathTo(newX, newY);
@@ -81,7 +80,6 @@ public class Enemy extends Entity implements Subject, Observer {
 	public ArrayList<Node> findPathTo(int tarX, int tarY) {
 		int player_index = 0;
 		int index = 0;
-		
 		Queue<Node> q = new LinkedList<Node>();
 		ArrayList<Node> predecessor = new ArrayList<Node>();
 		boolean[][] visited = new boolean[dungeon.getHeight()+1][dungeon.getWidth()+1];

@@ -151,7 +151,7 @@ public class Player extends Entity implements Subject{
 		if (obj instanceof Enemy) {
 			Enemy enemy = (Enemy) obj;
 			if (!(attack(enemy))) {
-				System.out.println("can not attack enemy");
+				//System.out.println("can not attack enemy");
 				this.delete();
 			}
 		}
@@ -193,7 +193,7 @@ public class Player extends Entity implements Subject{
 
 	@Override
 	public void registerObserver(Observer o) {
-		System.out.println("add observer");
+		//System.out.println("add observer");
 		observers.add(o);
 	}
 
