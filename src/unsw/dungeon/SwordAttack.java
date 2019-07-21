@@ -24,7 +24,7 @@ public class SwordAttack implements WeaponStrategy {
 		if (!(obj instanceof Enemy)) return false;
 		Enemy enemy = (Enemy) obj;
 		if(this.durability < 1) return false;
-		enemy.delete();
+		enemy.isDead();
 		this.durability--;
 		return true;
 	}

@@ -1,10 +1,15 @@
-package unsw.dungeon;
+package unsw.dungeonTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import unsw.dungeon.Boulder;
+import unsw.dungeon.Dungeon;
+import unsw.dungeon.Player;
+import unsw.dungeon.Switch;
 
 class SwitchTest {
 

@@ -255,7 +255,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		if (!this.alive) return;
 		Player player = (Player) obj;
 		if (player.attack(this)) {
-			updateObservers();
+			System.out.println("player attacked this enemy, update");
 		} else {
 			obj.delete();
 		}
@@ -274,6 +274,8 @@ public class Enemy extends Entity implements Subject, Observer {
 	 */
 	public void isDead() {
 		this.alive = false;
+		updateObservers();
 		this.delete();
+		
 	}
 }

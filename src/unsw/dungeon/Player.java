@@ -201,11 +201,12 @@ public class Player extends Entity implements Subject{
 
 	@Override
 	public void interact(Entity obj) {
+		if (! this.getGameInProgress()) return;
 		if (obj instanceof Enemy) {
 			Enemy enemy = (Enemy) obj;
 			if(!enemy.isAlive()) return;
 			if (!(attack(enemy))) {
-				//System.out.println("can not attack enemy");
+				System.out.println("can not attack enemy");
 				this.delete();
 			}
 		}
@@ -310,14 +311,11 @@ public class Player extends Entity implements Subject{
 		Enemy enemy = (Enemy) obj;
 		if (isInvincible()) {
 			enemy.isDead();
-			enemy.updateObservers();
 			return true;
 		} else if (weaponStrat.attack(obj)) {
 			if(!(weaponStrat.hasDurability())) {
 				dropWeapon();
 			}
-			enemy.isDead();
-			enemy.updateObservers();
 			return true;
 		}
 		return false;

@@ -27,14 +27,17 @@ class EnemyGoalTest {
 
 	@Test
 	void testEnemyGoalSuccessNoEnemy() {
+		System.out.println("------ Tests enemy goal no enemy--------");
 		EnemyGoal eg = new EnemyGoal(0);
 		assertTrue(eg.getDefeated() == 0);
 		assertTrue(eg.getTotalEnemies() == 0);
 		assertTrue(eg.isComplete());
+		System.out.println("Passed");
 	}
 	
 	@Test
 	void testEnemyGoalSuccessInitial() {
+		System.out.println("------ Tests enemy goal initial--------");
 		Enemy e1 = new Enemy(dungeon, 0,1);
 		Enemy e2 = new Enemy(dungeon, 0,2);
 		Enemy e3 = new Enemy(dungeon, 0,3);
@@ -52,10 +55,12 @@ class EnemyGoalTest {
 		EnemyGoal eg = (EnemyGoal) g;
 		assertTrue(eg.getDefeated() == 0);
 		assertTrue(eg.getTotalEnemies() == 3);
+		System.out.println("Passed");
 	}
 	
 	@Test
 	void testEnemyGoalSuccessCompleteOneEnemy() {
+		System.out.println("------ Tests enemy goal interaction success --------");
 		Enemy e1 = new Enemy(dungeon, 0,1);
 		
 		dungeon.addEntity(e1);
@@ -71,17 +76,19 @@ class EnemyGoalTest {
 		assertTrue(eg.getTotalEnemies() == 1);
 		assertFalse(eg.isComplete());
 
-		player.interact(e1);
+		player.moveDown();
 		player.moveRight();
 		assertTrue(eg.getDefeated() == 0);
 		assertTrue(eg.getTotalEnemies() == 1);
 		assertFalse(gameState.checkGameComplete());
 		assertFalse(gameState.isGameInProgress());
+		System.out.println("Passed");
 	}
 
 	@Test
 	void testEnemyGoalSuccessCompleteInteractionOneEnemy() {
-		Enemy e1 = new Enemy(dungeon, 0,2);
+		System.out.println("------ Tests enemy goal interaction success --------");
+		Enemy e1 = new Enemy(dungeon, 0,3);
 		
 		dungeon.addEntity(e1);
 		
@@ -98,18 +105,20 @@ class EnemyGoalTest {
 
 		Sword sw = new Sword(0, 1);
 		dungeon.addEntity(sw);
+		
 		player.moveDown();
 		player.moveDown();
 		player.moveDown();
-
 		assertTrue(eg.getDefeated() == 1);
 		assertTrue(eg.getTotalEnemies() == 1);
 		assertTrue(gameState.checkGameComplete());
-		assertFalse(gameState.isGameInProgress());
+		System.out.println("Passed");
 	}
 	
 	@Test
 	void testEnemyGoalSuccessCompleteInteractionThreeEnemy() {
+		System.out.println("------ Tests enemy goal interaction three enemies success --------");
+
 		Enemy e1 = new Enemy(dungeon, 0,2);
 		
 		dungeon.addEntity(e1);
@@ -128,15 +137,15 @@ class EnemyGoalTest {
 		Sword sw = new Sword(0, 1);
 		dungeon.addEntity(sw);
 		player.moveDown();
-		player.moveDown();
-		player.moveDown();
-		player.moveDown();
+		System.out.println(player.getX() + " " + player.getY());
 		player.moveDown();
 
 		assertTrue(eg.getDefeated() == 1);
 		assertTrue(eg.getTotalEnemies() == 1);
 		assertTrue(gameState.checkGameComplete());
 		assertFalse(gameState.isGameInProgress());
+		System.out.println("Passed");
+
 	}
 }
 
