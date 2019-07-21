@@ -36,7 +36,7 @@ class InvinciblePotionTest {
 		assertTrue(player.isInvincible());
 		
 		try {
-			Thread.sleep(10001);
+			Thread.sleep(10010);
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
