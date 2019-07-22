@@ -7,6 +7,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+
 /**
  * An enemy in the dungeon that wanders around or chases the player if it finds him.
  * The enemy runs away from the player when the player is invincible.
@@ -43,6 +48,20 @@ public class Enemy extends Entity implements Subject, Observer {
 	public boolean getGameInProgress() {
     	return dungeon.getGameInProgress();
     }
+	// ------ animations methods ------
+	
+	public void animationMove() {
+		KeyValue x = new KeyValue(this.x(), 5);
+		KeyValue y = new KeyValue(this.y(), 5);
+		
+		KeyFrame move = new KeyFrame(Duration.millis(10000), x, y);
+		
+		Timeline timeline = new Timeline();
+		timeline.setCycleCount(1);
+		timeline.getKeyFrames().addAll(move);
+		timeline.play();
+		
+	}
 	
 	// ------ Path finder methods ------ 
 	
@@ -60,10 +79,13 @@ public class Enemy extends Entity implements Subject, Observer {
 			}
 			if (entity != null) entity.interact(this);
 			
-			if (e.getX() < this.getX() && e.getY() == this.getY()) moveLeft();
-			else if (e.getX() > this.getX() && e.getY() == this.getY()) moveRight();
-			else if (e.getX() == this.getX() && e.getY() > this.getY()) moveDown();
-			else if (e.getX() == this.getX() && e.getY() < this.getY()) moveUp();
+			
+			
+//			
+//			if (e.getX() < this.getX() && e.getY() == this.getY()) moveLeft();
+//			else if (e.getX() > this.getX() && e.getY() == this.getY()) moveRight();
+//			else if (e.getX() == this.getX() && e.getY() > this.getY()) moveDown();
+//			else if (e.getX() == this.getX() && e.getY() < this.getY()) moveUp();
 			
 		}
 	}
@@ -234,12 +256,13 @@ public class Enemy extends Entity implements Subject, Observer {
 		Player player = (Player) obj;
 		this.playerXPos = player.getX();
 		this.playerYPos = player.getY();
-
-		if(player.isInvincible()) {
-			followPath(runAwayPath());
-		} else {
-			followPath(playerPath());
-		}
+		
+		animationMove();
+//		if(player.isInvincible()) {
+//			followPath(runAwayPath());
+//		} else {
+//			followPath(playerPath());
+//		}
 	}
 	
 	//------ Entity methods ------
