@@ -290,6 +290,7 @@ public class Dungeon {
 			if (e instanceof Enemy) {
 				Enemy enemy = (Enemy) e;
 				player.registerObserver(enemy);
+				enemy.start();
 			}
 		}
 	}

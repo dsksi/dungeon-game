@@ -2,15 +2,9 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
-
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 
 /**
  * An enemy in the dungeon that wanders around or chases the player if it finds him.
@@ -23,8 +17,10 @@ public class Enemy extends Entity implements Subject, Observer {
 	private Dungeon dungeon;
 	private int playerXPos;
 	private int playerYPos;
+	private boolean playerIsinvincible;
 	private ArrayList<Observer> observers;
 	private boolean alive;
+	private ChaseBehavior chaseBehavior;
 	
 	/**
 	 * Constructor for enemy . 
@@ -39,8 +35,10 @@ public class Enemy extends Entity implements Subject, Observer {
 		this.playerYPos = 0;
 		this.observers = new ArrayList<Observer>();
 		this.alive = true;
+		this.chaseBehavior = new ChasePlayer();
 	}
 	
+	// ------ States/Other methods ------
 	/**
 	 * Method to check if the game is in progress (Player has not completed all goals or the Player dies).
 	 * @return Returns true if game is still in progress
@@ -48,85 +46,28 @@ public class Enemy extends Entity implements Subject, Observer {
 	public boolean getGameInProgress() {
     	return dungeon.getGameInProgress();
     }
-	// ------ animations methods ------
 	
-	public void animationMove() {
-		KeyValue x = new KeyValue(this.x(), 5);
-		KeyValue y = new KeyValue(this.y(), 5);
-		
-		KeyFrame move = new KeyFrame(Duration.millis(10000), x, y);
-		
-		Timeline timeline = new Timeline();
-		timeline.setCycleCount(1);
-		timeline.getKeyFrames().addAll(move);
-		timeline.play();
+	/**
+	 * The enemy's alive status
+	 * @return Returns the enemy's status
+	 */
+	public boolean isAlive() {
+		return this.alive;
+	}
+
+	/**
+	 * Changes the enemy's alive status to false and deletes it from the map.
+	 */
+	public void isDead() {
+		this.alive = false;
+		updateObservers();
+		this.delete();
+		this.chaseBehavior.stop();
 		
 	}
 	
 	// ------ Path finder methods ------ 
-	
-	/**
-	 * Method that moves the enemy position given a path in the form of a list of Nodes(coordinates).
-	 * @param pathList : List of type Node
-	 */
-	public void followPath(ArrayList<Node> pathList) {
-		ArrayList<Node> path = pathList;	
-		for (Node e : path) {
-			
-			Entity entity = null;
-			if (dungeon.getEntity(e.getX(), e.getY()).size() != 0) {
-				entity = dungeon.getEntity(e.getX(), e.getY()).get(0);
-			}
-			if (entity != null) entity.interact(this);
-			
-			
-			
-//			
-//			if (e.getX() < this.getX() && e.getY() == this.getY()) moveLeft();
-//			else if (e.getX() > this.getX() && e.getY() == this.getY()) moveRight();
-//			else if (e.getX() == this.getX() && e.getY() > this.getY()) moveDown();
-//			else if (e.getX() == this.getX() && e.getY() < this.getY()) moveUp();
-			
-		}
-	}
-	
-	/**
-	 * Generates a path to the player or a random path if player cannot be reached.
-	 * @return Returns a list of type Node containing a path to player or random coordinate.
-	 */
-	public ArrayList<Node> playerPath() {
-		if (findPathTo(playerXPos, playerYPos).size() == 0) {
-			return runAwayPath();
-		}
-		return findPathTo(playerXPos, playerYPos);
-	}
-	
-	/**
-	 * Generates a path to a random coordinate.
-	 * @return Returns a list of type Node containing a path to a random coordinate
-	 */
-	public ArrayList<Node> runAwayPath() {
-		// Using random generator to determine path
-		
-		Random rand = new Random();
-		
-		int randX = rand.nextInt(dungeon.getHeight());
-		int randY = rand.nextInt(dungeon.getWidth());
-		
-		int newX = (randX + playerXPos)%dungeon.getHeight();
-		int newY = (randY + playerYPos)%dungeon.getWidth();
-		
-		while (!checkMoveable(newX,newY)) {
-			randX = rand.nextInt(dungeon.getHeight());
-			randY = rand.nextInt(dungeon.getWidth());
-			
-			newX = (randX + playerXPos + 1)%dungeon.getHeight();
-			newY = (randY + playerYPos + 1)%dungeon.getWidth();
-		}
-		
-		return findPathTo(newX, newY);
-	}
-	
+
 	/**
 	 * A shortest path finder which uses the BFS algorithm to a given x, y coordinate.
 	 * @param tarX : The target X coordinate
@@ -177,6 +118,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		}
 		
 		ArrayList<Node> directions = new ArrayList<Node>();
+		
 		for (int i = player_index; i != predecessor.get(i).getParentIndex(); i = predecessor.get(i).getParentIndex()) {
 			directions.add(predecessor.get(i));
 		}
@@ -192,22 +134,54 @@ public class Enemy extends Entity implements Subject, Observer {
 	 * @param y : Y coordinate for checking
 	 * @return Returns true if the given coordinate can be moved to.
 	 */
-	private boolean checkMoveable(int x, int y) {
+	public boolean checkMoveable(int x, int y) {
 		if(!this.alive) return false;
 		if(!getGameInProgress()) return false;
     	if(!((y < dungeon.getHeight()) && (y >= 0)))	return false;
     	if(!((x < dungeon.getWidth()) && (x >= 0)))		return false;
-
+//    	if (!this.playerIsinvincible) {
+//	    	if(x > this.getX() + 5 || x < this.getX() - 5) return false;
+//	    	if(y > this.getY() + 5 || y < this.getY() - 5) return false;
+//    	}
+    	
     	ArrayList<Entity> list = dungeon.getEntity(x, y);
         if(!list.isEmpty()) {
         	boolean result = true;
         	for (Entity e: list) {
         		if(! e.movable(this)) return false;
+        		if (e instanceof Enemy) return false;
             }
         	return result;
         }
         return true;
     }
+	
+	/**
+	 * Method that moves the enemy position given a path in the form of a list of Nodes(coordinates).
+	 * @param pathList : List of type Node
+	 */
+	public void followPath(ArrayList<Node> pathList) {
+		if (!this.alive) return;
+		if (pathList.size() == 0) return;
+		
+		Node e = pathList.get(0);
+		Entity entity = null;
+		if (dungeon.getEntity(e.getX(), e.getY()).size() != 0) {
+			entity = dungeon.getEntity(e.getX(), e.getY()).get(0);
+		}
+		if (entity != null) entity.interact(this);
+		
+		x().set(e.getX());
+		y().set(e.getY());
+		
+	}
+	
+	/**
+	 * Start the enemy movement and behavior
+	 */
+	public void start() {
+		this.chaseBehavior.start(this);
+	}
 	
 	// ------ Controls ------
 	public void moveUp() {
@@ -226,7 +200,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		x().set(getX() + 1);
 	}
 	
-	//------ Observer methods ------
+	//------ Subject methods ------
 	@Override
 	public void registerObserver(Observer o) {
 		observers.add(o);
@@ -244,7 +218,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		}
 	}
 	
-	//------ Subject methods ------
+	//------ Observer methods ------
 	/**
 	 * Updates the enemy of the player position. Stops updating if game is completed or enemy dies.
 	 */
@@ -256,13 +230,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		Player player = (Player) obj;
 		this.playerXPos = player.getX();
 		this.playerYPos = player.getY();
-		
-		animationMove();
-//		if(player.isInvincible()) {
-//			followPath(runAwayPath());
-//		} else {
-//			followPath(playerPath());
-//		}
+		this.playerIsinvincible = player.isInvincible();
 	}
 	
 	//------ Entity methods ------
@@ -283,22 +251,26 @@ public class Enemy extends Entity implements Subject, Observer {
 			obj.delete();
 		}
 	}
-
-	/**
-	 * The enemy's alive status
-	 * @return Returns the enemy's status
-	 */
-	public boolean isAlive() {
-		return this.alive;
+	
+	// ------ Getters/Setters ------
+	
+	public int getPlayerX() {
+		return this.playerXPos;
 	}
-
-	/**
-	 * Changes the enemy's alive status to false and deletes it from the map.
-	 */
-	public void isDead() {
-		this.alive = false;
-		updateObservers();
-		this.delete();
-		
+	
+	public int getPlayerY() {
+		return this.playerYPos;
+	}
+	
+	public Dungeon getDungeon() {
+		return this.dungeon;
+	}
+	
+	public boolean getPlyIsInvincible() {
+		return this.playerIsinvincible;
+	}
+	
+	public void setChaseBehavior(ChaseBehavior behaviour) {
+		this.chaseBehavior = behaviour;
 	}
 }
