@@ -1,0 +1,20 @@
+
+
+
+.start-btn{
+    -fx-text-align: center;
+	-fx-display: inline-block;
+	-fx-margin:5px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 0 10px 10px ;
+    -fx-background-color: lightgray;
+    -fx-text-shadow: -1px -1px black, 1px 1px white; */
+    -fx-color: gray;
+    -fx--webkit-border-radius: 7px;
+	-fx--moz-border-radius: 7px;
+	-fx--o-border-radius: 7px;
+	-fx-border-radius: 7px;
+    -fx-box-shadow: 0 .2em gray;  */
+    -fx-cursor: pointer;
+
+}

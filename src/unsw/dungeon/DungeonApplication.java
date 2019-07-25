@@ -14,13 +14,14 @@ public class DungeonApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Dungeon");
 
+        MenuScreen menuScreen = new MenuScreen(primaryStage);
 
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("testGoals.json");
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("boulders.json");
 
 
         DungeonController controller = dungeonLoader.loadController();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("trial.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
         Scene scene = new Scene(root);
