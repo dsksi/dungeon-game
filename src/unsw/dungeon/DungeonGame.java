@@ -15,9 +15,17 @@ public class DungeonGame extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		MenuScreen menuScreen = new MenuScreen(primaryStage);
 		DungeonScreen dungeonScreen = new DungeonScreen(primaryStage);
-//		WinScreen winScreen = new WinScreen(primaryStage);
+		WinScreen winScreen = new WinScreen(primaryStage);
+		LostScreen lostScreen = new LostScreen(primaryStage);
 		
+		menuScreen.getController().setMenuScreen(menuScreen);
 		menuScreen.getController().setDungeonScreen(dungeonScreen);
+		menuScreen.getController().setWinScreen(winScreen);
+		menuScreen.getController().setLostScreen(lostScreen);
+		
+		winScreen.getEndController().setMenuScreen(menuScreen);
+		lostScreen.getEndController().setMenuScreen(menuScreen);
+		
 		menuScreen.start();
 		
 	}

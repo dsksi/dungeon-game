@@ -3,6 +3,8 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -25,11 +27,14 @@ public class DungeonController {
     private Player player;
 
     private Dungeon dungeon;
+    private WinScreen winScreen;
+	private LostScreen lostScreen;
 
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.initialEntities = new ArrayList<>(initialEntities);
+        this.trackGameState();
     }
 
     @FXML
@@ -85,9 +90,37 @@ public class DungeonController {
     public void setMenuScreen(MenuScreen menuScreen) {
     	this.menuScreen = menuScreen;
     }
+    
     @FXML
     public void handleMenuButton(ActionEvent event) {
     	menuScreen.start();
     }
+    
+    public void setWinScreen(WinScreen winScreen) {
+    	this.winScreen = winScreen;
+    }
+    
+	public void setLostScreen(LostScreen lostScreen) {
+		this.lostScreen = lostScreen;
+		
+	}
+    
+    public void trackGameState() {
+    	dungeon.progress().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                    Number oldValue, Number newValue) {
+            	if(newValue.equals(1)) {
+            		System.out.println("Game won");
+            		winScreen.start();
+            	} else if (newValue.equals(2)) {
+            		lostScreen.start();
+            		System.out.println("Game lost");
+            	}
+            }
+        });
+    }
+
+
 }
 
