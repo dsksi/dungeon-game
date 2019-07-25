@@ -44,6 +44,7 @@ public class Bomb extends Entity {
 	 * Should call state.pickUp if entity is a player.
 	 * @param Entity to interact with bomb
 	 */
+	@Override
 	public void interact(Entity obj) {
 		if (obj instanceof Player) {
 			Player player = (Player) obj;
@@ -98,7 +99,4 @@ public class Bomb extends Entity {
 	public void setVisualStatus(int visualStatus) {
 		this.visualStatus.set(visualStatus);
 	}
-	
-	
-
 }

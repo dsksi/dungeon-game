@@ -24,6 +24,7 @@ public class Door extends Entity {
 		return true;
 	}
 	
+	@Override
 	public void interact(Entity obj) {
 		if(!(obj instanceof Player)) {
 			return;

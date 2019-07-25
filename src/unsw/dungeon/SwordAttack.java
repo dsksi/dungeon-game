@@ -7,7 +7,7 @@ package unsw.dungeon;
  */
 public class SwordAttack implements WeaponStrategy {
 
-	int durability;
+	private int durability;
 	
 	/**
 	 * Constructor for the SwordAttack strategy. gives a sword 5 durability.
@@ -37,5 +37,4 @@ public class SwordAttack implements WeaponStrategy {
 		if (durability != 0) return true;
 		return false;
 	}
-	
 }
