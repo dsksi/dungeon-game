@@ -51,7 +51,7 @@ public class Lit implements BombState {
 				}
 			}
 		}
-		bomb.setVisualStatus(1);
+		
 		return;
 	}
 
@@ -62,6 +62,6 @@ public class Lit implements BombState {
 	 */
 	@Override
 	public void exploding(Bomb bomb, Player player) {
-		bomb.setVisualStatus(2);
+		//bomb.setVisualStatus(2);
 	}
 }

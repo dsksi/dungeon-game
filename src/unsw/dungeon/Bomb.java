@@ -73,14 +73,16 @@ public class Bomb extends Entity {
 		
 		TimerTask task2 = new TimerTask() {
 			public void run() {
-				state.exploding(bombRef, player);
+				
+				player.getDungeon().removeEntity(bombRef);
+				bombRef.setVisualStatus(1);
 			}
 		};
 		
-		timer.schedule(task2, 1500);
-		timer.schedule(task, 2000);
+		timer.schedule(task, 1500);
+		timer.schedule(task2, 2000);
 		
-		player.getDungeon().removeEntity(this);
+		
 	}
 
 	/**

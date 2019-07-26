@@ -7,7 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
 /**
  * A JavaFX controller for the dungeon.
@@ -34,12 +36,22 @@ public class DungeonController {
     @FXML
     public void initialize() {
         Image ground = new Image("/dirt_0_new.png");
-
+        
         // Add the ground first so it is below all other entities
+        
+        
         for (int x = 0; x < dungeon.getWidth(); x++) {
             for (int y = 0; y < dungeon.getHeight(); y++) {
                 squares.add(new ImageView(ground), x, y);
             }
+        }
+        for (int y = 1; y < dungeon.getHeight(); y++) {
+            squares.getRowConstraints().add(new RowConstraints(32)); // column 1 is 200 wide
+
+        }
+        for (int y = 1; y < dungeon.getWidth(); y++) {
+        	squares.getColumnConstraints().add(new ColumnConstraints(32));
+
         }
 
         for (ImageView entity : initialEntities)
