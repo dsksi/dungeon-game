@@ -79,7 +79,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		int index = 0;
 		Queue<Node> q = new LinkedList<Node>();
 		ArrayList<Node> predecessor = new ArrayList<Node>();
-		boolean[][] visited = new boolean[dungeon.getHeight()+1][dungeon.getWidth()+1];
+		boolean[][] visited = new boolean[dungeon.getWidth()][dungeon.getHeight()];
 
 		int[] dx = {-1, +1, 0, 0};
 		int[] dy = {0, 0, +1, -1};
@@ -106,6 +106,9 @@ public class Enemy extends Entity implements Subject, Observer {
 				int futureY = y + dy[i];
 		
 				if (!this.checkMoveable(futureX, futureY)) continue;
+				if (futureX >= dungeon.getWidth() || futureX < 0) continue;
+				if (futureY >= dungeon.getHeight()|| futureY < 0) continue;
+
 				if (visited[futureX][futureY]) continue;
 
 				Node child = new Node(index, parent_index, futureX, futureY);

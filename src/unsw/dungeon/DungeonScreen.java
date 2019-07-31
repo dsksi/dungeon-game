@@ -21,7 +21,7 @@ public class DungeonScreen {
 	}
 	
 	public void start() throws IOException {
-		DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("testGoals.json");
+		DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("PacMan.json");
 		controller = dungeonLoader.loadController();
 	    
 	    FXMLLoader loader = new FXMLLoader(getClass().getResource("trial.fxml"));
