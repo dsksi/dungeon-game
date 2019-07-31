@@ -4,6 +4,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -12,7 +13,10 @@
             <Image url="@../../../images/lost.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="34.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="27.0" prefWidth="118.0" text="Return to Menu" />
-      <Button layoutX="479.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleExitButton" text="Exit Game" />
+      <Button id="button" layoutX="34.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="40.0" prefWidth="142.0" styleClass="lostButton" stylesheets="@style.css" text="Return to Menu">
+         <font>
+            <Font name="PT Mono" size="13.0" />
+         </font></Button>
+      <Button id="button" layoutX="411.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="40.0" prefWidth="142.0" styleClass="lostButton" stylesheets="@style.css" text="Exit Game" />
    </children>
 </Pane>
