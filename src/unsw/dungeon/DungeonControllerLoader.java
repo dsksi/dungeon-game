@@ -4,12 +4,16 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.animation.Animation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.AudioClip;
+import javafx.util.Duration;
 
 /**
  * A DungeonLoader that also creates the necessary ImageViews for the UI,
@@ -27,7 +31,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image playerSwordImage;
     private Image wallImage;
     private Image bombImage;
-    private Image explodeImage;
+    private Image explodeAnim;
     private Image enemyImage;
     private Image exitImage;
     private Image switchImage;
@@ -39,6 +43,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image closedImage;
     private Image openImage;
     private Image keyImage;
+    private AudioClip bombSound;
 
 
     public DungeonControllerLoader(String filename)
@@ -48,7 +53,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         playerImage = new Image("/player.png");
         wallImage = new Image("/brick_brown_0.png");
         bombImage = new Image("/bomb_unlit.png");
-        explodeImage = new Image("bomb_lit_4.png");
+        explodeAnim = new Image("BombExploding.png");
         playerSwordImage = new Image("/playerSword.png");
         enemyImage = new Image("/hound.png");
         exitImage = new Image("/exit.png");
@@ -62,6 +67,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         closedImage = new Image("/closed_door.png");
         openImage = new Image("/open_door.png");
         keyImage = new Image("key.png");
+        bombSound = new AudioClip(getClass().getResource("/sounds/bomb.mp3").toString());
     }
 
     @Override
@@ -266,11 +272,22 @@ public class DungeonControllerLoader extends DungeonLoader {
                         Number oldValue, Number newValue) {
                 	if(newValue.equals(0)) {
                 		node.setVisible(true);
+                		
                 	} else if (newValue.equals(1)) {
                 		node.setVisible(false);
+                		
                 	} else if (newValue.equals(2)) {
+                		bombSound.play();
+                		node.setVisible(true);
                 		ImageView view = (ImageView) node;
-                		view.setImage(explodeImage);
+                		view.setImage(explodeAnim);
+                		view.setViewport(new Rectangle2D(0, 0, 32, 64));
+                		Animation animation = new SpriteAnimation(view, Duration.millis(2000), 13, 13, 0, 0, 32, 64);
+                		animation.setCycleCount(1);
+                		animation.play();
+                		
+                		
+                		
                 	}
                 }
             });

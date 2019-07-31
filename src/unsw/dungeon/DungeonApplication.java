@@ -1,11 +1,14 @@
 package unsw.dungeon;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class DungeonApplication extends Application {
@@ -16,7 +19,8 @@ public class DungeonApplication extends Application {
 
         MenuScreen menuScreen = new MenuScreen(primaryStage);
 
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("testEnemiess.json");
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("test.json");
+
 
 
         DungeonController controller = dungeonLoader.loadController();
@@ -28,6 +32,12 @@ public class DungeonApplication extends Application {
         root.requestFocus();
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+//        String musicFile = "sounds/intro2.mp3";
+//        
+//        Media introMusic = new Media(new File(musicFile).toURI().toString());
+//        MediaPlayer mediaPlayer = new MediaPlayer(introMusic);
+//        //mediaPlayer.play();
 
     }
 

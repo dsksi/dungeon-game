@@ -33,24 +33,8 @@ public class Lit implements BombState {
 	 */
 	@Override
 	public void explode(Bomb bomb, Player player) {
-		
-		int x = bomb.getX();
-		int y = bomb.getY();
+
 		Dungeon dungeon = player.getDungeon();
-		
-//		for (int i = (x - 1); i <= (x + 1); i++) {
-//			for (int j = (y - 1); j <= (y + 1); j++) {
-//				for (Entity k : dungeon.getEntity(i, j)) {
-//					if (k instanceof Enemy) {
-//						k.delete();
-//					} else if (k instanceof Player) {
-//						k.delete();
-//					} else if (k instanceof Boulder) {
-//						k.delete();
-//					}
-//				}
-//			}
-//		}
 		
 		int[] diffx = {-1, +1, 0, 0, 0};
 		int[] diffy = {0, 0, +1, -1, 0};
@@ -70,7 +54,7 @@ public class Lit implements BombState {
 				}
 			}
 		}
-		bomb.setVisualStatus(1);
+		
 		return;
 	}
 
@@ -81,6 +65,6 @@ public class Lit implements BombState {
 	 */
 	@Override
 	public void exploding(Bomb bomb, Player player) {
-		bomb.setVisualStatus(2);
+		//bomb.setVisualStatus(2);
 	}
 }
