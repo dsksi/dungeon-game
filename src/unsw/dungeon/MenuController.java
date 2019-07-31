@@ -14,12 +14,19 @@ public class MenuController {
 	private WinScreen winScreen;
 	private LostScreen lostScreen;
 	private LevelScreen levelScreen;
+	private ManualScreen manualScreen;
 	
 	@FXML
 	private Button StartButton;
 	
 	@FXML
 	private Button ExitButton;
+	
+	@FXML
+	private Button LevelButton;
+	
+	@FXML
+	private Button ManualButton;
 
 	
 	public void setMenuScreen(MenuScreen ms) {
@@ -39,6 +46,13 @@ public class MenuController {
 	private void handleExitButton(ActionEvent event) {
 		System.exit(0);
 	}
+	
+	
+	@FXML
+	private void openManual(ActionEvent event) {
+		manualScreen.start();
+	}
+	
 	
 	@FXML
 	private void handleLevelButton(ActionEvent event) {
@@ -66,5 +80,10 @@ public class MenuController {
 	public void setLevelScreen(LevelScreen levelScreen) {
 		this.levelScreen = levelScreen;
 	}
+	
+	public void setManualScreen(ManualScreen manualScreen) {
+		this.manualScreen = manualScreen;
+	}
+	
 
 }

@@ -15,15 +15,20 @@
             <Image url="@../../../images/background.jpg" />
          </image>
       </ImageView>
-      <Button id="button" layoutX="41.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleStartButton" prefHeight="38.0" prefWidth="112.0" styleClass="normal" stylesheets="@style.css" text="Start Game">
+      <Button id="button" fx:id="StartButton" layoutX="45.0" layoutY="238.0" mnemonicParsing="false" onAction="#handleStartButton" prefHeight="38.0" prefWidth="125.0" styleClass="normal" stylesheets="@style.css" text="Quick Start">
          <font>
             <Font name="PT Mono" size="13.0" />
          </font></Button>
-      <Button id="button" layoutX="451.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="27.0" prefWidth="112.0" styleClass="normal" stylesheets="@style.css" text="Exit Game">
+      <Button id="button" fx:id="ExitButton" layoutX="455.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="38.0" prefWidth="125.0" styleClass="normal" stylesheets="@style.css" text="Exit Game">
          <font>
             <Font name="PT Mono" size="13.0" />
          </font></Button>
-      <Button id="button" layoutX="233.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleLevelButton" prefHeight="38.0" prefWidth="141.0" styleClass="normal" stylesheets="@style.css" text="Choose Level">
+      <Button id="button" fx:id="LevelButton" layoutX="45.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleLevelButton" prefHeight="38.0" prefWidth="125.0" styleClass="normal" stylesheets="@style.css" text="Choose Level">
+         <font>
+            <Font name="PT Mono" size="13.0" />
+         </font>
+      </Button>
+      <Button id="button" fx:id="ManualButton" layoutX="45.0" layoutY="290.0" mnemonicParsing="false" onAction="#openManual" prefHeight="38.0" prefWidth="125.0" styleClass="normal" stylesheets="@style.css" text="Game Manual">
          <font>
             <Font name="PT Mono" size="13.0" />
          </font>
