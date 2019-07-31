@@ -39,18 +39,17 @@ public class DungeonController {
         
         // Add the ground first so it is below all other entities
         
-        
         for (int x = 0; x < dungeon.getWidth(); x++) {
             for (int y = 0; y < dungeon.getHeight(); y++) {
                 squares.add(new ImageView(ground), x, y);
             }
         }
         for (int y = 1; y < dungeon.getHeight(); y++) {
-            squares.getRowConstraints().add(new RowConstraints(32)); // column 1 is 200 wide
+            squares.getRowConstraints().add(new RowConstraints(ground.getHeight())); // column 1 is 200 wide
 
         }
         for (int y = 1; y < dungeon.getWidth(); y++) {
-        	squares.getColumnConstraints().add(new ColumnConstraints(32));
+        	squares.getColumnConstraints().add(new ColumnConstraints(ground.getWidth()));
 
         }
 

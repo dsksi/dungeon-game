@@ -1,5 +1,12 @@
 package unsw.dungeon;
 
+/*
+ * This class allows for sprite sheets to be played as animations.
+ * This was found the following link:
+ * https://netopyr.com/2012/03/09/creating-a-sprite-animation-with-javafx/
+ * @author Michael Heinrichs
+ */
+
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
