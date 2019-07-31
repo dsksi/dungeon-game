@@ -57,18 +57,18 @@ public class DungeonControllerLoader extends DungeonLoader {
         entities = new ArrayList<>();
         playerImage = new Image("/player.png");
         attackAnim = new Image("/playerattack.png");
-        wallImage = new Image("/brick_brown_0.png");
+        wallImage = new Image("/blueWall.png");
         bombImage = new Image("/bomb_unlit.png");
         explodeAnim = new Image("BombExploding.png");
         playerSwordImage = new Image("/playerSword.png");
-        enemyImage = new Image("/hound.png");
+        enemyImage = new Image("/lemongrab.png");
         exitImage = new Image("/exit.png");
         switchImage = new Image("/pressure_plate.png");
         treasureImage = new Image("/gold_pile.png");
         boulderImage = new Image("/boulder.png");
         swordImage = new Image("/greatsword_1_new.png");
-        invImage = new Image("brilliant_blue_new.png");
-        mageImage = new Image("/gnome.png");
+        invImage = new Image("potion.png");
+        mageImage = new Image("/playergodmode.png");
         playerBombImage = new Image("/playerBomb.png");
         closedImage = new Image("/closed_door.png");
         openImage = new Image("/open_door.png");
@@ -201,8 +201,8 @@ public class DungeonControllerLoader extends DungeonLoader {
             	if (entity instanceof Player) {
             		ImageView view = (ImageView) node;
             		view.setImage(playerDeadImage);
-            		view.setViewport(new Rectangle2D(0, 0, 32, 64));
-            		Animation animation = new SpriteAnimation(view, Duration.millis(2000), 13, 13, 0, 0, 32, 64);
+            		view.setViewport(new Rectangle2D(0, 0, 32, 32));
+            		Animation animation = new SpriteAnimation(view, Duration.millis(2000), 10, 13, 0, 0, 32, 32);
             		animation.setCycleCount(1);
             		animation.play();
             	} else {
@@ -242,7 +242,7 @@ public class DungeonControllerLoader extends DungeonLoader {
             		Rectangle2D vp = view.getViewport();
             		view.setImage(attackAnim);
             		view.setViewport(new Rectangle2D(0, 0, 32, 32));
-            		Animation animation = new SpriteAnimation(view, Duration.millis(500), 13, 13, 0, 0, 32, 32);
+            		Animation animation = new SpriteAnimation(view, Duration.millis(500), 5, 13, 0, 0, 32, 32);
             		animation.setCycleCount(1);
             		animation.play();
             		Timer timer = new Timer();
@@ -317,8 +317,8 @@ public class DungeonControllerLoader extends DungeonLoader {
                 		node.setVisible(true);
                 		ImageView view = (ImageView) node;
                 		view.setImage(explodeAnim);
-                		view.setViewport(new Rectangle2D(0, 0, 32, 64));
-                		Animation animation = new SpriteAnimation(view, Duration.millis(2000), 13, 13, 0, 0, 32, 64);
+                		view.setViewport(new Rectangle2D(0, 0, 32, 32));
+                		Animation animation = new SpriteAnimation(view, Duration.millis(2000), 13, 13, 0, 0, 32, 96);
                 		animation.setCycleCount(1);
                 		animation.play();
                 		

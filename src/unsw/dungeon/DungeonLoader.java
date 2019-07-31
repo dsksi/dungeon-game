@@ -49,8 +49,16 @@ public abstract class DungeonLoader {
         	if (obj.getString("type").equals("boulder")) {
         		continue;
         	}
+        	if (obj.getString("type").equals("switch")) continue;
         	loadEntity(dungeon, obj);
         	
+        }
+        
+        for (int i = 0; i < jsonEntities.length(); i++) {
+        	JSONObject obj = jsonEntities.getJSONObject(i);
+        	if (obj.getString("type").equals("switch")) {
+        		loadEntity(dungeon, obj);
+        	}
         }
         
         
