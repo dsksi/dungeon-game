@@ -3,8 +3,11 @@ package unsw.dungeon;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.animation.Animation;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Rectangle2D;
@@ -29,9 +32,11 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image playerImage;
     private Image mageImage;
     private Image playerSwordImage;
+    private Image playerDeadImage;
     private Image wallImage;
     private Image bombImage;
     private Image explodeAnim;
+    private Image attackAnim;
     private Image enemyImage;
     private Image exitImage;
     private Image switchImage;
@@ -51,6 +56,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         super(filename);
         entities = new ArrayList<>();
         playerImage = new Image("/player.png");
+        attackAnim = new Image("/playerattack.png");
         wallImage = new Image("/brick_brown_0.png");
         bombImage = new Image("/bomb_unlit.png");
         explodeAnim = new Image("BombExploding.png");
@@ -67,6 +73,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         closedImage = new Image("/closed_door.png");
         openImage = new Image("/open_door.png");
         keyImage = new Image("key.png");
+        playerDeadImage = new Image("playerdead.png");
         bombSound = new AudioClip(getClass().getResource("/sounds/bomb.mp3").toString());
     }
 
@@ -191,10 +198,19 @@ public class DungeonControllerLoader extends DungeonLoader {
             @Override
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
-            	if(newValue.equals(0)) {
-            		node.setVisible(true);
-            	} else if (newValue.equals(1)) {
-            		node.setVisible(false);
+            	if (entity instanceof Player) {
+            		ImageView view = (ImageView) node;
+            		view.setImage(playerDeadImage);
+            		view.setViewport(new Rectangle2D(0, 0, 32, 64));
+            		Animation animation = new SpriteAnimation(view, Duration.millis(2000), 13, 13, 0, 0, 32, 64);
+            		animation.setCycleCount(1);
+            		animation.play();
+            	} else {
+	            	if(newValue.equals(0)) {
+	            		node.setVisible(true);
+	            	} else if (newValue.equals(1)) {
+	            		node.setVisible(false);
+	            	}
             	}
             }
         });
@@ -221,6 +237,26 @@ public class DungeonControllerLoader extends DungeonLoader {
             	} else if(newValue.equals(3)) {
             		System.out.println("player with bomb image");
             		view.setImage(playerBombImage);
+            	} else if(newValue.equals(4)) {
+            		
+            		Rectangle2D vp = view.getViewport();
+            		view.setImage(attackAnim);
+            		view.setViewport(new Rectangle2D(0, 0, 32, 32));
+            		Animation animation = new SpriteAnimation(view, Duration.millis(500), 13, 13, 0, 0, 32, 32);
+            		animation.setCycleCount(1);
+            		animation.play();
+            		Timer timer = new Timer();
+            		TimerTask task = new TimerTask() {
+            	        public void run() {
+            	        	animation.stop();
+            	        	System.out.println("set");
+            	        	view.setViewport(vp);
+            	        	player.setVisualStatus(1);	
+            	        }
+            		};
+            	    
+            	    timer.schedule(task, 500);	
+            		
             	}
             }
         });
