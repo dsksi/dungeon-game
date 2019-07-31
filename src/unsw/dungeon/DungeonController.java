@@ -3,6 +3,7 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -125,8 +126,12 @@ public class DungeonController {
             		System.out.println("Game won");
             		winScreen.start();
             	} else if (newValue.equals(2)) {
-            		lostScreen.start();
-            		System.out.println("Game lost");
+            		Platform.runLater(() -> {
+            			lostScreen.start();
+                		System.out.println("Game lost");
+            		});
+            		
+
             	}
             }
         });

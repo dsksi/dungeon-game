@@ -248,6 +248,7 @@ public class Enemy extends Entity implements Subject, Observer {
 		if (player.attack(this)) {
 			System.out.println("player attacked this enemy, update");
 		} else {
+			System.out.println("player should die");
 			obj.delete();
 		}
 	}
