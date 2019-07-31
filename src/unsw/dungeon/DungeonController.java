@@ -3,6 +3,7 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,7 +21,7 @@ public class DungeonController {
 
     @FXML
     private GridPane squares;
-
+    private MenuScreen menuScreen;
     private List<ImageView> initialEntities;
 
     private Player player;
@@ -92,5 +93,12 @@ public class DungeonController {
         }
     }
 
+    public void setMenuScreen(MenuScreen menuScreen) {
+    	this.menuScreen = menuScreen;
+    }
+    @FXML
+    public void handleMenuButton(ActionEvent event) {
+    	menuScreen.start();
+    }
 }
 

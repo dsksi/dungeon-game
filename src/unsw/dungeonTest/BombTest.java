@@ -36,6 +36,7 @@ class BombTest {
 		player.moveDown();
 		assertTrue(player.getBomb() == bomb);
 		assertTrue(bomb.status().get() == 1 );
+		System.out.println("Passed");
 	}
 	
 	@Test
@@ -52,6 +53,7 @@ class BombTest {
 		}
 		
 		assertTrue(bomb.status().get() == 1);
+		System.out.println("Passed");
 	}
 	
 	@Test
@@ -101,6 +103,7 @@ class BombTest {
 				(player3.status().get() == 1) &&
 				(player4.status().get() == 1) &&
 				(player5.status().get() == 1));
+		System.out.println("Passed");
 	}
 	
 	@Test
@@ -121,6 +124,7 @@ class BombTest {
 		}
 		
 		assertTrue(dungeon.getEntity(1, 3).contains(wall));
+		System.out.println("Passed");
 	}
 	
 	@Test
@@ -144,6 +148,7 @@ class BombTest {
 		
 		assertTrue(dungeon.getEntity(1, 3).contains(door));
 		assertTrue(dungeon.getEntity(2, 3).contains(key));
+		System.out.println("Passed");
 		
 	}
 	
@@ -171,6 +176,7 @@ class BombTest {
 		assertTrue(dungeon.getEntity(1, 3).contains(sword));
 		assertTrue(dungeon.getEntity(2, 3).contains(newBomb));
 		assertTrue(dungeon.getEntity(3, 3).contains(potion));
+		System.out.println("Passed");
 		
 	}
 	
@@ -191,6 +197,7 @@ class BombTest {
 		}
 		
 		assertTrue(dungeon.getEntity(1, 3).contains(switch1));
+		System.out.println("Passed");
 	}
 	
 	@Test
@@ -210,6 +217,7 @@ class BombTest {
 		}
 		
 		assertTrue(dungeon.getEntity(1, 3).contains(exit));
+		System.out.println("Passed");
 	}
 	
 	@Test
@@ -230,6 +238,7 @@ class BombTest {
 		
 		assertTrue(enemy.status().get() == 1);
 		assertFalse(dungeon.getEntity(1, 3).contains(enemy));
+		System.out.println("Passed");
 	}
 	
 	@Test
@@ -250,6 +259,7 @@ class BombTest {
 		
 		assertTrue(boulder.status().get() == 1);
 		assertFalse(dungeon.getEntity(1, 3).contains(boulder));
+		System.out.println("Passed");
 		
 	}
 	
@@ -264,7 +274,8 @@ class BombTest {
 		}
 		
 		assertTrue(bomb.status().get() == 0);
+		System.out.println("Passed");
 	}
 	
-
+	
 }

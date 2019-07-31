@@ -75,7 +75,7 @@ class EnemyTest {
         ArrayList<Node> pathList = enemy.runAwayPath();
         enemy.followPath(pathList);
         System.out.println("Enemy now at (" + enemy.getX() + "," + enemy.getY() + ")" + " Player now at (" + player.getX() + "," + player.getY() + ")");
-        assert (enemy.getX() != player.getX() || (enemy.getY() != player.getY()));
+        assertFalse((enemy.getX() == player.getX()) && (enemy.getY() == player.getY()));
         System.out.println("Enemy ran away from player position");
         System.out.println("Passed");	
     }
