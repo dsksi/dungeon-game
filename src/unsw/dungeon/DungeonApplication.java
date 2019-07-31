@@ -18,7 +18,7 @@ public class DungeonApplication extends Application {
         primaryStage.setTitle("Dungeon");
 
         MenuScreen menuScreen = new MenuScreen(primaryStage);
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("testGoal.json");
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("boulders.json");
 
 
         DungeonController controller = dungeonLoader.loadController();

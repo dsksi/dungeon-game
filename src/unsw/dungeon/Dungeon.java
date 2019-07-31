@@ -6,6 +6,8 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
@@ -24,6 +26,7 @@ public class Dungeon {
     private List<Entity> entities;
     private Player player;
     private GameState gameState;
+    private IntegerProperty progress;
 
     /**
      * 
@@ -36,6 +39,7 @@ public class Dungeon {
         this.entities = new ArrayList<>();
         this.gameState = new GameState();
         this.player = null;
+        this.progress = new SimpleIntegerProperty(0);
     }
 
     /**
@@ -130,6 +134,7 @@ public class Dungeon {
     	if (gameState.isGameInProgress()) {
     		gameState.gameEnded();
     		System.out.println("You completed all goals: You have WON!");
+    		progress().set(1);
     	}
 	}
     
@@ -140,6 +145,7 @@ public class Dungeon {
     	if (gameState.isGameInProgress()) {
     		gameState.gameEnded();
     		System.out.println("You died. Game lost!");
+    		progress().set(2);
     	}
 	}
 
@@ -290,6 +296,7 @@ public class Dungeon {
 			if (e instanceof Enemy) {
 				Enemy enemy = (Enemy) e;
 				player.registerObserver(enemy);
+				enemy.start();
 			}
 		}
 	}
@@ -300,5 +307,9 @@ public class Dungeon {
 	 */
 	public boolean getGameInProgress() {
 		return this.gameState.isGameInProgress();
+	}
+
+	public IntegerProperty progress() {
+		return this.progress;
 	}
 }

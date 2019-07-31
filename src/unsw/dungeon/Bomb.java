@@ -76,11 +76,13 @@ public class Bomb extends Entity {
 				
 				player.getDungeon().removeEntity(bombRef);
 				bombRef.setVisualStatus(1);
+				timer.cancel();
 			}
 		};
 		
 		timer.schedule(task, 1500);
 		timer.schedule(task2, 2000);
+		
 		
 		
 	}

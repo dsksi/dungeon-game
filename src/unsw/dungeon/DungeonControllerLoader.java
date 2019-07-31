@@ -44,6 +44,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image openImage;
     private Image keyImage;
     private AudioClip bombSound;
+    private AudioClip doorUnlock;
 
 
     public DungeonControllerLoader(String filename)
@@ -68,6 +69,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         openImage = new Image("/open_door.png");
         keyImage = new Image("key.png");
         bombSound = new AudioClip(getClass().getResource("/sounds/bomb.mp3").toString());
+        doorUnlock = new AudioClip(getClass().getResource("/sounds/door.mp3").toString());
     }
 
     @Override
@@ -240,6 +242,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 				if (newValue.equals(true)) {
 					view.setImage(closedImage);
 				} else {
+					doorUnlock.play();
 					view.setImage(openImage);
 				}
 			}
@@ -279,12 +282,12 @@ public class DungeonControllerLoader extends DungeonLoader {
                 	} else if (newValue.equals(2)) {
                 		bombSound.play();
                 		node.setVisible(true);
-                		ImageView view = (ImageView) node;
-                		view.setImage(explodeAnim);
-                		view.setViewport(new Rectangle2D(0, 0, 32, 64));
-                		Animation animation = new SpriteAnimation(view, Duration.millis(2000), 13, 13, 0, 0, 32, 64);
-                		animation.setCycleCount(1);
-                		animation.play();
+//                		ImageView view = (ImageView) node;
+//                		view.setImage(explodeAnim);
+//                		view.setViewport(new Rectangle2D(0, 0, 32, 64));
+//                		Animation animation = new SpriteAnimation(view, Duration.millis(2000), 13, 13, 0, 0, 32, 64);
+//                		animation.setCycleCount(1);
+//                		animation.play();
                 		
                 		
                 		

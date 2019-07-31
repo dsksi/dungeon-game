@@ -45,9 +45,12 @@ public class Lit implements BombState {
 			
 			for (Entity k : dungeon.getEntity(relativePosX, relativePosY)) {
 				if ((k instanceof Player)
-				|| (k instanceof Enemy)
 				|| (k instanceof Boulder)) {
 					k.delete();
+				}
+				if (k instanceof Enemy) {
+					Enemy enemy = (Enemy) k;
+					enemy.isDead();
 				}
 			}
 		}

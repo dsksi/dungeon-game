@@ -12,7 +12,7 @@ public class DungeonScreen {
 	private Stage stage;
 	private String title;
 	private Scene scene;
-	
+	private DungeonController controller;
 	public DungeonScreen(Stage stage) throws IOException {
 		this.stage = stage;
 		this.title = "Dungeon";
@@ -22,9 +22,9 @@ public class DungeonScreen {
 	
 	public void start() throws IOException {
 		DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("testGoals.json");
-		DungeonController controller = dungeonLoader.loadController();
+		controller = dungeonLoader.loadController();
 	    
-	    FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("trial.fxml"));
 		loader.setController(controller);
 		Parent root = loader.load();
 		root.requestFocus();
@@ -33,5 +33,9 @@ public class DungeonScreen {
 		stage.setTitle(title);
 	    stage.setScene(scene);
 	    stage.show();
+	}
+
+	public DungeonController getDungeonController() {
+		return this.controller;
 	}
 }
