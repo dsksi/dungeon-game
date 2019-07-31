@@ -36,10 +36,32 @@ public abstract class DungeonLoader {
 
         JSONArray jsonEntities = json.getJSONArray("entities");
         JSONObject jsonGoals = json.optJSONObject("goal-condition");
+        
+        for (int i = 0; i < jsonEntities.length(); i++) {
+        	JSONObject obj = jsonEntities.getJSONObject(i);
+        	if (obj.getString("type").equals("boulder")) {
+        		loadEntity(dungeon, obj);
+        	}
+        }
 
         for (int i = 0; i < jsonEntities.length(); i++) {
-            loadEntity(dungeon, jsonEntities.getJSONObject(i));
+        	JSONObject obj = jsonEntities.getJSONObject(i);
+        	if (obj.getString("type").equals("boulder")) {
+        		continue;
+        	}
+        	if (obj.getString("type").equals("switch")) continue;
+        	loadEntity(dungeon, obj);
+        	
         }
+        
+        for (int i = 0; i < jsonEntities.length(); i++) {
+        	JSONObject obj = jsonEntities.getJSONObject(i);
+        	if (obj.getString("type").equals("switch")) {
+        		loadEntity(dungeon, obj);
+        	}
+        }
+        
+        
         
         if(jsonGoals != null) {
         	loadGoal(dungeon, jsonGoals);

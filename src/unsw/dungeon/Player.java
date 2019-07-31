@@ -301,6 +301,13 @@ public class Player extends Entity implements Subject{
 		setVisualStatus(0);
 	}
 	
+
+	public void attack() {
+		if(this.isInvincible()) return;
+		if(!this.haveWeapon()) return;
+		setVisualStatus(4);
+	}
+	
 	/**
 	 * Given the entity obj, the player attempts to attack the entity
 	 * @param obj
@@ -313,6 +320,7 @@ public class Player extends Entity implements Subject{
 			enemy.isDead();
 			return true;
 		} else if (weaponStrat.attack(obj)) {
+			this.setVisualStatus(4);
 			if(!(weaponStrat.hasDurability())) {
 				dropWeapon();
 			}

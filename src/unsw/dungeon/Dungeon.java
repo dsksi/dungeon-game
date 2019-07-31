@@ -5,6 +5,8 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -119,7 +121,13 @@ public class Dungeon {
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
                 if (obj instanceof Player) {
-                	gameLost();
+                	Timer timer = new Timer();
+            		TimerTask task = new TimerTask() {
+            	        public void run() {
+            	        	gameLost();
+            	        }
+            		};
+                	timer.schedule(task, 2500);
                 	return;
                 }
                 removeEntity(obj);
