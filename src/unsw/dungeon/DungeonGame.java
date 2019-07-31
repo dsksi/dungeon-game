@@ -17,11 +17,13 @@ public class DungeonGame extends Application {
 		DungeonScreen dungeonScreen = new DungeonScreen(primaryStage);
 		WinScreen winScreen = new WinScreen(primaryStage);
 		LostScreen lostScreen = new LostScreen(primaryStage);
+		LevelScreen levelScreen = new LevelScreen(primaryStage);
 		
 		menuScreen.getController().setMenuScreen(menuScreen);
 		menuScreen.getController().setDungeonScreen(dungeonScreen);
 		menuScreen.getController().setWinScreen(winScreen);
 		menuScreen.getController().setLostScreen(lostScreen);
+		menuScreen.getController().setLevelScreen(levelScreen);
 		
 		winScreen.getEndController().setMenuScreen(menuScreen);
 		lostScreen.getEndController().setMenuScreen(menuScreen);

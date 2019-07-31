@@ -19,9 +19,14 @@
          <font>
             <Font name="PT Mono" size="13.0" />
          </font></Button>
-      <Button layoutX="46.0" layoutY="298.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="27.0" prefWidth="112.0" text="Exit Game">
+      <Button layoutX="46.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="27.0" prefWidth="112.0" text="Exit Game">
          <font>
             <Font name="PT Mono" size="13.0" />
          </font></Button>
+      <Button layoutX="46.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleLevelButton" prefHeight="27.0" prefWidth="112.0" text="Choose Level">
+         <font>
+            <Font name="PT Mono" size="13.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

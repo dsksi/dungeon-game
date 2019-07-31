@@ -13,6 +13,7 @@ public class MenuController {
 	private MenuScreen menuScreen;
 	private WinScreen winScreen;
 	private LostScreen lostScreen;
+	private LevelScreen levelScreen;
 	
 	@FXML
 	private Button StartButton;
@@ -38,6 +39,16 @@ public class MenuController {
 	private void handleExitButton(ActionEvent event) {
 		System.exit(0);
 	}
+	
+	@FXML
+	private void handleLevelButton(ActionEvent event) {
+		levelScreen.getController().setDungeonScreen(dungeonScreen);
+		levelScreen.getController().setLostScreen(lostScreen);
+		levelScreen.getController().setWinScreen(winScreen);
+		levelScreen.getController().setMenuScreen(menuScreen);
+		levelScreen.start();		
+	}
+
 
 	public void setDungeonScreen(DungeonScreen dungeonScreen) {
 		this.dungeonScreen = dungeonScreen;
@@ -47,13 +58,13 @@ public class MenuController {
 		this.winScreen = winScreen;
 	}
 	
-	 @FXML
-	 public void handleKeyPress(KeyEvent event) {
-	 	System.out.println("Do stuff");
-	 }
 
 	public void setLostScreen(LostScreen lostScreen) {
 		this.lostScreen = lostScreen;
+	}
+	
+	public void setLevelScreen(LevelScreen levelScreen) {
+		this.levelScreen = levelScreen;
 	}
 
 }
