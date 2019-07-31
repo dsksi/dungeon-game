@@ -28,6 +28,7 @@ public class DungeonGame extends Application {
 		winScreen.getEndController().setMenuScreen(menuScreen);
 		lostScreen.getEndController().setMenuScreen(menuScreen);
 		
+		levelScreen.getController().setMenuScreen(menuScreen);
 		menuScreen.start();
 		
 	}

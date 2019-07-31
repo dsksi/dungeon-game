@@ -39,6 +39,11 @@ public class LevelController {
 
 	}
 	
+	@FXML
+    public void handleMenuButton(ActionEvent event) {
+    	menuScreen.start();
+    }
+	
 	public void setDungeonScreen(DungeonScreen dungeonScreen) {
 		this.dungeonScreen = dungeonScreen;
 	}
@@ -56,4 +61,5 @@ public class LevelController {
 	public void setMenuScreen(MenuScreen menuScreen) {
 		this.menuScreen = menuScreen;
 	}	
+	
 }
