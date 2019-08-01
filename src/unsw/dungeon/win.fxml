@@ -12,7 +12,7 @@
             <Image url="@../../../images/win.png" />
          </image>
       </ImageView>
-      <Button layoutX="34.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="27.0" prefWidth="118.0" text="Return to Menu" />
-      <Button layoutX="479.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleExitButton" text="Exit Game" />
+      <Button id="button" layoutX="34.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="40.0" prefWidth="140.0" styleClass="normal" stylesheets="@style.css" text="Return to Menu" />
+      <Button id="button" layoutX="425.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="40.0" prefWidth="140.0" styleClass="normal" stylesheets="@style.css" text="Exit Game" />
    </children>
 </Pane>

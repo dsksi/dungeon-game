@@ -2,23 +2,29 @@ package unsw.dungeon;
 
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 
-public class LostScreen {
+public class LevelScreen {
 	private Stage stage;
 	private String title;
-	private EndController controller;
+	private LevelController controller;
 	private Scene scene;
 	
-	public LostScreen(Stage stage) throws IOException{
+
+	
+	public LevelScreen(Stage stage) throws IOException{
 		this.stage = stage;
-		this.title = "Lost Screen";
-		this.controller = new EndController();
+		this.title = "Level Screen";
+		this.controller = new LevelController();
 		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("lost.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("levelselect.fxml"));
 		loader.setController(this.controller);
 		
 		Parent root = loader.load();
@@ -28,13 +34,17 @@ public class LostScreen {
 	}
 	
 	
+	
 	public void start() {
 		stage.setTitle(title);
 		stage.setScene(scene);
 		stage.show();
 	}
 	
-	public EndController getEndController() {
+	public LevelController getController() {
 		return controller;
 	}
+
+
+
 }

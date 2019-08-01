@@ -121,6 +121,7 @@ public class Dungeon {
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
                 if (obj instanceof Player) {
+                	gameState.gameEnded();
                 	Timer timer = new Timer();
             		TimerTask task = new TimerTask() {
             	        public void run() {
@@ -139,7 +140,7 @@ public class Dungeon {
      * Announce game won and end game when all goals completed
      */
     private void gameWon() {
-    	if (gameState.isGameInProgress()) {
+    	if (progress().intValue() == 0) {
     		gameState.gameEnded();
     		System.out.println("You completed all goals: You have WON!");
     		progress().set(1);
@@ -150,9 +151,7 @@ public class Dungeon {
      * Announce game lost and end game when player dies
      */
     private void gameLost() {
-    	if (gameState.isGameInProgress()) {
-    		gameState.gameEnded();
-    		System.out.println("You died. Game lost!");
+    	if (progress().intValue() == 0) {
     		progress().set(2);
     	}
 	}

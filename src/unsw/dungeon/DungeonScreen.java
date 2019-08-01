@@ -34,6 +34,21 @@ public class DungeonScreen {
 	    stage.setScene(scene);
 	    stage.show();
 	}
+	
+	public void start(String levelFile) throws IOException {
+		DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(levelFile);
+		controller = dungeonLoader.loadController();
+	    
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("trial.fxml"));
+		loader.setController(controller);
+		Parent root = loader.load();
+		root.requestFocus();
+		this.scene = new Scene(root);
+		
+		stage.setTitle(title);
+	    stage.setScene(scene);
+	    stage.show();
+	}
 
 	public DungeonController getDungeonController() {
 		return this.controller;
