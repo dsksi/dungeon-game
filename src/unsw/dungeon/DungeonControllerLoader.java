@@ -49,7 +49,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image openImage;
     private Image keyImage;
     private AudioClip bombSound;
-    //private AudioClip doorUnlock;
+    private AudioClip doorUnlock;
 
 
     public DungeonControllerLoader(String filename)
@@ -76,7 +76,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         keyImage = new Image("key.png");
         playerDeadImage = new Image("playerdead.png");
         bombSound = new AudioClip(getClass().getResource("/sounds/bomb.mp3").toString());
-        //doorUnlock = new AudioClip(getClass().getResource("/sounds/door.mp3").toString());
+        doorUnlock = new AudioClip(getClass().getResource("/sounds/door.mp3").toString());
     }
 
     @Override
@@ -278,7 +278,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 				if (newValue.equals(true)) {
 					view.setImage(closedImage);
 				} else {
-					//doorUnlock.play();
+					doorUnlock.play();
 					view.setImage(openImage);
 				}
 			}
