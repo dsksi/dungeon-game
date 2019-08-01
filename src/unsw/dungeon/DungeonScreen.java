@@ -20,8 +20,8 @@ public class DungeonScreen {
 		
 	}
 	
-	public void start(String levelFile) throws IOException {
-		DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(levelFile);
+	public void start() throws IOException {
+		DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("maze.json");
 		controller = dungeonLoader.loadController();
 	    
 	    FXMLLoader loader = new FXMLLoader(getClass().getResource("trial.fxml"));

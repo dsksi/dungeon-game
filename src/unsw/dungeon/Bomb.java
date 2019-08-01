@@ -76,7 +76,6 @@ public class Bomb extends Entity {
 				
 				player.getDungeon().removeEntity(bombRef);
 				bombRef.setVisualStatus(1);
-				timer.cancel();
 			}
 		};
 		
