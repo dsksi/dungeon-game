@@ -1,17 +1,8 @@
 package unsw.dungeon;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javafx.scene.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-
 import javafx.stage.*;
 
 public class MenuScreen {

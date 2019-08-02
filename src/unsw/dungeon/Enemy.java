@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Random;
 
 /**
  * An enemy in the dungeon that wanders around or chases the player if it finds him.

@@ -7,7 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.animation.Animation;
-import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Rectangle2D;
@@ -48,6 +47,8 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image closedImage;
     private Image openImage;
     private Image keyImage;
+    
+    // Sounds
     private AudioClip bombSound;
     private AudioClip doorUnlock;
     private AudioClip swordSlash;
