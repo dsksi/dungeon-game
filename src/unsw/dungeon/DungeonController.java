@@ -94,8 +94,10 @@ public class DungeonController {
             break;
         case B:
         	player.dropBomb();
+        	break;
         case X:
         	player.attack();
+        	break;
         default:
             break;
         }
