@@ -6,7 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class RunAway implements ChaseBehavior{
-	Timer timer;
+	private Timer timer;
 	
 	public RunAway() {
 		this.timer = new Timer();

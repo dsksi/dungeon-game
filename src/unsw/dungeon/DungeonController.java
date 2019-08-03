@@ -107,6 +107,7 @@ public class DungeonController {
     
     @FXML
     public void handleMenuButton(ActionEvent event) {
+    	dungeon.getGameState().gameEnded();
     	menuScreen.start();
     }
     

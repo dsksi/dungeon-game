@@ -21,6 +21,7 @@ public class DungeonScreen {
 	}
 	
 	public void start() throws IOException {
+
 		DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("maze.json");
 		controller = dungeonLoader.loadController();
 	    
