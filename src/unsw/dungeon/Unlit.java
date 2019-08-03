@@ -39,14 +39,4 @@ public class Unlit implements BombState {
 	public void explode(Bomb bomb, Player player) {
 		return;
 	}
-
-	/**
-	 * Bomb should not explode in Unlit state.
-	 * @param bomb Bomb to be exploded
-	 * @param player Player activating the bomb
-	 */
-	@Override
-	public void exploding(Bomb bomb, Player player) {
-		return;
-	}
 }

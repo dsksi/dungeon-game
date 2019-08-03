@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.media.AudioClip;
 
 /**
  * A JavaFX controller for the dungeon.
@@ -32,12 +33,16 @@ public class DungeonController {
     private Dungeon dungeon;
     private WinScreen winScreen;
 	private LostScreen lostScreen;
+	private AudioClip wonSound;
+	private AudioClip lostSound;
 
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.initialEntities = new ArrayList<>(initialEntities);
         this.trackGameState();
+        this.wonSound = new AudioClip(getClass().getResource("/sounds/won.mp3").toString());
+        this.lostSound = new AudioClip(getClass().getResource("/sounds/lost.mp3").toString());
     }
 
     @FXML
@@ -94,8 +99,10 @@ public class DungeonController {
             break;
         case B:
         	player.dropBomb();
+        	break;
         case X:
         	player.attack();
+        	break;
         default:
             break;
         }
@@ -126,10 +133,12 @@ public class DungeonController {
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
             	if(newValue.equals(1)) {
+            		wonSound.play();
             		System.out.println("Game won");
             		winScreen.start();
             	} else if (newValue.equals(2)) {
             		Platform.runLater(() -> {
+            			lostSound.play();
             			lostScreen.start();
                 		System.out.println("Game lost");
             		});

@@ -36,11 +36,4 @@ public interface BombState {
 		 * @param player Player to explode bomb
 		 */
 		public void explode(Bomb bomb, Player player);
-		
-		/**
-		 * Sets the visual status of the bomb to show explosion
-		 * @param bomb Bomb to be exploded
-		 * @param player Player activating the bomb
-		 */
-		public void exploding(Bomb bomb, Player player);
 }

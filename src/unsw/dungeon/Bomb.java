@@ -78,11 +78,8 @@ public class Bomb extends Entity {
 				bombRef.setVisualStatus(1);
 			}
 		};
-		
 		timer.schedule(task, 1500);
 		timer.schedule(task2, 2000);
-		
-		
 	}
 
 	/**

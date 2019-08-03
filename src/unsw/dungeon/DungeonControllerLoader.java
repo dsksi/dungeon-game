@@ -7,7 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.animation.Animation;
-import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Rectangle2D;
@@ -48,7 +47,11 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image closedImage;
     private Image openImage;
     private Image keyImage;
+    
+    // Sounds
     private AudioClip bombSound;
+    private AudioClip doorUnlock;
+    private AudioClip swordSlash;
 
 
     public DungeonControllerLoader(String filename)
@@ -75,6 +78,8 @@ public class DungeonControllerLoader extends DungeonLoader {
         keyImage = new Image("key.png");
         playerDeadImage = new Image("playerdead.png");
         bombSound = new AudioClip(getClass().getResource("/sounds/bomb.mp3").toString());
+        doorUnlock = new AudioClip(getClass().getResource("/sounds/door.mp3").toString());
+        swordSlash = new AudioClip(getClass().getResource("/sounds/sword.wav").toString());
     }
 
     @Override
@@ -239,6 +244,7 @@ public class DungeonControllerLoader extends DungeonLoader {
             		view.setImage(playerBombImage);
             	} else if(newValue.equals(4)) {
             		
+            		swordSlash.play();
             		Rectangle2D vp = view.getViewport();
             		view.setImage(attackAnim);
             		view.setViewport(new Rectangle2D(0, 0, 32, 32));
@@ -276,6 +282,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 				if (newValue.equals(true)) {
 					view.setImage(closedImage);
 				} else {
+					doorUnlock.play();
 					view.setImage(openImage);
 				}
 			}
@@ -320,10 +327,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                 		view.setViewport(new Rectangle2D(0, 0, 32, 32));
                 		Animation animation = new SpriteAnimation(view, Duration.millis(2000), 13, 13, 0, 0, 32, 96);
                 		animation.setCycleCount(1);
-                		animation.play();
-                		
-                		
-                		
+                		animation.play();                		
                 	}
                 }
             });
