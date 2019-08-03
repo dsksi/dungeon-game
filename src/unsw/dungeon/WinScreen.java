@@ -7,6 +7,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * A screen indicating the player has won the dungeon game level
+ * @author Amy
+ *
+ */
 public class WinScreen {
 	
 	private Stage stage;

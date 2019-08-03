@@ -7,6 +7,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * A screen indicating the player has lost the dungeon game level
+ * @author Amy
+ *
+ */
 public class LostScreen {
 	private Stage stage;
 	private String title;

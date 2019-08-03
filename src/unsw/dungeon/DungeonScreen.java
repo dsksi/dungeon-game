@@ -8,6 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Launches the dungeon game screen.
+ * The dungeon screen is controlled using the dungeon controller.
+ * @author Amy
+ *
+ */
 public class DungeonScreen {
 	private Stage stage;
 	private String title;
