@@ -6,7 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Wander implements ChaseBehavior{
-	Timer timer;
+	private Timer timer;
 	
 	public Wander() {
 		this.timer = new Timer();

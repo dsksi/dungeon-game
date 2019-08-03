@@ -6,7 +6,7 @@ import java.util.TimerTask;
 
 public class ChasePlayer implements ChaseBehavior {
 	
-	Timer timer;
+	private Timer timer;
 	
 	public ChasePlayer() {
 		this.timer = new Timer();
