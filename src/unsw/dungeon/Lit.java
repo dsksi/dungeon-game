@@ -57,14 +57,4 @@ public class Lit implements BombState {
 		
 		return;
 	}
-
-	/**
-	 * Sets the visual status of the bomb to show explosion
-	 * @param bomb Bomb to be exploded
-	 * @param player Player activating the bomb
-	 */
-	@Override
-	public void exploding(Bomb bomb, Player player) {
-		//bomb.setVisualStatus(2);
-	}
 }
