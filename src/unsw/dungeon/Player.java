@@ -26,8 +26,9 @@ public class Player extends Entity implements Subject{
 
     /**
      * Create a player positioned in square (x,y)
-     * @param x
-     * @param y
+     * @param x X coordinate of the player
+     * @param y Y coordinate of the player
+     * @param dungeon The dungeon the player is in
      */
     public Player(Dungeon dungeon, int x, int y) {
         super(x, y);
@@ -45,7 +46,7 @@ public class Player extends Entity implements Subject{
     
     /**
      * Check if the game is still in progress
-     * @return
+     * @return Returns true if the game is still in progress
      */
     public boolean getGameInProgress() {
     	return dungeon.getGameInProgress();
@@ -53,8 +54,8 @@ public class Player extends Entity implements Subject{
     
     /**
      * Given the coordinate, check if player can move onto the location
-     * @param x
-     * @param y
+     * @param x X coordinate of the player
+     * @param y Y coordinate of the player
      * @return true or false
      */
     private boolean checkMoveable(int x, int y) {
@@ -133,7 +134,7 @@ public class Player extends Entity implements Subject{
 	
 	/**
 	 * Get the key id of the player's key
-	 * @return keyID
+	 * @return keyID of the player's key
 	 */
 	public int getKeyID() {
 		return keyID;
@@ -141,7 +142,7 @@ public class Player extends Entity implements Subject{
 
 	/**
 	 * Set the key id when the player picks up the key
-	 * @param keyID
+	 * @param keyID keyID of the key picked up by the player
 	 */
 	public void setKeyID(int keyID) {
 		this.keyID = keyID;
@@ -149,7 +150,7 @@ public class Player extends Entity implements Subject{
 
 	/**
 	 * Get the bomb from the player
-	 * @return bomb
+	 * @return Returns the bomb object held by the player
 	 */
 	public Bomb getBomb() {
 		return bomb;
@@ -157,7 +158,7 @@ public class Player extends Entity implements Subject{
 
 	/**
 	 * Set the bomb of the player when player picks up a bomb
-	 * @param bomb
+	 * @param bomb The bomb picked up by the player
 	 */
 	public void setBomb(Bomb bomb) {
 		this.bomb = bomb;
@@ -174,7 +175,7 @@ public class Player extends Entity implements Subject{
 
 	/**
 	 * Given treasure, player picks up the treasure
-	 * @param treasure
+	 * @param treasure The treasure picked up by the player
 	 */
 	public void pickUpTreasure(Treasure treasure) {
 		if (treasure.isCollected()) return;
@@ -186,19 +187,24 @@ public class Player extends Entity implements Subject{
 	
 	/**
 	 * Get the dungeon of the game
-	 * @return dungeon
+	 * @return Returns the dungeon the player is in
 	 */
 	public Dungeon getDungeon() {
 		return dungeon;
 	}
 
-	/*
+	/**
 	 * Get number of treasure collected
+	 * @return Returns the number of treasure collected by the player
 	 */
 	public int getTreasureCollected() {
 		return this.treasureCollected;
 	}
 
+	/**
+	 * This method allows enemies to attack the player
+	 * @param obj The enemy attacking the player
+	 */
 	@Override
 	public void interact(Entity obj) {
 		if (! this.getGameInProgress()) return;
@@ -215,14 +221,14 @@ public class Player extends Entity implements Subject{
 
 	/**
 	 * Get the current visual status of the player
-	 * @return visualStatus
+	 * @return The visual status of the player
 	 */
 	public IntegerProperty visualStatus() {
 		return this.visualStatus;
 	}
 	
 	/**
-	 * Remember the current visual status as previous
+	 * Sets the previous visual status to be the same as the current visual status
 	 */
 	public void setPrevVisualStatus() {
 		this.prevVisualStatus = new SimpleIntegerProperty(this.visualStatus.intValue());
@@ -230,7 +236,7 @@ public class Player extends Entity implements Subject{
 	
 	/**
 	 * Get the previous visual status of the player
-	 * @return prevVisualStatus
+	 * @return The previous visual status of the player
 	 */
 	public IntegerProperty getPrevVisualStatus() {
 		return this.prevVisualStatus;
@@ -238,7 +244,7 @@ public class Player extends Entity implements Subject{
 	
 	/**
 	 * Set the visual status of the player
-	 * @param num
+	 * @param num The visual status to set the player to
 	 */
 	public void setVisualStatus(int num) {
 		visualStatus().set(num);
@@ -254,7 +260,7 @@ public class Player extends Entity implements Subject{
 	
 	/**
 	 * Check if player has weapon
-	 * @return true or false
+	 * @return True if the player has a weapon
 	 */
 	public boolean haveWeapon() {
 		if (!(this.weaponStrat instanceof NoWeapon)) return true;
@@ -263,7 +269,7 @@ public class Player extends Entity implements Subject{
 	
 	/**
 	 * Given sword, player picks up the sword
-	 * @param sword
+	 * @param sword Sword picked up by the player
 	 */
 	public void pickUpSword(Sword sword) {
 		setVisualStatus(1);
@@ -271,18 +277,25 @@ public class Player extends Entity implements Subject{
 		sword.delete();
 	}
 	
-	
+	/**
+	 * @param o Observer to be added
+	 */
 	@Override
 	public void registerObserver(Observer o) {
-		//System.out.println("add observer");
 		observers.add(o);
 	}
 
+	/**
+	 * @param o Observer to be removed
+	 */
 	@Override
 	public void removeObserver(Observer o) {
 		observers.add(o);
 	}
 
+	/**
+	 * Update all observers of the player
+	 */
 	@Override
 	public void updateObservers() {
 		if (observers.isEmpty()) {
@@ -301,7 +314,9 @@ public class Player extends Entity implements Subject{
 		setVisualStatus(0);
 	}
 	
-
+	/**
+	 * Play the attack animation
+	 */
 	public void attack() {
 		if(this.isInvincible()) return;
 		if(!this.haveWeapon()) return;
@@ -310,7 +325,7 @@ public class Player extends Entity implements Subject{
 	
 	/**
 	 * Given the entity obj, the player attempts to attack the entity
-	 * @param obj
+	 * @param obj Entity to be attacked
 	 * @return true if player succeeds at attacking the entity, else false
 	 */
 	public boolean attack(Entity obj) {
@@ -339,7 +354,7 @@ public class Player extends Entity implements Subject{
 	
 	/**
 	 * Set the weapon strategy of the player
-	 * @param wstr
+	 * @param wstr Weapon strategy to be set to the player
 	 */
 	public void setWeaponStrategy(WeaponStrategy wstr) {
 		this.weaponStrat = wstr;
@@ -350,7 +365,7 @@ public class Player extends Entity implements Subject{
 	 * Player becomes invincible for 10 seconds
 	 * Player returns to the previous visual status after the invincibility wears off
 	 * If player changes to other status during invincibility, player keeps the new status.
-	 * @param potion
+	 * @param potion Potion for the player to consume
 	 */
 	public void drinkPotion(InvinciblePotion potion) {
 		Timer timer = new Timer();

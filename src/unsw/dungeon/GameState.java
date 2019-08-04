@@ -169,9 +169,9 @@ public class GameState {
 	
 	/**
 	 * Add a composite goal to game state
-	 * @param type
-	 * @param subgoals
-	 * @param dungeon
+	 * @param type Type of goal to be added
+	 * @param subgoals JSONArray of subgoals
+	 * @param dungeon Dungeon containing the goals
 	 */
 	public void addCompositeGoal(String type, JSONArray subgoals, Dungeon dungeon) {
 		CompositeGoal cg = createCompositeGoal(type, subgoals, dungeon);
@@ -180,8 +180,8 @@ public class GameState {
 	
 	/**
 	 * Add a simple goal to game state
-	 * @param type
-	 * @param dungeon
+	 * @param type Type of goal to be added
+	 * @param dungeon Dungeon containing the goals
 	 */
 	public void addSimpleGoal(String type, Dungeon dungeon) {
 		this.goal = createSimpleGoal(type, dungeon);

@@ -16,8 +16,8 @@ public abstract class Entity {
 
     /**
      * Create an entity positioned in square (x,y)
-     * @param x
-     * @param y
+     * @param x X coordinate of entity
+     * @param y Y coordinate of entity
      */
     public Entity(int x, int y) {
         this.x = new SimpleIntegerProperty(x);
@@ -27,7 +27,7 @@ public abstract class Entity {
 
     /**
      * Get the x coordinate of the entity
-     * @return x
+     * @return X coordinate of entity as an integer property
      */
     public IntegerProperty x() {
         return x;
@@ -35,7 +35,7 @@ public abstract class Entity {
 
     /**
      * Get the y coordinate of the entity
-     * @return y
+     * @return Y coordinate of entity as an integer property
      */
     public IntegerProperty y() {
         return y;
@@ -43,7 +43,7 @@ public abstract class Entity {
     
     /**
      * Get the status of the entity, indicating whether the entity is deleted from dungeon
-     * @return status
+     * @return status of the entity
      */
     public IntegerProperty status() {
         return this.status;
@@ -59,7 +59,7 @@ public abstract class Entity {
     
     /**
      *  Get y coordinate of entity as integer
-     * @return y 
+     * @return Y coordinate of entity as an int
      */
     public int getY() {
         return y().get();
@@ -67,7 +67,7 @@ public abstract class Entity {
 
     /**
      *  Get x coordinate of entity as integer
-     * @return x 
+     * @return X coordinate of entity as an int
      */
     public int getX() {
         return x().get();
@@ -75,14 +75,14 @@ public abstract class Entity {
 
     /**
      * Check if the given entity can move on to the location of this entity
-     * @param obj
+     * @param obj Entity moving on to this entity.
      * @return true if possible to move to same location, else false
      */
 	public abstract boolean movable(Entity obj);
 	
 	/**
 	 * Given an entity, trigger the interaction between the two entities
-	 * @param obj
+	 * @param obj Entity interacting with this entity
 	 */
 	public abstract void interact(Entity obj);
 }

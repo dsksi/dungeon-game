@@ -20,7 +20,6 @@ public class Bomb extends Entity {
 	 * Initializes a new bomb object.
 	 * @param x X coordinate of bomb object
 	 * @param y Y coordinate of bomb object
-	 * @return Returns a new bomb object.
 	 */
 	public Bomb(int x, int y) {
 		super(x, y);
@@ -42,7 +41,7 @@ public class Bomb extends Entity {
 	/**
 	 * Entity interacts with bomb.
 	 * Should call state.pickUp if entity is a player.
-	 * @param Entity to interact with bomb
+	 * @param obj Entity to interact with bomb
 	 */
 	@Override
 	public void interact(Entity obj) {
@@ -91,9 +90,8 @@ public class Bomb extends Entity {
 	}
 
 	/**
-	 * 
+	 * Sets the visual status to the given visual status.
 	 * @param visualStatus The visual status of the bomb
-	 * @return Sets the visual status to the given visual status.
 	 */
 	public void setVisualStatus(int visualStatus) {
 		this.visualStatus.set(visualStatus);

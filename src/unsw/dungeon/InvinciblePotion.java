@@ -15,8 +15,8 @@ public class InvinciblePotion extends Entity {
 	 * When player is invincible, player cannot be killed by enemies or bombs
 	 * Enemy runs away from the player when player is invincible
 	 * Invincible mode player kills the enemy upon contact
-	 * @param x
-	 * @param y
+	 * @param x X coordinate of the potion
+	 * @param y Y coordinate of the potion
 	 */
 	
 	public InvinciblePotion(int x, int y) {

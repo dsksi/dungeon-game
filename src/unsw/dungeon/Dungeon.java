@@ -70,7 +70,7 @@ public class Dungeon {
 
     /**
      * Setup the player in the dungeon map
-     * @param player
+     * @param player Player in the dungeon
      */
     public void setPlayer(Player player) {
         this.player = player;
@@ -80,7 +80,7 @@ public class Dungeon {
 
     /**
      * Add entity to the dungeon's list of entities and allow dungeon to track entity
-     * @param entity
+     * @param entity Entity to be added to the dungeon
      */
     public void addEntity(Entity entity) {
     	trackEntityStatus(entity);
@@ -88,7 +88,7 @@ public class Dungeon {
     }
     /**
      * Track the player movement to check for game completion
-     * @param player
+     * @param player Player to be tracked
      */
     public void trackGameState(Player player) {
     	player.x().addListener(new ChangeListener<Number>() {
@@ -113,7 +113,7 @@ public class Dungeon {
     
     /**
      * Setup listener for entity status to remove the entity from dungeon when it is deleted
-     * @param obj
+     * @param obj Entity to be tracked
      */
     public void trackEntityStatus(Entity obj) {
     	obj.status().addListener(new ChangeListener<Number>() {
@@ -158,9 +158,9 @@ public class Dungeon {
 
     /**
      * Given the x, y coordinate, get a list of entities at that coordinate in the dungeon
-     * @param x
-     * @param y
-     * @return
+     * @param x X coordinate in the dungeon
+     * @param y Y coordinate in the dungeon
+     * @return ArrayList of entities in the specified coordinate in the dungeon.
      */
 	public ArrayList<Entity> getEntity(int x, int y) {
     	ArrayList<Entity> list = new ArrayList<Entity>();
@@ -175,9 +175,9 @@ public class Dungeon {
     
 	/**
 	 * Given an entity obj and x, y coordinate, inflict interaction between obj and all entities at that coordinate in the dungeon
-	 * @param obj
-	 * @param x
-	 * @param y
+	 * @param obj Entity interacting with the other entities in the specified coordinate
+	 * @param x X coordinate in the dungeon
+	 * @param y Y coordinate in the dungeon
 	 */
     public void interactItems(Entity obj, int x, int y) {
     	ArrayList<Entity> list = new ArrayList<Entity>();
@@ -245,7 +245,7 @@ public class Dungeon {
 
 	/**
 	 * Remove a given entity from the dungeon list of entities
-	 * @param obj
+	 * @param obj Entity to be removed from the dungeon
 	 */
 	public void removeEntity(Entity obj) {
 		if(entities.contains(obj))
@@ -254,7 +254,7 @@ public class Dungeon {
 
 	/**
 	 * Get the GameState of the dungeon game
-	 * @return gameState
+	 * @return GameState of the dungeon game
 	 */
 	public GameState getGameState() {
 		return this.gameState;
@@ -262,7 +262,7 @@ public class Dungeon {
 
 	/**
 	 * Set up all subject observer relationship for a given enemy goal
-	 * @param goal
+	 * @param goal EnemyGoal for enemies to be registered to
 	 */
 	public void setUpObserverEnemyGoal(EnemyGoal goal) {
 		for (Entity e : entities) {
@@ -276,7 +276,7 @@ public class Dungeon {
 	
 	/**
 	 * Set up all subject observer relationship for a given switch goal
-	 * @param goal
+	 * @param goal SwitchGoal for switches to be registered to
 	 */
 	public void setUpObserverSwitchGoal(SwitchGoal goal) {
 		for (Entity e : entities) {
@@ -289,7 +289,7 @@ public class Dungeon {
 	
 	/**
 	 * Set up subject observer relationship for a given treasure goal
-	 * @param goal
+	 * @param goal TreasureGoal for the player to register
 	 */
 	public void setUpObserverTreasureGoal(TreasureGoal goal) {
 		player.registerObserver(goal);

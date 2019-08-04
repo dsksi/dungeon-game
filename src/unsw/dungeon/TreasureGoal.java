@@ -14,7 +14,7 @@ public class TreasureGoal implements Goal, Observer {
 	
 	/**
 	 * Create a treasure goal given a total treasure count goal
-	 * @param goal
+	 * @param goal Total number of treasure
 	 */
 	public TreasureGoal(int goal) {
 		this.totalTreasure = goal;
@@ -23,7 +23,7 @@ public class TreasureGoal implements Goal, Observer {
 	
 	/**
 	 * Get the current treasure count collected
-	 * @return
+	 * @return The number of treasure collected
 	 */
 	public int getTreasureCount() {
 		return treasureCount;

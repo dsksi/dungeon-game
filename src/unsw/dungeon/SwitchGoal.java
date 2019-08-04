@@ -13,8 +13,7 @@ public class SwitchGoal implements Goal, Observer {
 	
 	/**
 	 * Create a switch goal given the total number of switches
-	 * @param count
-	 * @precondition count is positive
+	 * @param count The total number of switches. Must be positive
 	 */
 	public SwitchGoal(int count) {
 		this.totalSwitches = count;
@@ -31,7 +30,7 @@ public class SwitchGoal implements Goal, Observer {
 
 	/**
 	 * Get number of switches currently activated
-	 * @return
+	 * @return The number of switches currently activated
 	 */
 	public int getSwitchActivated() {
 		return switchActivated;

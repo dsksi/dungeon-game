@@ -12,9 +12,8 @@ public class ExitGoal implements Goal {
 	
 	/**
 	 * Create an exit goal for the dungeon game
-	 * @param player of the game
-	 * @param exit of the game
-	 * @precondition the dungeon has exactly one exit and one player
+	 * @param player Player of the game. The dungeon has exactly one player
+	 * @param exit Exit of the game. The dungeon has exactly one exit
 	 */
 	public ExitGoal(Player player, Exit exit) {
 		this.player = player;

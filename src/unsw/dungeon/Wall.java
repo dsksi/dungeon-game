@@ -9,8 +9,8 @@ public class Wall extends Entity {
 
 	/**
 	 * Create a wall given the coordinate
-	 * @param x
-	 * @param y
+	 * @param x X coordinate of the wall
+	 * @param y Y coordinate of the wall
 	 */
     public Wall(int x, int y) {
         super(x, y);

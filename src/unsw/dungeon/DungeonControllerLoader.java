@@ -337,8 +337,8 @@ public class DungeonControllerLoader extends DungeonLoader {
     /**
      * Create a controller that can be attached to the DungeonView with all the
      * loaded entities.
-     * @return
-     * @throws FileNotFoundException
+     * @return new DungeonController
+     * @throws FileNotFoundException File not found
      */
     public DungeonController loadController() throws FileNotFoundException {
         return new DungeonController(load(), entities);
