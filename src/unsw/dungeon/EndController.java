@@ -4,6 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+/**
+ * A controller for the game end screen.
+ * @author Amy
+ *
+ */
 public class EndController {
 	
 	private MenuScreen menuScreen;

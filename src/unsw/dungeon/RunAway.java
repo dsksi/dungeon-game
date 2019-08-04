@@ -5,6 +5,11 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The enemy class goes into RunAway state behaviour when the player is invincible.
+ * @author Luke
+ *
+ */
 public class RunAway implements ChaseBehavior{
 	private Timer timer;
 	

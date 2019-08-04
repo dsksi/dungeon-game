@@ -8,6 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * A screen displaying the game rules.
+ * @author Amy
+ *
+ */
 public class ManualScreen {
 	private Stage stage;
 	private String title;

@@ -5,6 +5,11 @@ import java.io.IOException;
 import javafx.scene.*;
 import javafx.stage.*;
 
+/**
+ * A screen displaying the menu options
+ * @author Amy
+ *
+ */
 public class MenuScreen {
 
 	private Stage stage;

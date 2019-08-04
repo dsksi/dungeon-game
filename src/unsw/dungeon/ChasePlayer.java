@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The enemy chase the player when the player is not invincible.
+ * @author Luke
+ *
+ */
 public class ChasePlayer implements ChaseBehavior {
 	
 	private Timer timer;

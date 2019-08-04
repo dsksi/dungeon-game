@@ -1,5 +1,10 @@
 package unsw.dungeon;
 
+/**
+ * A node class used for graph path searching for the enemy.
+ * @author Luke
+ *
+ */
 public class Node {
 	private int index;
 	private int parent_index;

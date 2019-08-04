@@ -24,13 +24,11 @@ public class DungeonGame extends Application {
 		menuScreen.getController().setLostScreen(lostScreen);
 		menuScreen.getController().setLevelScreen(levelScreen);
 		menuScreen.getController().setManualScreen(manualScreen);
-		System.out.println("made");
 		
 		winScreen.getEndController().setMenuScreen(menuScreen);
 		lostScreen.getEndController().setMenuScreen(menuScreen);
 		manualScreen.getEndController().setMenuScreen(menuScreen);
 		levelScreen.getController().setMenuScreen(menuScreen);
-		System.out.println("success");
 		menuScreen.start();
 		
 	}

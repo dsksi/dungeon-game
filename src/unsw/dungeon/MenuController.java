@@ -6,6 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 
+/**
+ * A controller to control the interaction with the menu screen.
+ * @author Amy
+ *
+ */
 public class MenuController {
 	
 	private DungeonScreen dungeonScreen;
