@@ -10,33 +10,14 @@
 
 * Learn the application of design patterns.
 
-## Due Dates
-
-Milestone 1: 5PM Sunday Week 5 (Feedback: Week 6 Lab)
-
-Milestone 2: 5PM Sunday Week 7 (Feedback: Week 8 Lab)
-
-Final milestone: 5PM Sunday Week 9 (Demonstration: Week 10 Lab)
-
-**NOTE:** There is **NO** provision for late submissions with a late penalty. Not submitting by the deadline is considered non-submission.
-
-## Value: 25 marks
-
----
 
 ## Overview
 
 You have received a request from a client for an application for the playing of dungeon-style puzzles. With a partner from your lab class, you will follow an agile development process to design and implement a desktop Java application that satisfies the requirements of the client (see below). The final piece of software you deliver is expected to be of professional quality, user-friendly, and demonstrate the knowledge and skills you have acquired in this course.
 
-## Partner
+## Instructions to Run the Game
 
-Your first step in this project will be to find a partner. You will do this under the guidance of your tutor in the week 3 tutorial. You may work as an individual if you wish, but your project will be judged by the same criteria as if you had done it with a partner. If class sizes necessitate, groups of 3 will be allowed.
-
-After resolving who you will be working with, you should create a project group on WebCMS. A repository on GitLab will be created for you at the end of week 3 based on the group you create, so you **must** create one by then.
-
-Once created, your repository will be available here (replace *GROUP_NAME* with your group's name):
-
-https://gitlab.cse.unsw.edu.au/COMP2511/19T2/GROUP_NAME
+Run src/unsw/dungeon/GameApplication.java
 
 ## Preliminary client requirements
 
@@ -172,6 +153,14 @@ Additionally, for this milestone you also have the chance to extend the project 
 
 This final milestone will be a culmination of all the work done in the previous milestones. You have the opportunity to improve on your design based on feedback from your tutor. Marking of the design will be harsher for the final milestone as you have already had the opportunity to receive feedback.
 
+## Extra Features Implemented
+
+In addition to implementing all preliminary requirements, the game provides the following extra features
+- Game level selection
+- Sound effect for various game actions, events
+- Shortest path enemy chase
+- Animation for bomb, player actions (attack, death)
+
 ## Assessment
 
 You will be assessed on your ability to apply what you have learnt in this course as well as your ability to produce a significant piece of software.
@@ -181,38 +170,6 @@ In cases where the client has not been explicit in their requirements, you will 
 You are expected to use git appropriately by committing regularly with meaningful commit messages and using feature branches to manage significant changes. Similarly, you should use the task board to coordinate work with your partner. You will need to take the principles you learnt from COMP1531 and apply them here.
 
 While it is up to you how to divide the work between you and your partner, both of you are expected to contribute code. Just creating diagrams and documentation is not sufficient contribution. Both members of a pair *generally* receive the same mark, but if there is a significant imbalance in the amount of work done, the total mark may be scaled to match actual contribution.
-
-## Hints
-
-* The first two milestones do not require a working UI. First determine how you are going to model a dungeon and its entities before turning to the UI.
-* The starter code uses the observer pattern to ensure the frontend is displaying the current state of the backend. It would be advisable to do the same for the changes you will make.
-* The majority of marks available (see below) are for having a well designed application that meets the requirements. Avoid adding extra complexity and extensions till you have something that meets the most basic requirements.
-
-## Submission
-
-### Milestone 1
-
-You should have all your user stories entered into the issue board on your GitLab repository. You may continue to use the board between the deadline and your tutor's assessment, but they will be looking at the dates issues were modified to make sure you did the work that was required of you prior to the deadline.
-
-### Milestone 2
-
-Submit the contents of your GitLab repository with the following command:
-
-```bash
-$ 2511 submit milestone2
-```
-
-Your UML class diagram should be a PDF file at the root of your repository named `design.pdf`.
-
-### Milestone 3
-
-Submit the contents of your GitLab repository with the following command:
-
-```bash
-$ 2511 submit milestone3
-```
-
-You will demonstrate your application to your tutor in Week 10. You may be asked to justify your design decisions and explain how you worked with your partner.
 
 ## Marking criteria
 
@@ -275,7 +232,7 @@ Marks will be deducted for poor git and GitLab usage. For example, meaningless c
 |              | 1    | One extension that represents some technical consideration                                        |
 |              | 2    | Multiple extensions that represent some technical as well as design and user interaction consideration |
 
-Marks will be deducted for poor git and GitLab usage. For example, meaningless commit messages, large commits, issue board out of date, etc.
+Final Result: 24/25
 
 [player]:        images/human_new.png
 [wall]:          images/brick_brown_0.png
